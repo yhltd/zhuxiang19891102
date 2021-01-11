@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    druid:
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://yhocn.cn/zhuxiang?autoReconnect=true&characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai
+    username: root
+    password: Lyh07910
+  mvc:
+    view:
+      suffix: .html
+    static-path-pattern: /**
+  resources:
+    static-locations: classpath:/templates/,classpath:/static/
