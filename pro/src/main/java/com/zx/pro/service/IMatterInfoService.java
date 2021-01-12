@@ -6,6 +6,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * 物料表接口
+ * @author wanghui
+ */
 @Service
 public interface IMatterInfoService extends IService<MatterInfo> {
 
@@ -27,7 +31,7 @@ public interface IMatterInfoService extends IService<MatterInfo> {
      * @param matterInfo 添加物料的对象
      * @return 是否添加成功
      */
-    boolean insertMatterInfo(MatterInfo matterInfo);
+    boolean addMatterInfo(MatterInfo matterInfo);
 
     /**
      * 删除物料

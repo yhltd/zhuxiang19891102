@@ -18,6 +18,10 @@ public class MatterInfoController {
     @Resource
     private IMatterInfoService iMatterInfoService;
 
+    /**
+     * 查询物料信息
+     * @return 物料信息的集合
+     */
     @GetMapping("/getMatterInfoList")
     public ResultInfo getMatterInfoList(){
         List<MatterInfo> matterInfoList=null;
@@ -29,28 +33,43 @@ public class MatterInfoController {
         }
     }
 
+    /**
+     * 修改
+     * @param matterInfo 修改过的物料对象
+     * @return 是否修改成功
+     */
     @PostMapping("/updateMatterInfo")
     public boolean updateMatterInfo(MatterInfo matterInfo){
-        boolean updateMatter=false;
+        boolean updateMatterInfo=false;
         try {
-            updateMatter=iMatterInfoService.updateMatterInfo(matterInfo);
-            return updateMatter;
+            updateMatterInfo=iMatterInfoService.updateMatterInfo(matterInfo);
+            return updateMatterInfo;
         }catch (Exception e){
-            return updateMatter;
+            return updateMatterInfo;
         }
     }
 
-    @PostMapping("/insertMatterInfo")
-    public boolean insertMatterInfo(MatterInfo matterInfo){
-        boolean insertMatterInfo=false;
+    /**
+     * 添加物料
+     * @param matterInfo 添加物料的对象
+     * @return 是否添加成功
+     */
+    @PostMapping("/addMatterInfo")
+    public boolean addMatterInfo(MatterInfo matterInfo){
+        boolean addMatterInfo=false;
         try {
-            insertMatterInfo=iMatterInfoService.insertMatterInfo(matterInfo);
-            return insertMatterInfo;
+            addMatterInfo=iMatterInfoService.addMatterInfo(matterInfo);
+            return addMatterInfo;
         }catch (Exception e){
-            return insertMatterInfo;
+            return addMatterInfo;
         }
     }
 
+    /**
+     * 删除物料
+     * @param id 根据id删除
+     * @return 是否删除成功
+     */
     @PostMapping("/deleteMatterInfo")
     public boolean deleteMatterInfo(int id){
         boolean deleteMatterInfo=false;
