@@ -1,4 +1,4 @@
-package com.zx.pro.util;
+package com.zx.pro.constent;
 
 /**
  * 返回状态码

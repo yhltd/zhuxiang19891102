@@ -14,6 +14,4 @@ public class MatterOrderController {
     @Resource
     private IMatterOrderService iMatterOrderService;
 
-    @PostMapping()
-
 }

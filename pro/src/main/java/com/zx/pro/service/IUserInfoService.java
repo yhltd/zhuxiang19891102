@@ -4,10 +4,13 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.zx.pro.entity.UserInfo;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
+/**
+ * 用户Service
+ *
+ * @author dai
+ */
 @Service
 public interface IUserInfoService extends IService<UserInfo> {
 
-    List<UserInfo> getUserInfoList();
+    String login(String name,String pwd);
 }
