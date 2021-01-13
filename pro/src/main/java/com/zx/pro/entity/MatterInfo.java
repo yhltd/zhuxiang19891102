@@ -13,17 +13,32 @@ public class MatterInfo {
      */
     @TableId(value = "id" , type = IdType.AUTO)
     private int id;
-    //物料代码
+    /**
+     * 物料代码
+     */
     private String code;
-    //长度（英尺）
+    /**
+     * 长度（英尺）
+     */
     private double size;
-    //屈服强度
+    /**
+     * 屈服强度
+     */
     private String yieldStrength;
-    //图层厚度
+    /**
+     * 图层厚度
+     */
     private String chartThickness;
+    /**
+     * 颜色
+     */
     private String color;
-    //配件比例
+    /**
+     * 配件比例
+     */
     private String fittingsProportion;
-    //配件数量
+    /**
+     * 配件数量
+     */
     private double fittingsNum;
 }
