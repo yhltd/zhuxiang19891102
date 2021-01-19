@@ -23,11 +23,12 @@ public class LoginConfig implements WebMvcConfigurer {
         //添加不拦截路径
         registration.excludePathPatterns(
                 "/",
+                "/error",
                 "/index.html",
                 "/user/login",
-                "/css/***",
-                "/javascript/***",
-                "/bootstrap-4.5.0-dist/***"
+                "/css/**",
+                "/javascript/**",
+                "/bootstrap-4.5.0-dist/**"
         );
     }
 }

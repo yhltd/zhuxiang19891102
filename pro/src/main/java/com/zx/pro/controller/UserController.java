@@ -1,19 +1,20 @@
 package com.zx.pro.controller;
 
-import com.zx.pro.entity.UserInfo;
 import com.zx.pro.service.IUserInfoService;
 import com.zx.pro.util.ResultInfo;
 import com.zx.pro.util.SessionUtil;
 import com.zx.pro.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
+/**
+ * @author dai
+ */
 @Slf4j
 @RestController
 @RequestMapping("/user")
@@ -31,7 +32,10 @@ public class UserController {
         try {
             //获取user
             data = iUserInfoService.login(name, pwd);
-        } catch (Exception ex) {
+        } catch (Exception e) {
+            log.error("登陆失败：{}",e.getMessage());
+            log.error("参数：{}",name);
+            log.error("参数：{}",pwd);
             return ResultInfo.error("错误!");
         }
         //为Null则查询不到

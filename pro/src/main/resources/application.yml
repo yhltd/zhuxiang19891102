@@ -1,6 +1,7 @@
 spring:
   datasource:
     druid:
+      max-wait: 10000
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     url: jdbc:mysql://yhocn.cn/zhuxiang?autoReconnect=true&characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai

@@ -1,5 +1,6 @@
 package com.zx.pro.util;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,12 @@ import java.util.Map;
 public class StringUtils extends org.apache.commons.lang3.StringUtils {
   /** 空字符串 */
   private static final String NULLSTR = "";
+
+  /** 最大日期*/
+  public static final LocalDateTime MAX_DATETIME = LocalDateTime.parse("2999-12-31T00:00:00");
+
+  /** 最小日期*/
+  public static final LocalDateTime MIN_DATETIME = LocalDateTime.parse("2000-01-01T00:00:00");
 
   /** 下划线 */
   private static final char SEPARATOR = '_';

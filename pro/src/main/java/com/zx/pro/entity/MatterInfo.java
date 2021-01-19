@@ -20,7 +20,7 @@ public class MatterInfo {
     /**
      * 长度（英尺）
      */
-    private double size;
+    private Double size;
     /**
      * 屈服强度
      */
@@ -40,5 +40,5 @@ public class MatterInfo {
     /**
      * 配件数量
      */
-    private double fittingsNum;
+    private Double fittingsNum;
 }

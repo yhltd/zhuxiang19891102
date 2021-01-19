@@ -1,11 +1,9 @@
 package com.zx.pro.util;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -105,6 +103,39 @@ public class GsonUtil {
   public static <K, V> Map<K, V> toMap(Object object) {
     return gson.fromJson(gson.toJson(object), new TypeToken<Map<K, V>>() {
     }.getType());
+  }
+
+  /**
+   * 将json转换成指定map类型，并返回
+   *
+   * @param <K>    不确定类型键
+   * @param <V>    不确定类型值
+   * @param json xx
+   * @return 返回的map信息
+   */
+  public static <K, V> Map<K, V> toMap(String json) {
+    return gson.fromJson(json, new TypeToken<Map<K, V>>() {
+    }.getType());
+  }
+
+  /**
+   * 将json转换成指定list类型，并返回
+   * @param json xx
+   * @param tClass 类名称
+   * @param <T> 泛型
+   * @return
+   */
+  public static <T> List<T> toList(String json,Class<T> tClass) {
+    List<T> list = new ArrayList<>();
+    try {
+      JsonArray array = new JsonParser().parse(json).getAsJsonArray();
+      for (final JsonElement elem : array) {
+        list.add(new Gson().fromJson(elem, tClass));
+      }
+    } catch (Exception e) {
+      return null;
+    }
+    return list;
   }
 
   /**

@@ -13,13 +13,21 @@ import lombok.Data;
 @Data
 @TableName("user_info")
 public class UserInfo {
-    /** id自增列 */
+    /**
+     * id自增列
+     */
     @TableId(value = "id" , type = IdType.AUTO)
     private Integer id;
-    /** 用户名 */
+    /**
+     * 用户名
+     */
     private String name;
-    /** 密码 */
+    /**
+     * 密码
+     */
     private String pwd;
-    /** 身份 */
+    /**
+     * 身份
+     */
     private String powerName;
 }
