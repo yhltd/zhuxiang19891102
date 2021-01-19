@@ -71,5 +71,4 @@ public class MatterInfoImpl extends ServiceImpl<MatterInfoMapper, MatterInfo> im
         return this.removeByIds(idList);
     }
 
-
 }

@@ -1,0 +1,14 @@
+select{
+    height: 30px;
+    width: 100px;
+}
+input{
+    height: 30px;
+    width: 140px;
+}
+button{
+    position: fixed;
+    bottom: 120px;
+    height: 40px;
+    width: 200px;
+}

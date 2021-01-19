@@ -29,6 +29,7 @@ public class MatterInfoController {
      * 查询物料信息
      *
      * @return 物料信息的集合
+     * @return ResultInfo
      */
     @PostMapping("/getList")
     public ResultInfo getMatterInfoList() {
@@ -58,7 +59,7 @@ public class MatterInfoController {
      * 修改
      *
      * @param matterInfo 修改过的物料对象
-     * @return 是否修改成功
+     * @return ResultInfo
      */
     @PostMapping("/update")
     public ResultInfo updateMatterInfo(MatterInfo matterInfo) {
@@ -79,12 +80,13 @@ public class MatterInfoController {
      * 添加物料
      *
      * @param matterInfo 添加物料的对象
-     * @return 是否添加成功
+     * @return ResultInfo
      */
     @PostMapping("/add")
     public ResultInfo addMatterInfo(MatterInfo matterInfo) {
         try {
             matterInfo = iMatterInfoService.add(matterInfo);
+
             if (StringUtils.isNotNull(matterInfo)) {
                 return ResultInfo.success("添加成功", matterInfo);
             } else {
@@ -101,7 +103,7 @@ public class MatterInfoController {
      * 删除物料
      *
      * @param id 根据id删除
-     * @return 是否删除成功
+     * @return ResultInfo
      */
     @PostMapping("/delete")
     public ResultInfo deleteMatterInfo(int id) {

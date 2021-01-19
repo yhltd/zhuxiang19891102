@@ -91,6 +91,9 @@ html,body,#main{
 .fixed-table-body::-webkit-scrollbar-track {
     background-color: #ffffff;
 }
-#table tr{
+#table tr {
     cursor: pointer;
+}
+.page-list{
+    display:none;
 }

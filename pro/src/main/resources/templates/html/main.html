@@ -15,10 +15,10 @@
     <link rel="stylesheet" href="../css/dc-Menu.css">
     <script type="text/javascript" src="../javascript/dcMenu.js"></script>
     <script type="text/javascript">
-        $(function(){
+        $(function () {
             dcMenu({
                 el: '#dc-menu',
-                list :
+                list:
                     [{
                         title: '项目',
                         children: [
@@ -30,7 +30,7 @@
                                 url: ''
                             }
                         ]
-                    },{
+                    }, {
                         title: '订单',
                         children: [
                             {
@@ -44,7 +44,7 @@
                                 url: ''
                             }
                         ]
-                    },{
+                    }, {
                         title: '派工单',
                         children: [
                             {
@@ -53,9 +53,18 @@
                             }, {
                                 text: '派工单明细',
                                 url: ''
+                            }, {
+                                text: '派工单录入',
+                                url: 'workOrder.html'
+                            }, {
+                                text: '派工单汇总',
+                                url: 'workOrderInfo.html'
+                            }, {
+                                text: '派工单明细',
+                                url: 'workOrderDetail.html'
                             }
                         ]
-                    },{
+                    }, {
                         title: '生产',
                         children: [
                             {
@@ -66,7 +75,7 @@
                                 url: ''
                             }
                         ]
-                    },{
+                    }, {
                         title: '进销存',
                         children: [
                             {
@@ -83,18 +92,18 @@
                                 url: ''
                             }
                         ]
-                    },{
+                    }, {
                         title: '物料配置',
                         url: ''
-                    },{
+                    }, {
                         title: '员工管理',
                         url: ''
                     }],
-                onSelect: function(item){
+                onSelect: function (item) {
                     $('#iframe').animate({
                         'opacity': 0
-                    },300,'linear',function(){
-                        $('#iframe').attr('src',item.url).css('opacity',1)
+                    }, 300, 'linear', function () {
+                        $('#iframe').attr('src', item.url).css('opacity', 1)
                     })
                 }
             })
@@ -105,7 +114,7 @@
 </head>
 <body>
 <header class="bottom-border" style="height: 10%;min-height: 60px;">
-        <div class="col-12 navbar navbar-expand-lg navbar-dark bg-dark" style="height: 100%">
+    <div class="col-12 navbar navbar-expand-lg navbar-dark bg-dark" style="height: 100%">
         <a class="navbar-brand" style="font-weight: 600">订单管理系统</a>
         <div class="navbar-collapse collapse ml-auto" id="navbar-mobile">
             <ul class="navbar-nav ml-auto">
@@ -124,15 +133,15 @@
 </header>
 <div class="container-fluid" style="height: 90%;">
     <div class="row" style="height: 100%;justify-content: center;">
-        <div class="col-2 border-right" style="padding: 0;min-width: 200px;">
-            <nav id="dc-menu"></nav>
-        </div>
         <div class="col-10" style="padding: 0">
-            <iframe id="iframe" src=""></iframe>
+            <div class="col-2 border-right" style="padding: 0;height: 100%;min-width: 200px;">
+                <nav id="dc-menu"></nav>
+            </div>
+            <div class="col-10">
+                <iframe id="iframe" src=""></iframe>
+            </div>
         </div>
     </div>
 </div>
-
-
 </body>
 </html>

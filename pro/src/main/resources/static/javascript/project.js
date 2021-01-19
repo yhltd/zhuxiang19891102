@@ -292,17 +292,13 @@ function setMatterTable(data) {
 
 function getList() {
     $ajax({
-            type: 'post',
-            url: '/project_info/getList',
-        },
-        false,
-        '',
-        function (res) {
-            if (res.code == 200) {
-                //设置表格
-                setTable(res.data);
-            }
-        })
+        type: 'post',
+        url: '/project_info/getList',
+    }, false, function (res) {
+        if (res.code == 200) {
+            setTable(res.data);
+        }
+    })
 }
 
 function setTable(data) {
@@ -319,7 +315,7 @@ function setTable(data) {
         sortStable: true,
         classes: 'table table-hover',
         idField: 'id',
-        pagination: true,
+        pagination: false,
         clickToSelect: true,
         locale: 'zh-CN',
         toolbar: '#table-toolbar',
@@ -327,6 +323,7 @@ function setTable(data) {
         columns: [
             {
                 field: 'id',
+                field: '',
                 title: '序号',
                 align: 'center',
                 width: 50,
