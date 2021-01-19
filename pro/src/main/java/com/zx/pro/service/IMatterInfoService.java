@@ -40,4 +40,11 @@ public interface IMatterInfoService extends IService<MatterInfo> {
      */
     boolean delete(int id);
 
+    /**
+     * 批量删除物料
+     * @param id 根据id批量删除
+     * @return 是否删除成功
+     */
+    boolean delete(List<Integer>id);
+
 }

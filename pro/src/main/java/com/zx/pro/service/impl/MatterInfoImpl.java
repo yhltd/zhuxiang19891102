@@ -41,5 +41,9 @@ public class MatterInfoImpl extends ServiceImpl<MatterInfoMapper, MatterInfo> im
         return this.removeById(id);
     }
 
+    @Override
+    public boolean delete(List<Integer>id) {
+        return this.removeByIds(id);
+    }
 
 }
