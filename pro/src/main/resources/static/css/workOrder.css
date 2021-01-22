@@ -4,11 +4,15 @@ select{
 }
 input{
     height: 30px;
-    width: 140px;
+    width: 50px;
 }
 button{
-    position: fixed;
-    bottom: 120px;
+    /*margin-left: 850px;*/
+    /*position: fixed;*/
+    margin-top: 10px;
     height: 40px;
     width: 200px;
+}
+td{
+    width: 150px;
 }

@@ -1,6 +1,7 @@
 package com.zx.pro.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zx.pro.entity.WorkOrderDetail;
 import com.zx.pro.entity.WorkOrderInfo;
 import org.springframework.stereotype.Service;
 
@@ -15,20 +16,11 @@ import java.util.List;
  */
 @Service
 public interface IWorkOrderInfoService extends IService<WorkOrderInfo> {
-
-    /**
-     * 批量录入
-     * @param workOrderInfoList 订单信息集合
-     * @return 是否添加成功
-     */
-    boolean add(List<WorkOrderInfo> workOrderInfoList);
-
     /**
      * 录入
-     * @param workOrderInfo 订单信息对象
      * @return 实体类
      */
-    WorkOrderInfo add(WorkOrderInfo workOrderInfo);
+    WorkOrderInfo add();
 
     /**
      * 查询派工单信息

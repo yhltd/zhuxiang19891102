@@ -1,12 +1,13 @@
 package com.zx.pro.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zx.pro.entity.WorkOrderDetail;
 import com.zx.pro.entity.WorkOrderDetailItem;
+import com.zx.pro.entity.WorkOrderInfo;
 import com.zx.pro.mapper.WorkOrderDetailMapper;
 import com.zx.pro.service.IWorkOrderDetailService;
+import com.zx.pro.service.IWorkOrderInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,22 +24,29 @@ public class WorkOrderDetailImpl extends ServiceImpl<WorkOrderDetailMapper, Work
     @Autowired
     private WorkOrderDetailMapper workOrderDetailMapper;
 
-    @Override
-    public boolean add(List<WorkOrderDetail> workOrderDetailList) {
-        return saveBatch(workOrderDetailList);
-    }
+    @Autowired
+    private IWorkOrderInfoService iWorkOrderInfoService;
+
 
     @Override
     public WorkOrderDetail add(WorkOrderDetail workOrderDetail) {
-        this.save(workOrderDetail);
-        return workOrderDetail;
+        return this.save(workOrderDetail) ? workOrderDetail : null;
+    }
+
+    @Override
+    public boolean add(List<WorkOrderDetail> list) {
+        WorkOrderInfo workOrderInfo = iWorkOrderInfoService.add();
+        list.forEach(workOrderDetail -> {
+            workOrderDetail.setWorkOrderInfoId(workOrderInfo.getId());
+        });
+        //批量插入，插入批次50
+        return this.saveBatch(list, 50);
     }
 
     @Override
     public List<WorkOrderDetailItem> getList() {
         return workOrderDetailMapper.getList();
     }
-
 
     @Override
     public List<WorkOrderDetailItem> getList(String workOrder) {
@@ -51,6 +59,11 @@ public class WorkOrderDetailImpl extends ServiceImpl<WorkOrderDetailMapper, Work
         updateWrapper.eq("id",workOrderDetail.getId());
         return this.update(workOrderDetail,updateWrapper);
     }
+
+//    @Override
+//    public boolean update(WorkOrderDetail workOrderDetail) {
+//        return workOrderDetailMapper.update(workOrderDetail);
+//    }
 
     @Override
     public boolean delete(List<Integer>id) {

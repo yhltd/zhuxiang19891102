@@ -23,7 +23,7 @@
 
 <div id="table-toolbar">
     <div class="btn-group" role="group">
-        <button class="btn btn-primary">
+        <button id="update-btn" class="btn btn-primary">
             <i class="bi bi-pencil-square icon"></i>
             修改
         </button>
@@ -48,7 +48,65 @@
                 </button>
             </div>
             <div class="modal-body">
-                <table id="detail-table"></table>
+                <form id="update-form" class="needs-validation">
+                    <div class="form-group">
+                        <input id="id" name="id" type="hidden">
+                    </div>
+                    <div class="form-group">
+                        <input id="workOrderInfoId" name="workOrderInfoId" type="hidden">
+                    </div>
+                    <div class="form-group">
+                        <label for="update-workDate">日期</label>
+                        <input id="update-workDate" name="workDate" type="date" class="form-control"
+                               autocomplete="off" required>
+                        <div class="invalid-feedback">
+                            请输入日期！
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="update-workShop">车间</label>
+                        <input id="update-workShop" name="workShop" type="text" class="form-control"
+                               autocomplete="off" required>
+                        <div class="invalid-feedback">
+                            请输入车间！
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="update-workLine">产线</label>
+                        <input id="update-workLine" name="workLine" type="text" class="form-control"
+                               autocomplete="off" required>
+                        <div class="invalid-feedback">
+                            请输入产线！
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="update-productInfoId">产品</label>
+                        <select id="update-productInfoId" name="productInfoId" class="form-control">
+                            <option value="2">呃呃呃</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            请选择产品！
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="update-workNum">数量</label>
+                        <input id="update-workNum" name="workNum" type="text" class="form-control"
+                               autocomplete="off" required>
+                        <div class="invalid-feedback">
+                            请输入数量！
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="border-top" style="padding: 15px;">
+                <button id="update-form-submit-btn" type="button" class="btn btn-primary">
+                    <i class="bi bi-arrow-bar-up icon"></i>
+                    提交
+                </button>
+                <button id="update-form-close-btn" type="button" class="btn btn-primary left-margin">
+                    <i class="bi bi-x-circle icon"></i>
+                    关闭
+                </button>
             </div>
         </div>
     </div>

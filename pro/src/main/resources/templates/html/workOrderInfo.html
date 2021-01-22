@@ -15,36 +15,35 @@
     <script src="../bootstrap-4.5.0-dist/js/bootstrap-table.js"></script>
     <script src="../bootstrap-4.5.0-dist/js/bootstrap-table-zh-CN.min.js"></script>
 
+    <link rel="stylesheet" href="../css/main.css">
     <script type="text/javascript" src="../javascript/main.js"></script>
     <script type="text/javascript" src="../javascript/workOrderInfo.js"></script>
 </head>
 <body>
 <div class="top-toolbar bottom-border">
-    <input id="workOrder" type="text" class="form-control left-margin"
-           style="width: 200px;margin-top: 15px;margin-right: 8px;float: left" placeholder="派工单单号">
-    <button id="select-btn1" class="btn btn-primary left-margin"
-            style="width: 90px;margin-top: 15px;margin-right: 8px;float: left">
+    <input id="workOrder" type="text" class="form-control" style="width: 200px" placeholder="派工单单号">
+    <button id="select-btn1" class="btn btn-primary left-margin" style="width: 90px">
         <i class="bi bi-search icon"></i>
         查询
     </button>
-    <div class="input-group left-margin" style="width: 550px;float: left;margin-top: 15px">
+    <div class="input-group left-margin" style="width: 550px">
         <div class="input-group-prepend">
             <span class="input-group-text">派工单创建时间</span>
         </div>
         <input id="startTime" type="datetime-local" class="form-control">
         <input id="endTime" type="datetime-local" class="form-control">
     </div>
-    <button id="select-btn2" class="btn btn-primary left-margin" style="width: 90px;margin-top: 15px;margin-left: 8px">
+    <button id="select-btn2" class="btn btn-primary left-margin" style="width: 90px">
         <i class="bi bi-search icon"></i>
         查询
     </button>
 </div>
+
 <div class="table-div">
     <table id="workOrderInfoTable">
 
     </table>
 </div>
-
 
 <div id="detail-modal" class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-lg">
@@ -61,5 +60,6 @@
         </div>
     </div>
 </div>
+
 </body>
 </html>

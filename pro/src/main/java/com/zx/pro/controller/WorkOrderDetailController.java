@@ -3,14 +3,15 @@ package com.zx.pro.controller;
 import com.zx.pro.entity.WorkOrderDetail;
 import com.zx.pro.entity.WorkOrderDetailItem;
 import com.zx.pro.service.IWorkOrderDetailService;
+import com.zx.pro.service.IWorkOrderInfoService;
+import com.zx.pro.util.DecodeUtil;
 import com.zx.pro.util.GsonUtil;
 import com.zx.pro.util.ResultInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,43 +25,37 @@ import java.util.List;
 @RestController
 @RequestMapping("/work_order_detail")
 public class WorkOrderDetailController {
-
     @Autowired
     private IWorkOrderDetailService iWorkOrderDetailService;
+    @Autowired
+    private IWorkOrderInfoService iWorkOrderInfoService;
 
     /**
      * 批量录入派工单
      *
-     * @param workOrderDetailList 录入派工单的集合对象
+     * @param //workOrderDetailList 录入派工单的集合对象
      * @return ResultInfo
      */
-    @PostMapping("/addList")
-    public ResultInfo add(List<WorkOrderDetail> workOrderDetailList) {
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @Transactional
+    public ResultInfo add(@RequestBody HashMap map) {
+        GsonUtil gsonUtil = new GsonUtil(GsonUtil.toJson(map));
+        //WorkOrderDetail workOrderDetail=new WorkOrderDetail();
         try {
-            if (iWorkOrderDetailService.add(workOrderDetailList)) {
-                return ResultInfo.success("添加成功", workOrderDetailList);
+            //WorkOrderInfo workOrderInfo=iWorkOrderInfoService.add();
+
+            List<WorkOrderDetail> list = GsonUtil.toList(gsonUtil.get("workOrderDetailList"),WorkOrderDetail.class);
+            if (iWorkOrderDetailService.add(list)) {
+                return ResultInfo.success("录入成功", list);
             } else {
-                return ResultInfo.success("未添加", workOrderDetailList);
+                return ResultInfo.success("未录入", list);
             }
         } catch (Exception e) {
-            log.error("获取派工单信息集合失败：{}，参数：[workOrderDetailList: {}]", e.getMessage(), workOrderDetailList);
-            return ResultInfo.error("错误");
-        }
-    }
-
-    /**
-     * 录入派工单
-     *
-     * @param workOrderDetail 派工单明细类
-     * @return ResultInfo
-     */
-    @PostMapping("/add")
-    public ResultInfo add(WorkOrderDetail workOrderDetail) {
-        try {
-            workOrderDetail = iWorkOrderDetailService.add(workOrderDetail);
-            return ResultInfo.success("添加成功", workOrderDetail);
-        } catch (Exception e) {
-            log.error("获取派工单信息集合失败：{}，参数：[workOrderDetail: {}]", e.getMessage(), workOrderDetail);
+            e.printStackTrace();
+            //手动回滚
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            log.error("录入失败：{}", e.getMessage());
+            log.error("参数：{}", map);
             return ResultInfo.error("错误");
         }
     }
@@ -75,7 +70,7 @@ public class WorkOrderDetailController {
         List<WorkOrderDetailItem> getList = null;
         try {
             getList = iWorkOrderDetailService.getList();
-            return ResultInfo.success("添加成功", getList);
+            return ResultInfo.success("查询成功", getList);
         } catch (Exception e) {
             log.error("获取派工单信息集合失败：{}，参数：[workOrderInfoId: {}]", e.getMessage(), getList);
             return ResultInfo.error("错误");
@@ -85,19 +80,21 @@ public class WorkOrderDetailController {
     /**
      * 修改派工单明细
      *
-     * @param workOrderDetail 修改过的派工单明细表对象
+     * @param workOrderDetailJson 修改过的派工单明细表对象
      * @return ResultInfo
      */
-    @PostMapping("/update")
-    public ResultInfo update(WorkOrderDetail workOrderDetail) {
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public ResultInfo update(@RequestBody String workOrderDetailJson) {
+        WorkOrderDetail workOrderDetail = null;
         try {
+            workOrderDetail = DecodeUtil.decodeToJson(workOrderDetailJson, WorkOrderDetail.class);
             if (iWorkOrderDetailService.update(workOrderDetail)) {
-                return ResultInfo.success("添加成功", workOrderDetail);
+                return ResultInfo.success("修改成功", workOrderDetail);
             } else {
                 return ResultInfo.error("错误");
             }
         } catch (Exception e) {
-            log.error("获取派工单信息集合失败：{}，参数：[workOrderDetail: {}]", e.getMessage(), workOrderDetail);
+            log.error("修改派工单失败：{}，参数：[workOrderDetail: {}]", e.getMessage(), workOrderDetail);
             return ResultInfo.error("错误");
         }
     }
@@ -112,7 +109,7 @@ public class WorkOrderDetailController {
     public ResultInfo delete(@RequestBody HashMap map) {
         GsonUtil gsonUtil = new GsonUtil(GsonUtil.toJson(map));
 
-        List<Integer> idList = GsonUtil.toEntity(gsonUtil.get("idList"),List.class);
+        List<Integer> idList = GsonUtil.toList(gsonUtil.get("idList"), Integer.class);
 
         try {
             if (iWorkOrderDetailService.delete(idList)) {
@@ -121,7 +118,7 @@ public class WorkOrderDetailController {
                 return ResultInfo.success("删除失败", idList);
             }
         } catch (Exception e) {
-            log.error("获取派工单信息集合失败：{}，参数：[id: {}]", e.getMessage(), idList);
+            log.error("删除派工单信息失败：{}，参数：[id: {}]", e.getMessage(), idList);
             return ResultInfo.error("错误");
         }
     }
@@ -139,7 +136,7 @@ public class WorkOrderDetailController {
             getListByWorkOrder = iWorkOrderDetailService.getList(workOrder);
             return ResultInfo.success("查询成功", getListByWorkOrder);
         } catch (Exception e) {
-            log.error("获取派工单信息集合失败：{}，参数：[workOrderInfoId: {}]", e.getMessage(), getListByWorkOrder);
+            log.error("获取派工单信息集合失败：{}", e.getMessage(), getListByWorkOrder);
             return ResultInfo.error("错误");
         }
     }
