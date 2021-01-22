@@ -32,23 +32,39 @@ public class MatterInfoController {
      * @return ResultInfo
      */
     @PostMapping("/getList")
-    public ResultInfo getMatterInfoList() {
+    public ResultInfo getList() {
         try {
             List<MatterInfo> matterInfoList = iMatterInfoService.getList();
             return ResultInfo.success("获取成功", matterInfoList);
         } catch (Exception e) {
+            e.printStackTrace();
             log.error("获取失败：{}", e.getMessage());
             return ResultInfo.error("错误!");
         }
     }
 
     @RequestMapping("/selectListByProjectId")
-    public ResultInfo getMatterInfoList(@RequestBody HashMap map){
+    public ResultInfo getList(@RequestBody HashMap map){
         try {
             Integer projectId = Integer.parseInt(map.get("projectId").toString());
 
             return ResultInfo.success("获取成功", iMatterInfoService.getList(projectId));
         } catch (Exception e) {
+            e.printStackTrace();
+            log.error("获取失败：{}", e.getMessage());
+            log.error("参数：{}", map);
+            return ResultInfo.error("错误!");
+        }
+    }
+
+    @RequestMapping("/selectListOfUseByProjectId")
+    public ResultInfo getListOfUse(@RequestBody HashMap map){
+        try {
+            Integer projectId = Integer.parseInt(map.get("projectId").toString());
+
+            return ResultInfo.success("获取成功", iMatterInfoService.getListOfUse(projectId));
+        } catch (Exception e) {
+            e.printStackTrace();
             log.error("获取失败：{}", e.getMessage());
             log.error("参数：{}", map);
             return ResultInfo.error("错误!");
@@ -62,7 +78,7 @@ public class MatterInfoController {
      * @return ResultInfo
      */
     @PostMapping("/update")
-    public ResultInfo updateMatterInfo(MatterInfo matterInfo) {
+    public ResultInfo update(MatterInfo matterInfo) {
         try {
             if (iMatterInfoService.update(matterInfo)) {
                 return ResultInfo.success("修改成功", matterInfo);
@@ -70,6 +86,7 @@ public class MatterInfoController {
                 return ResultInfo.success("未修改", matterInfo);
             }
         } catch (Exception e) {
+            e.printStackTrace();
             log.error("修改失败：{}", e.getMessage());
             log.error("参数：{}", matterInfo);
             return ResultInfo.error("修改失败");
@@ -83,7 +100,7 @@ public class MatterInfoController {
      * @return ResultInfo
      */
     @PostMapping("/add")
-    public ResultInfo addMatterInfo(MatterInfo matterInfo) {
+    public ResultInfo add(MatterInfo matterInfo) {
         try {
             matterInfo = iMatterInfoService.add(matterInfo);
 
@@ -93,6 +110,7 @@ public class MatterInfoController {
                 return ResultInfo.success("未添加", null);
             }
         } catch (Exception e) {
+            e.printStackTrace();
             log.error("添加失败：{}", e.getMessage());
             log.error("参数：{}", matterInfo);
             return ResultInfo.error("添加失败");
@@ -106,7 +124,7 @@ public class MatterInfoController {
      * @return ResultInfo
      */
     @PostMapping("/delete")
-    public ResultInfo deleteMatterInfo(int id) {
+    public ResultInfo delete(int id) {
         try {
             if (iMatterInfoService.delete(id)) {
                 return ResultInfo.success("删除成功", id);
@@ -114,6 +132,7 @@ public class MatterInfoController {
                 return ResultInfo.success("未删除", id);
             }
         } catch (Exception e) {
+            e.printStackTrace();
             log.error("删除失败：{}", e.getMessage());
             log.error("参数：{}", id);
             return ResultInfo.error("删除失败");

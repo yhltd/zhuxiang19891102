@@ -16,14 +16,14 @@ function dcMenu(options){
                     $(this).removeClass('is-active')
                     onSelect_(isHasChildren,$(this),item.children.length);
                 }else{
-                    linkClose(list);
+                    linkClose(list,isHasChildren);
                     $(this).addClass('is-active')
                     onSelect_(isHasChildren,$(this),item.children.length);
                 }
             })
         }else{
             $(menuLink).click(function(){
-                linkClose(list);
+                linkClose(list,false);
                 onSelect_(isHasChildren,$(this),0);
                 options.onSelect(item);
             })
@@ -66,16 +66,19 @@ function onSelect_(isHasChildren,item,childrenLength){
     }
 }
 
-function linkClose(list){
+function linkClose(list,isHasChildren){
     $('.dc-menu-link').each(function(index,link){
         let isActive = $(link).hasClass('is-active')
         let isHasChildren = list[index].children != undefined
         if(isActive && isHasChildren){
-            $(link).next().children().each(function(i,li){
-                if($(li).hasClass('is-active')){
-                    $(li).removeClass('is-active')
-                }
-            })
+            if(!isHasChildren){
+                $(link).next().children().each(function(i,li){
+                    if($(li).hasClass('is-active')){
+                        $(li).removeClass('is-active')
+                    }
+                })
+            }
+
             $(link).removeClass('is-active');
             onSelect_(isHasChildren,link,list[index].children.length);
         }

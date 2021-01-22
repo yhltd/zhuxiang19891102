@@ -1,11 +1,12 @@
 package com.zx.pro.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.zx.pro.entity.MatterProductChange;
+import com.zx.pro.entity.ProductMatter;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @author dai
  */
 @Mapper
-public interface MatterProductChangeMapper extends BaseMapper<MatterProductChange> { }
+public interface ProductMatterMapper extends BaseMapper<ProductMatter> {
+}

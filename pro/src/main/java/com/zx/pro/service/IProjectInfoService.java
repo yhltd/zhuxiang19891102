@@ -1,11 +1,10 @@
 package com.zx.pro.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.zx.pro.entity.MatterProduct;
+import com.zx.pro.entity.MatterProject;
 import com.zx.pro.entity.ProjectInfo;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -37,7 +36,7 @@ public interface IProjectInfoService extends IService<ProjectInfo> {
      * @param list 所需物料的集合
      * @return 是否添加成功
      */
-    ProjectInfo add(ProjectInfo projectInfo, List<MatterProduct> list);
+    ProjectInfo add(ProjectInfo projectInfo, List<MatterProject> list);
 
     /**
      * 添加新的项目

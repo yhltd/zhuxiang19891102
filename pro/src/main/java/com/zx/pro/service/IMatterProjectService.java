@@ -1,14 +1,11 @@
 package com.zx.pro.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.zx.pro.entity.MatterProduct;
+import com.zx.pro.entity.MatterProject;
 import com.zx.pro.entity.UserInfo;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 物料订单表接口
@@ -16,47 +13,54 @@ import java.util.Map;
  * @author dai
  */
 @Service
-public interface IMatterProductService extends IService<MatterProduct> {
+public interface IMatterProjectService extends IService<MatterProject> {
     /**
      * 查询物料订单表
      * @return 物料订单表信息的集合
      */
-    List<MatterProduct> getList();
+    List<MatterProject> getList();
 
     /**
      * 获取id集合
      * @param projectInfoId 项目id
      * @return id集合
      */
-    List<MatterProduct> getList(int projectInfoId);
+    List<MatterProject> getList(int projectInfoId);
+
+    /**
+     * 获取id集合
+     * @param projectInfoIdList 项目id集合
+     * @return id集合
+     */
+    List<MatterProject> getList(List<Integer> projectInfoIdList);
 
     /**
      * 修改物料订单表
      * @param matterProduct 修改过的物料订单表对象
      * @return 是否修改成功
      */
-    boolean update(MatterProduct matterProduct);
+    boolean update(MatterProject matterProduct);
 
     /**
      * 批量修改
      * @param matterProduct 需要修改的集合
      * @return 是否修改成功
      */
-    boolean update(List<MatterProduct> matterProduct);
+    boolean update(List<MatterProject> matterProduct);
 
     /**
      * 添加物料订单
      * @param matterProduct 添加物料订单表对象
      * @return 是否添加成功
      */
-    MatterProduct add(MatterProduct matterProduct);
+    MatterProject add(MatterProject matterProduct);
 
     /**
      * 批量添加物料订单
      * @param list
      * @return
      */
-    boolean add(List<MatterProduct> list);
+    boolean add(List<MatterProject> list);
 
     /**
      * 删除
@@ -86,5 +90,5 @@ public interface IMatterProductService extends IService<MatterProduct> {
      * @param userInfo 当前登陆用户信息
      * @return
      */
-    boolean change(List<MatterProduct> newMatterProductList, Integer projectInfoId, UserInfo userInfo);
+    boolean change(List<MatterProject> newMatterProductList, Integer projectInfoId, UserInfo userInfo);
 }

@@ -2,7 +2,7 @@ $(function () {
     //修改按钮点击事件
     $('#edit-btn').click(function () {
         let rows = getTableSelection('#table')
-        if (rows.length > 1 || rows.length == 0) {
+        if (rows.length != 1) {
             alert('请选择一条数据修改');
             return;
         }
@@ -77,7 +77,7 @@ $(function () {
             url: '/project_info/add',
             data: JSON.stringify({
                 projectInfo: projectInfo,
-                matterProductList: matterProductList
+                matterProjectList: matterProductList
             }),
             contentType: "application/json;charset=utf-8",
             dataType: 'json'
@@ -125,9 +125,14 @@ $(function () {
         }, false, '', function (res) {
             alert(res.msg);
             if (res.code == 200) {
+                $('#delete-close-btn').click();
                 getList();
             }
         })
+    })
+
+    $('#delete-close-btn').click(function(){
+        $('#delete-modal').modal('hide');
     })
 
     //刷新按钮点击事件
@@ -135,7 +140,9 @@ $(function () {
         $('#projectName-select').val('')
         $('#startDate-select').val('')
         $('#endDate-select').val('')
-        getList()
+        getList(function(){
+            alert('已刷新')
+        })
     })
 
     //查询按钮点击事件
@@ -153,6 +160,7 @@ $(function () {
             contentType: "application/json;charset=utf-8",
             dataType: 'json'
         }, false, '', function (res) {
+            alert(res.msg);
             if (res.code == 200) {
                 setTable(res.data);
             }
@@ -168,7 +176,7 @@ $(function () {
 
         $ajax({
             type: 'post',
-            url: '/matter_product/change',
+            url: '/matter_project/change',
             data: JSON.stringify(params),
             contentType: "application/json;charset=utf-8",
             dataType: 'json'
@@ -189,14 +197,24 @@ $(function () {
     getList()
 })
 
-function selectMatter(projectId) {
+function selectMatter() {
+    $ajax({
+        type: 'post',
+        url: '/matter_info/getList'
+    }, false, '', function (res) {
+        $('#show-matter-modal').modal('show');
+        setShowMatterTable(res.data)
+    })
+}
+
+function selectMatterByProjectId(projectId) {
     $ajax({
         type: 'post',
         url: '/matter_info/selectListByProjectId',
         data: JSON.stringify({
             projectId: projectId
         }),
-        contentType: "application/json;charset=utf-8",
+        contentType: 'application/json;charset=utf-8',
         dataType: 'json'
     }, false, '', function (res) {
         $('#show-matter-modal').modal('show');
@@ -290,13 +308,16 @@ function setMatterTable(data) {
     $('.fixed-table-container').addClass('border-top').addClass('border-bottom');
 }
 
-function getList() {
+function getList(callback) {
     $ajax({
         type: 'post',
         url: '/project_info/getList',
-    }, false, function (res) {
+    }, false,'', function (res) {
         if (res.code == 200) {
             setTable(res.data);
+            if(callback != undefined){
+                callback();
+            }
         }
     })
 }
@@ -363,7 +384,7 @@ function setTable(data) {
                 align: 'left',
                 width: 100,
                 formatter: function (value, row, index) {
-                    return '<button onclick="javascript:selectMatter(' + value + ')" type="button" class="btn btn-primary">' +
+                    return '<button onclick="javascript:selectMatterByProjectId(' + value + ')" type="button" class="btn btn-primary">' +
                         '<i class="bi bi-inbox icon"></i>' +
                         '查看物料' +
                         '</button>'
@@ -384,49 +405,19 @@ function setTable(data) {
 }
 
 function getMatterProductList(el) {
-    let matterProductList = [];
+    let matterProjectList = [];
     $(el + ' tr').each(function (index, tr) {
         let dataIndex = $(tr).data('index');
         if (dataIndex == undefined) return true;
 
         let id = $(el).bootstrapTable('getData')[dataIndex].id;
         let num = $(tr).children().last().children().val();
-        matterProductList.push({
+        matterProjectList.push({
+            id: 0,
+            projectInfoId: 0,
             matterInfoId: parseInt(id),
             matterNum: parseInt(num)
         })
     })
-    return matterProductList;
-}
-
-//获取表格选择行
-function getTableSelection(tableEl) {
-    let result = [];
-    let tableData = $(tableEl).bootstrapTable('getData');
-    $(tableEl + ' tr').each(function (i, tr) {
-        let index = $(tr).data('index');
-        if (index != undefined) {
-            if ($(tr).hasClass('selected')) {
-                result.push({
-                    index: index,
-                    data: tableData[index]
-                })
-            }
-        }
-    })
-    return result;
-}
-
-//选择表格行
-function setTableSelection(tableEl, rowIndex, isSelect) {
-    $(tableEl + ' tr').each(function (i, tr) {
-        let index = $(tr).data('index');
-        if (index == rowIndex) {
-            if (isSelect) {
-                $(tr).addClass('selected')
-            } else {
-                $(tr).removeClass('selected')
-            }
-        }
-    })
+    return matterProjectList;
 }

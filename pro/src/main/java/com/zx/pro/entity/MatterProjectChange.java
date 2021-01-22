@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
  * @author dai
  */
 @Data
-@TableName("matter_product_change")
-public class MatterProductChange {
+@TableName("matter_project_change")
+public class MatterProjectChange {
 
     /**
      * 主键id
@@ -24,7 +24,7 @@ public class MatterProductChange {
     /**
      * 项目物料表
      */
-    private int matterProductId;
+    private int matterProjectId;
     /**
      * 修改前数量
      */

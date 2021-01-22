@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" style="padding: 0 10px;">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>项目</title>
+    <title>订单汇总</title>
 
     <script type="text/javascript" src="../javascript/Jquery.js"></script>
     <!--bootstrap-->
@@ -19,15 +19,17 @@
     <link rel="stylesheet" href="../css/dcLoading.css">
     <link rel="stylesheet" href="../css/main.css">
     <script type="text/javascript" src="../javascript/main.js"></script>
-    <script type="text/javascript" src="../javascript/project.js"></script>
-
+    <script type="text/javascript" src="../javascript/order.js"></script>
 </head>
 <body>
 <div class="top-toolbar bottom-border">
-    <input id="projectName-select" type="text" class="form-control" style="width: 200px" placeholder="项目名称" autocomplete="off">
+    <input id="projectName-select" type="text" class="form-control" style="width: 200px" placeholder="项目名称"
+           autocomplete="off">
+    <input id="orderId-select" type="text" class="form-control left-margin" style="width: 200px" placeholder="订单号"
+           autocomplete="off">
     <div class="input-group left-margin" style="width: 550px">
         <div class="input-group-prepend">
-            <span class="input-group-text">项目创建时间</span>
+            <span class="input-group-text">订单创建时间</span>
         </div>
         <input id="startDate-select" type="datetime-local" class="form-control">
         <input id="endDate-select" type="datetime-local" class="form-control">
@@ -41,7 +43,7 @@
     <div class="btn-group" role="group">
         <button id="add-btn" class="btn btn-primary">
             <i class="bi bi-plus-square icon"></i>
-            新增项目
+            新增订单
         </button>
         <button id="edit-btn" class="btn btn-primary">
             <i class="bi bi-pencil-square icon"></i>
@@ -57,98 +59,37 @@
     </div>
 </div>
 <div class="table-div">
-    <table id="table" class=""></table>
-</div>
-
-<div id="edit-modal" class="modal fade" tabindex="-1">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title">修改项目</div>
-            </div>
-            <div class="modal-body">
-                <form id="edit-form" class="needs-validation">
-                    <div class="form-group">
-                        <input id="id" name="id" type="hidden">
-                    </div>
-                    <div class="form-group">
-                        <label for="upd-projectName">项目名称</label>
-                        <input id="upd-projectName" name="projectName" type="text" class="form-control"
-                               autocomplete="off" required>
-                        <div class="invalid-feedback">
-                            请输入项目名称！
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="upd-projectAddress">项目地址</label>
-                        <input id="upd-projectAddress" name="projectAddress" type="text" class="form-control"
-                               autocomplete="off" required>
-                        <div class="invalid-feedback">
-                            请输入项目地址！
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="upd-customerName">客户名称</label>
-                        <input id="upd-customerName" name="customerName" type="text" class="form-control"
-                               autocomplete="off" required>
-                        <div class="invalid-feedback">
-                            请输入客户名称！
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="upd-createTime">录入时间</label>
-                        <input id="upd-createTime" name="createTime" type="datetime-local" class="form-control"
-                               autocomplete="off" required>
-                        <div class="invalid-feedback">
-                            请选择录入时间！
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="border-top" style="padding: 15px;">
-                <button id="edit-form-submit-btn" type="button" class="btn btn-primary">
-                    <i class="bi bi-arrow-bar-up icon"></i>
-                    提交
-                </button>
-                <button id="edit-form-close-btn" type="button" class="btn btn-primary left-margin">
-                    <i class="bi bi-x-circle icon"></i>
-                    关闭
-                </button>
-            </div>
-        </div>
-    </div>
+    <table id="table"></table>
 </div>
 
 <div id="add-modal" class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="modal-title">新增项目</div>
+                <div class="modal-title">新增订单</div>
             </div>
             <div class="modal-body">
                 <form id="add-form" class="needs-validation">
                     <div class="form-group">
-                        <label for="add-projectName">项目名称</label>
-                        <input id="add-projectName" name="projectName" type="text" class="form-control"
+                        <label for="projectSelect">项目名称</label>
+                        <select id="projectSelect" name="projectInfoId" class="form-control">
+
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="add-supplier">供应商</label>
+                        <input id="add-supplier" name="supplier" type="text" class="form-control"
                                autocomplete="off" required>
                         <div class="invalid-feedback">
-                            请输入项目名称！
+                            请输入供应商！
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="add-projectAddress">项目地址</label>
-                        <input id="add-projectAddress" name="projectAddress" type="text" class="form-control"
+                        <label for="add-comment">贸易条款</label>
+                        <input id="add-comment" name="comment" type="text" class="form-control"
                                autocomplete="off" required>
                         <div class="invalid-feedback">
-                            请输入项目地址！
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="add-customerName">客户名称</label>
-                        <input id="add-customerName" name="customerName" type="text" class="form-control"
-                               autocomplete="off" required>
-                        <div class="invalid-feedback">
-                            请输入客户名称！
+                            请输入贸易条款！
                         </div>
                     </div>
                 </form>
@@ -167,45 +108,122 @@
     </div>
 </div>
 
-<div id="matter-modal" class="modal fade" tabindex="-1">
+<div id="product-modal" class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="modal-title">选择物料</div>
+                <div class="modal-title">选择产品</div>
             </div>
             <div class="modal-body">
-                <table id="table-matter"></table>
+                <div id="product-table-toolbar" style="display: none">
+                    <div class="btn-group" role="group">
+                        <button id="add-product" class="btn btn-primary">
+                            <i class="bi bi-plus-square icon"></i>
+                            添加产品
+                        </button>
+                        <button id="delete-product" class="btn btn-primary">
+                            <i class="bi bi-trash icon"></i>
+                            删除
+                        </button>
+                    </div>
+                </div>
+                <table id="product-table"></table>
             </div>
             <div class="border-top" style="padding: 15px;">
-                <button id="matter-submit-btn" type="button" class="btn btn-primary">
+                <button id="product-submit-btn" type="button" class="btn btn-primary">
                     <i class="bi bi-arrow-bar-up icon"></i>
-                    确定选择
+                    提交
                 </button>
-                <button id="matter-close-btn" type="button" class="btn btn-primary left-margin">
+                <button id="product-close-btn" type="button" class="btn btn-primary left-margin">
                     <i class="bi bi-arrow-90deg-left icon"></i>
                     返回
                 </button>
             </div>
         </div>
     </div>
-
 </div>
 
-<div id="show-matter-modal" class="modal fade" tabindex="-1">
+<div id="matter-modal" class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
+                <input id="productIndex" type="hidden"/>
                 <div class="modal-title">选择物料</div>
             </div>
             <div class="modal-body">
-                <table id="show-table-matter"></table>
+                <table id="matter-table"></table>
             </div>
             <div class="border-top" style="padding: 15px;">
-                <button id="upd-matter-submit-btn" type="button" class="btn btn-primary">
+                <button id="matter-submit-btn" type="button" class="btn btn-primary">
                     <i class="bi bi-arrow-bar-up icon"></i>
-                    确定修改
+                    确定选择
                 </button>
-                <button id="upd-matter-close-btn" type="button" class="btn btn-primary left-margin">
+                <button id="matter-back-btn" type="button" class="btn btn-primary left-margin">
+                    <i class="bi bi-arrow-90deg-left icon"></i>
+                    返回
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="edit-modal" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">修改订单</div>
+            </div>
+            <div class="modal-body">
+                <form id="edit-form" class="needs-validation">
+                    <div class="form-group">
+                        <input name="id" type="hidden">
+                    </div>
+                    <div class="form-group">
+                        <input id="projectInfoId" name="projectInfoId" type="hidden">
+                    </div>
+                    <div class="form-group">
+                        <input id="projectName" name="projectName" type="hidden">
+                    </div>
+                    <div class="form-group">
+                        <label for="upd-orderId">订单号</label>
+                        <input id="upd-orderId" name="orderId" type="text" class="form-control"
+                               autocomplete="off" required>
+                        <div class="invalid-feedback">
+                            请输入订单号！
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="upd-supplier">供应商</label>
+                        <input id="upd-supplier" name="supplier" type="text" class="form-control"
+                               autocomplete="off" required>
+                        <div class="invalid-feedback">
+                            请输入供应商！
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="upd-comment">贸易条款</label>
+                        <input id="upd-comment" name="comment" type="text" class="form-control"
+                               autocomplete="off" required>
+                        <div class="invalid-feedback">
+                            请输入贸易条款！
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="upd-comment">创建时间</label>
+                        <input id="upd-createTime" name="createTime" type="datetime-local" class="form-control"
+                               autocomplete="off" required>
+                        <div class="invalid-feedback">
+                            请选择创建时间！
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="border-top" style="padding: 15px;">
+                <button id="edit-form-submit-btn" type="button" class="btn btn-primary">
+                    <i class="bi bi-arrow-bar-up icon"></i>
+                    提交
+                </button>
+                <button id="edit-form-close-btn" type="button" class="btn btn-primary left-margin">
                     <i class="bi bi-x-circle icon"></i>
                     关闭
                 </button>

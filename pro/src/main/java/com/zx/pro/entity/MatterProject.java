@@ -8,8 +8,8 @@ import lombok.Data;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 
 @Data
-@TableName("matter_product")
-public class MatterProduct {
+@TableName("matter_project")
+public class MatterProject{
     /**
      * 主键
      */
@@ -20,10 +20,6 @@ public class MatterProduct {
      */
     private int projectInfoId;
     /**
-     * 产品id
-     */
-    private int productInfoId;
-    /**
      * 物料id
      */
     private int matterInfoId;
@@ -31,8 +27,4 @@ public class MatterProduct {
      * 数量
      */
     private Double matterNum;
-    /**
-     * 单价
-     */
-    private Double matterPrice;
 }

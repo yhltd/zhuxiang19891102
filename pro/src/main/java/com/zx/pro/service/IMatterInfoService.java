@@ -3,10 +3,10 @@ package com.zx.pro.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zx.pro.entity.MatterInfo;
 import com.zx.pro.entity.MatterInfoItem;
+import com.zx.pro.entity.MatterProject;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * 物料表接口
@@ -34,6 +34,13 @@ public interface IMatterInfoService extends IService<MatterInfo> {
      * @return 带有数量和单价的物料信息
      */
     List<MatterInfoItem> getList(Integer projectId);
+
+    /**
+     * 根基项目id查询所有可用物料
+     * @param projectId 项目id
+     * @return
+     */
+    List<MatterInfoItem> getListOfUse(Integer projectId);
 
     /**
      * 修改

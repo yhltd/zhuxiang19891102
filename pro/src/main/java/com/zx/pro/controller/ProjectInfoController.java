@@ -1,8 +1,6 @@
 package com.zx.pro.controller;
 
-import com.fasterxml.jackson.core.Base64Variant;
-import com.google.gson.Gson;
-import com.zx.pro.entity.MatterProduct;
+import com.zx.pro.entity.MatterProject;
 import com.zx.pro.entity.ProjectInfo;
 import com.zx.pro.service.IProjectInfoService;
 import com.zx.pro.util.DecodeUtil;
@@ -15,11 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URLDecoder;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author dai
@@ -52,11 +47,15 @@ public class ProjectInfoController {
 
             List<ProjectInfo> list = iProjectInfoService.getList(projectName,startDate,endDate);
 
-            return ResultInfo.success("获取成功", list);
+            if (StringUtils.isNotNull(list)) {
+                return ResultInfo.success("查询成功", list);
+            } else {
+                return ResultInfo.success("查询失败");
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            log.error("获取失败：{}", e.getMessage());
-            return ResultInfo.error("错误");
+            log.error("查询失败：{}", e.getMessage());
+            return ResultInfo.error("查询失败");
         }
     }
 
@@ -85,7 +84,7 @@ public class ProjectInfoController {
         GsonUtil gsonUtil = new GsonUtil(GsonUtil.toJson(map));
         try {
             ProjectInfo projectInfo = GsonUtil.toEntity(gsonUtil.get("projectInfo"),ProjectInfo.class);
-            List<MatterProduct> list = GsonUtil.toList(gsonUtil.get("matterProductList"),MatterProduct.class);
+            List<MatterProject> list = GsonUtil.toList(gsonUtil.get("matterProjectList"), MatterProject.class);
 
             projectInfo = iProjectInfoService.add(projectInfo, list);
             if (StringUtils.isNotNull(projectInfo)) {

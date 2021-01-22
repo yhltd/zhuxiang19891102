@@ -94,3 +94,35 @@ function formatDate(date, format) {
         return dict[arguments[0]];
     });
 }
+
+//获取表格选择行
+function getTableSelection(tableEl) {
+    let result = [];
+    let tableData = $(tableEl).bootstrapTable('getData');
+    $(tableEl + ' tr').each(function (i, tr) {
+        let index = $(tr).data('index');
+        if (index != undefined) {
+            if ($(tr).hasClass('selected')) {
+                result.push({
+                    index: index,
+                    data: tableData[index]
+                })
+            }
+        }
+    })
+    return result;
+}
+
+//选择表格行
+function setTableSelection(tableEl, rowIndex, isSelect) {
+    $(tableEl + ' tr').each(function (i, tr) {
+        let index = $(tr).data('index');
+        if (index == rowIndex) {
+            if (isSelect) {
+                $(tr).addClass('selected')
+            } else {
+                $(tr).removeClass('selected')
+            }
+        }
+    })
+}

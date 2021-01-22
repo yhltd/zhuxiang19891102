@@ -79,7 +79,7 @@ public class ResultInfo extends HashMap<String, Object> {
    * @param msg 返回内容
    * @return 成功消息
    */
-  public static ResultInfo success(String msg) {
+  public static ResultInfo  success(String msg) {
     return ResultInfo.success(msg, null);
   }
 

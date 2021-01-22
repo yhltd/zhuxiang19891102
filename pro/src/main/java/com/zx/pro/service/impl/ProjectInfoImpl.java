@@ -2,18 +2,18 @@ package com.zx.pro.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zx.pro.entity.MatterProduct;
+import com.zx.pro.entity.MatterProject;
 import com.zx.pro.entity.ProjectInfo;
 import com.zx.pro.mapper.ProjectInfoMapper;
-import com.zx.pro.service.IMatterProductService;
+import com.zx.pro.service.IMatterProjectChangeService;
+import com.zx.pro.service.IMatterProjectService;
 import com.zx.pro.service.IProjectInfoService;
 import com.zx.pro.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,7 +25,10 @@ import java.util.List;
 public class ProjectInfoImpl extends ServiceImpl<ProjectInfoMapper, ProjectInfo> implements IProjectInfoService {
 
     @Autowired
-    private IMatterProductService iMatterProductService;
+    private IMatterProjectService iMatterProjectService;
+
+    @Autowired
+    private IMatterProjectChangeService iMatterProjectChangeService;
 
     @Override
     public List<ProjectInfo> getList() {
@@ -54,16 +57,16 @@ public class ProjectInfoImpl extends ServiceImpl<ProjectInfoMapper, ProjectInfo>
     }
 
     @Override
-    public ProjectInfo add(ProjectInfo projectInfo, List<MatterProduct> list) {
+    public ProjectInfo add(ProjectInfo projectInfo, List<MatterProject> list) {
         projectInfo.setCreateTime(LocalDateTime.now());
         //新增项目
         if (this.save(projectInfo)) {
             //循环填入项目id
-            for (MatterProduct matterProduct : list) {
-                matterProduct.setProjectInfoId(projectInfo.getId());
+            for (MatterProject matterProject : list) {
+                matterProject.setProjectInfoId(projectInfo.getId());
             }
             //批量插入
-            return iMatterProductService.add(list) ? projectInfo : null;
+            return iMatterProjectService.add(list) ? projectInfo : null;
         } else {
             return null;
         }
@@ -86,8 +89,22 @@ public class ProjectInfoImpl extends ServiceImpl<ProjectInfoMapper, ProjectInfo>
 
     @Override
     public boolean delete(List<Integer> idList) {
-        if(this.removeByIds(idList)){
-            return iMatterProductService.deleteByProjectId(idList);
+        //获取选择的项目下的项目物料信息
+        List<MatterProject> matterProductList = iMatterProjectService.getList(idList);
+        //循环获取id
+        if(StringUtils.isNotNull(matterProductList)) {
+            List<Integer> matterProductIdList = new ArrayList<>();
+            matterProductList.forEach(matterProduct -> {
+                matterProductIdList.add(matterProduct.getId());
+            });
+
+            //删除项目信息
+            if(this.removeByIds(idList)){
+                //删除项目物料需求变化表
+                iMatterProjectChangeService.deleteByMatterProjectId(matterProductIdList);
+                //删除项目关联的项目物料表
+                return iMatterProjectService.deleteByProjectId(idList);
+            }
         }
         return false;
     }

@@ -145,6 +145,26 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     return isNotNull(object) && object.getClass().isArray();
   }
 
+  /**
+   * 判断两个数值是否相等
+   * @param double1 数值1
+   * @param double2 数值2
+   * @return true：相等 false：不相等
+   */
+  public static boolean isEqual(Double double1,Double double2){
+    return Double.doubleToRawLongBits(double1) == Double.doubleToRawLongBits(double2);
+  }
+
+  /**
+   * 判断两个数值是否相等
+   * @param double1 数值1
+   * @param double2 数值2
+   * @return true：不相等 false：相等
+   */
+  public static boolean isNotEqual(Double double1,Double double2){
+    return !isEqual(double1,double2);
+  }
+
   /** 去空格 */
   public static String trim(String str) {
     return (str == null ? "" : str.trim());

@@ -2,23 +2,16 @@ package com.zx.pro.service.impl;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zx.pro.entity.MatterInfo;
 import com.zx.pro.entity.MatterInfoItem;
-import com.zx.pro.entity.MatterProduct;
-import com.zx.pro.entity.UserInfo;
 import com.zx.pro.mapper.MatterInfoMapper;
 import com.zx.pro.service.IMatterInfoService;
-import com.zx.pro.service.IMatterProductService;
-import com.zx.pro.util.StringUtils;
+import com.zx.pro.service.IMatterProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 实现物料表接口的增删改查
@@ -29,7 +22,7 @@ import java.util.Map;
 public class MatterInfoImpl extends ServiceImpl<MatterInfoMapper, MatterInfo> implements IMatterInfoService {
 
     @Autowired
-    private IMatterProductService iMatterProductService;
+    private IMatterProjectService iMatterProjectService;
 
     @Autowired
     private MatterInfoMapper matterInfoMapper;
@@ -49,6 +42,11 @@ public class MatterInfoImpl extends ServiceImpl<MatterInfoMapper, MatterInfo> im
     @Override
     public List<MatterInfoItem> getList(Integer projectId) {
         return matterInfoMapper.getList(projectId);
+    }
+
+    @Override
+    public List<MatterInfoItem> getListOfUse(Integer projectId) {
+        return matterInfoMapper.getListOfUse(projectId);
     }
 
     @Override
