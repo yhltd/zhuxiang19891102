@@ -2,7 +2,7 @@ $(function () {
     $ajax({
         type: 'post',
         url: '/work_order_info/getList',
-    }, false, function (res) {
+    }, false,'' , function (res) {
         if (res.code == 200) {
             setTable(res.data);
         }
@@ -15,13 +15,17 @@ $(function () {
  * @param workOrderInfoId
  */
 function showDetail(workOrder) {
+    //let workOrder=$('#workOrderDetailTable').bootstrapTable('getData')[index].workOrder;
+    //let workOrder=getTableSelection('#workOrderDetailTable').workOrder
+    //$('#workOrderDetailTable').bootstrapTable('getData')[index].workOrder
+
     $ajax({
         type: 'post',
         url: '/work_order_detail/getListByWorkOrder',
         data: {
             workOrder: workOrder
         }
-    }, false, function (res) {
+    }, false,'' , function (res) {
         if (res.code == 200) {
             $('#detail-modal').modal('show');
             $('#detail-table').bootstrapTable('load', res.data).bootstrapTable({
@@ -102,7 +106,7 @@ $(function () {
             data: {
                 workOrder: workOrder
             }
-        }, false, function (res) {
+        }, false, '' ,function (res) {
             if (res.code == 200) {
                 $('#workOrderInfoTable').bootstrapTable('load', res.data);
             }
@@ -132,7 +136,7 @@ $(function () {
                 }),
                 dataType: 'json',
                 contentType: 'application/json;charset=utf-8'
-            }, false, function (res) {
+            }, false, '' ,function (res) {
                 if (res.code == 200) {
                     $('#workOrderInfoTable').bootstrapTable('load', res.data);
                 }
@@ -147,6 +151,14 @@ $(function () {
  * @param data
  */
 function setTable(data) {
+    $('#table-toolbar').css({
+        'opacity': 1
+    })
+
+    if ($('#workOrderDetailTable').html != '') {
+        $('#workOrderDetailTable').bootstrapTable('load', data);
+    }
+
     $('#workOrderInfoTable').bootstrapTable({
         data: data,
         sortStable: true,
@@ -218,7 +230,7 @@ function setTable(data) {
                 sortable: true,
                 width: 150,
                 formatter: function (value, row, index) {
-                    return '<button onclick="javascript:showDetail(' + row.workOrder + ')" class="btn btn-primary">查看明细</button>'
+                    return '<button onclick="javascript:showDetail(' +row.workOrder +')" class="btn btn-primary">查看明细</button>'
                 }
             }
         ]

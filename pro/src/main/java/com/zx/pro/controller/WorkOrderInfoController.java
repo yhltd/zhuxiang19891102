@@ -2,7 +2,6 @@ package com.zx.pro.controller;
 
 import com.zx.pro.entity.WorkOrderInfo;
 import com.zx.pro.service.IWorkOrderInfoService;
-import com.zx.pro.util.DecodeUtil;
 import com.zx.pro.util.ResultInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,44 +23,37 @@ public class WorkOrderInfoController {
     @Autowired
     private IWorkOrderInfoService iWorkOrderInfoService;
 
-    /**
-     * 批量录入
-     *
-     * @param workOrderInfoList 录入集合对象
-     * @return ResultInfo
-     */
-    @PostMapping("/addList")
-    public ResultInfo addWorkOrderInfoList(List<WorkOrderInfo> workOrderInfoList) {
-        try {
-            if (iWorkOrderInfoService.add(workOrderInfoList)) {
-                return ResultInfo.success("录入成功", workOrderInfoList);
-            } else {
-                return ResultInfo.success("录入失败", workOrderInfoList);
-            }
-        } catch (Exception e) {
-            log.error("批量录入失败：{}，参数：[workOrderInfoList: {}]", e.getMessage(), workOrderInfoList);
-            return ResultInfo.error("错误");
-        }
-    }
-
-    /**
-     * 录入
-     *
-     * @param workOrderInfoJson 返回录入对象
-     * @return ResultInfo
-     */
-    @PostMapping("/add")
-    public ResultInfo addWorkOrderInfo(@RequestBody String workOrderInfoJson) {
-        WorkOrderInfo workOrderInfo = null;
-        try {
-            workOrderInfo = DecodeUtil.decodeToJson(workOrderInfoJson, WorkOrderInfo.class, "createTime");
-            workOrderInfo = iWorkOrderInfoService.add(workOrderInfo);
-            return ResultInfo.success("录入成功", workOrderInfo);
-        } catch (Exception e) {
-            log.error("录入失败：{}，参数：[workOrderInfo: {}]", e.getMessage(), workOrderInfo);
-            return ResultInfo.error("错误");
-        }
-    }
+//    /**
+//     * 录入
+//     *
+//     * @param map
+//     * @return ResultInfo
+//     */
+//    @RequestMapping(value = "/add", method = RequestMethod.POST)
+//    @Transactional
+//    public ResultInfo add(@RequestBody HashMap map) {
+//        GsonUtil gsonUtil = new GsonUtil(GsonUtil.toJson(map));
+//        try {
+//            WorkOrderInfo workOrderInfo=GsonUtil.toEntity(gsonUtil.get("workOrderInfo"), WorkOrderInfo.class);
+//            List<WorkOrderDetail> list = GsonUtil.toList(gsonUtil.get("workOrderDetailList"),WorkOrderDetail.class);
+//
+//            workOrderInfo=iWorkOrderInfoService.add(workOrderInfo,list);
+//            return ResultInfo.success("新增成功", workOrderInfo);
+////            if (StringUtils.isNotNull(workOrderInfo)) {
+////                return ResultInfo.success("新增成功", workOrderInfo);
+////            } else {
+////                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+////                return ResultInfo.success("未新增", null);
+////            }
+//        }catch (Exception e){
+//            e.printStackTrace();
+//            //手动回滚
+//            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+//            log.error("新增失败：{}", e.getMessage());
+//            log.error("参数：{}", map);
+//            return ResultInfo.error("错误");
+//        }
+//    }
 
     /**
      * 查询派工单信息

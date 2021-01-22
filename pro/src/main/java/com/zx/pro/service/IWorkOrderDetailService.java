@@ -3,7 +3,6 @@ package com.zx.pro.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zx.pro.entity.WorkOrderDetail;
 import com.zx.pro.entity.WorkOrderDetailItem;
-import com.zx.pro.mapper.WorkOrderDetailMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,20 +16,18 @@ import java.util.List;
 public interface IWorkOrderDetailService extends IService<WorkOrderDetail> {
 
     /**
-     * 批量录入
-     *
-     * @param workOrderDetailList 订单明细集合
+     * 添加
+     * @param workOrderDetail 添加物料订单表对象
      * @return 是否添加成功
      */
-    boolean add(List<WorkOrderDetail> workOrderDetailList);
+    WorkOrderDetail add(WorkOrderDetail workOrderDetail);
 
     /**
-     * 录入
-     *
-     * @param workOrderDetail 订单明细对象
-     * @return 实体类
+     * 批量添加
+     * @param list
+     * @return
      */
-    WorkOrderDetail add(WorkOrderDetail workOrderDetail);
+    boolean add(List<WorkOrderDetail> list);
 
     /**
      * 查询派工单明细

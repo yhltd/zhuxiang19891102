@@ -9,12 +9,18 @@
     <link rel="stylesheet" href="../bootstrap-4.5.0-dist/icons/bootstrap-icons.css">
     <script type="text/javascript" src="../bootstrap-4.5.0-dist/js/bootstrap.min.js"></script>
 
+    <!--bootstrap-table-->
+    <link rel="stylesheet" href="../bootstrap-4.5.0-dist/css/bootstrap-table.css">
+    <script src="../bootstrap-4.5.0-dist/js/bootstrap-table.js"></script>
+    <script src="../bootstrap-4.5.0-dist/js/bootstrap-table-zh-CN.min.js"></script>
+
     <script type="text/javascript" src="../javascript/main.js"></script>
     <link rel="stylesheet" type="text/css" href="../css/workOrder.css"  >
+    <script type="text/javascript" src="../javascript/workOrder.js"></script>
 </head>
 <body style="outline:none;-webkit-tap-highlight-color:rgba(0,0,0,0)">
     <div class="top-toolbar bottom-border">
-        <table class="table" data-toggle="table" data-pagination="true" data-search="true" id="workOrderTable">
+        <table class="table" data-toggle="table" id="workOrderTable">
             <thead>
             <tr>
                 <th></th>
@@ -24,76 +30,160 @@
                 <th>车间</th>
                 <th>产线</th>
                 <th>本次生产数量</th>
-            </tr>
+            <tr>
             </thead>
             <tbody>
-            <tr>
+            </tr>
                 <td>周一</td>
-                <td><input name="myDate" type="date"></td>
-                <td><select></select></td>
-                <td><select></select></td>
-                <td><input></td>
-                <td><input></td>
-                <td><input></td>
+                <td><input name="workDate" type="date" class="form-control"></td>
+                <td>
+                    <select name="orderId" class="form-control">
+                        <option></option>
+                        <option value="1">1234</option>
+                        <option value="2">4321</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="productInfoId" class="form-control">
+                        <option></option>
+                        <option value="1">啊啊啊</option>
+                        <option value="2">呃呃呃</option>
+                    </select>
+                </td>
+                <td><input name="workShop" class="form-control"></td>
+                <td><input name="workLine" class="form-control"></td>
+                <td><input name="workNum" class="form-control"></td>
             </tr>
             <tr>
                 <td>周二</td>
-                <td><input name="myDate" type="date"></td>
-                <td><select></select></td>
-                <td><select></select></td>
-                <td><input></td>
-                <td><input></td>
-                <td><input></td>
+                <td><input name="workDate" type="date" class="form-control"></td>
+                <td>
+                    <select name="orderId" class="form-control">
+                        <option></option>
+                        <option value="1">1234</option>
+                        <option value="2">4321</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="productInfoId" class="form-control">
+                        <option></option>
+                        <option value="1">啊啊啊</option>
+                        <option value="2">呃呃呃</option>
+                    </select>
+                </td>
+                <td><input name="workShop" class="form-control"></td>
+                <td><input name="workLine" class="form-control"></td>
+                <td><input name="workNum" class="form-control"></td>
             </tr>
             <tr>
                 <td>周三</td>
-                <td><input name="myDate" type="date"></td>
-                <td><select></select></td>
-                <td><select></select></td>
-                <td><input></td>
-                <td><input></td>
-                <td><input></td>
+                <td><input name="workDate" type="date" class="form-control"></td>
+                <td>
+                    <select name="orderId" class="form-control">
+                        <option></option>
+                        <option value="1">1234</option>
+                        <option value="2">4321</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="productInfoId" class="form-control">
+                        <option></option>
+                        <option value="1">啊啊啊</option>
+                        <option value="2">呃呃呃</option>
+                    </select>
+                </td>
+                <td><input name="workShop" class="form-control"></td>
+                <td><input name="workLine" class="form-control"></td>
+                <td><input name="workNum" class="form-control"></td>
             </tr>
             <tr>
                 <td>周四</td>
-                <td><input name="myDate" type="date"></td>
-                <td><select></select></td>
-                <td><select></select></td>
-                <td><input></td>
-                <td><input></td>
-                <td><input></td>
+                <td><input name="workDate" type="date" class="form-control"></td>
+                <td>
+                    <select name="orderId" class="form-control">
+                        <option></option>
+                        <option value="1">1234</option>
+                        <option value="2">4321</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="productInfoId" class="form-control">
+                        <option></option>
+                        <option value="1">啊啊啊</option>
+                        <option value="2">呃呃呃</option>
+                    </select>
+                </td>
+                <td><input name="workShop" class="form-control"></td>
+                <td><input name="workLine" class="form-control"></td>
+                <td><input name="workNum" class="form-control"></td>
             </tr>
             <tr>
                 <td>周五</td>
-                <td><input name="myDate" type="date"></td>
-                <td><select></select></td>
-                <td><select></select></td>
-                <td><input></td>
-                <td><input></td>
-                <td><input></td>
+                <td><input name="workDate" type="date" class="form-control"></td>
+                <td>
+                    <select name="orderId" class="form-control">
+                        <option></option>
+                        <option value="1">1234</option>
+                        <option value="2">4321</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="productInfoId" class="form-control">
+                        <option></option>
+                        <option value="1">啊啊啊</option>
+                        <option value="2">呃呃呃</option>
+                    </select>
+                </td>
+                <td><input name="workShop" class="form-control"></td>
+                <td><input name="workLine" class="form-control"></td>
+                <td><input name="workNum" class="form-control"></td>
             </tr>
             <tr>
                 <td>周六</td>
-                <td><input name="myDate" type="date"></td>
-                <td><select></select></td>
-                <td><select></select></td>
-                <td><input></td>
-                <td><input></td>
-                <td><input></td>
+                <td><input name="workDate" type="date" class="form-control"></td>
+                <td>
+                    <select name="orderId" class="form-control">
+                        <option></option>
+                        <option value="1">1234</option>
+                        <option value="2">4321</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="productInfoId" class="form-control">
+                        <option></option>
+                        <option value="1">啊啊啊</option>
+                        <option value="2">呃呃呃</option>
+                    </select>
+                </td>
+                <td><input name="workShop" class="form-control"></td>
+                <td><input name="workLine" class="form-control"></td>
+                <td><input name="workNum" class="form-control"></td>
             </tr>
             <tr>
                 <td>周日</td>
-                <td><input name="myDate" type="date"></td>
-                <td><select></select></td>
-                <td><select></select></td>
-                <td><input></td>
-                <td><input></td>
-                <td><input></td>
+                <td><input name="workDate" type="date" class="form-control"></td>
+                <td>
+                    <select name="orderId" class="form-control">
+                        <option></option>
+                        <option value="1">1234</option>
+                        <option value="2">4321</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="productInfoId" class="form-control">
+                        <option></option>
+                        <option value="1">啊啊啊</option>
+                        <option value="2">呃呃呃</option>
+                    </select>
+                </td>
+                <td><input name="workShop" class="form-control"></td>
+                <td><input name="workLine" class="form-control"></td>
+                <td><input name="workNum" class="form-control"></td>
             </tr>
             </tbody>
         </table>
-        <button class="btn-primary" id="submit">
-            <i class="bi bi-capslock-fill"></i>
+        <button class="btn btn-primary" id="submit-btn">
+            <i class="bi bi-plus-square icon"></i>
             提交
         </button>
     </div>
