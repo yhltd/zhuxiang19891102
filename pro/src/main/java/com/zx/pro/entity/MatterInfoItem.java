@@ -24,4 +24,6 @@ public class MatterInfoItem extends MatterInfo{
      * 单价
      */
     private Double price;
+
+
 }

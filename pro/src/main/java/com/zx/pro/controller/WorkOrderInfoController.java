@@ -2,12 +2,15 @@ package com.zx.pro.controller;
 
 import com.zx.pro.entity.WorkOrderInfo;
 import com.zx.pro.service.IWorkOrderInfoService;
+import com.zx.pro.util.PowerUtil;
 import com.zx.pro.util.ResultInfo;
 import com.zx.pro.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.net.ssl.HttpsURLConnection;
+import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -24,47 +27,20 @@ public class WorkOrderInfoController {
     @Autowired
     private IWorkOrderInfoService iWorkOrderInfoService;
 
-//    /**
-//     * 录入
-//     *
-//     * @param map
-//     * @return ResultInfo
-//     */
-//    @RequestMapping(value = "/add", method = RequestMethod.POST)
-//    @Transactional
-//    public ResultInfo add(@RequestBody HashMap map) {
-//        GsonUtil gsonUtil = new GsonUtil(GsonUtil.toJson(map));
-//        try {
-//            WorkOrderInfo workOrderInfo=GsonUtil.toEntity(gsonUtil.get("workOrderInfo"), WorkOrderInfo.class);
-//            List<WorkOrderDetail> list = GsonUtil.toList(gsonUtil.get("workOrderDetailList"),WorkOrderDetail.class);
-//
-//            workOrderInfo=iWorkOrderInfoService.add(workOrderInfo,list);
-//            return ResultInfo.success("新增成功", workOrderInfo);
-////            if (StringUtils.isNotNull(workOrderInfo)) {
-////                return ResultInfo.success("新增成功", workOrderInfo);
-////            } else {
-////                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-////                return ResultInfo.success("未新增", null);
-////            }
-//        }catch (Exception e){
-//            e.printStackTrace();
-//            //手动回滚
-//            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-//            log.error("新增失败：{}", e.getMessage());
-//            log.error("参数：{}", map);
-//            return ResultInfo.error("错误");
-//        }
-//    }
-
     /**
      * 查询派工单信息
      *
      * @return ResultInfo
      */
     @PostMapping("/getList")
-    public ResultInfo workOrderList() {
+    public ResultInfo workOrderList(HttpSession session) {
         List<WorkOrderInfo> getList = null;
         try {
+            PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
+            if(!powerUtil.isSelect("派工单汇总")){
+                return ResultInfo.error(401,"无权限");
+            }
+
             getList = iWorkOrderInfoService.getList();
             return ResultInfo.success("查询成功", getList);
         } catch (Exception e) {
@@ -97,9 +73,14 @@ public class WorkOrderInfoController {
      * @return ResultInfo
      */
     @PostMapping("/getListByWorkOrder")
-    public ResultInfo workOrderListByWorkOrder(@RequestBody String workOrder) {
+    public ResultInfo workOrderListByWorkOrder(@RequestBody String workOrder,HttpSession session) {
         List<WorkOrderInfo> getList = null;
         try {
+            PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
+            if(!powerUtil.isSelect("派工单汇总")){
+                return ResultInfo.error(401,"无权限");
+            }
+
             getList = iWorkOrderInfoService.getList(workOrder.split("=")[1]);
             return ResultInfo.success("查询成功", getList);
         } catch (Exception e) {
@@ -115,12 +96,16 @@ public class WorkOrderInfoController {
      * @return ResultInfo
      */
     @RequestMapping("/getListByCreateTime")
-    public ResultInfo workOrderListByCreatTime(@RequestBody HashMap map) {
+    public ResultInfo workOrderListByCreatTime(@RequestBody HashMap map, HttpSession session) {
         LocalDateTime startTime = LocalDateTime.parse(map.get("startTime").toString());
         LocalDateTime endTime = LocalDateTime.parse(map.get("endTime").toString());
-
         List<WorkOrderInfo> getList = null;
         try {
+            PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
+            if(!powerUtil.isSelect("派工单汇总")){
+                return ResultInfo.error(401,"无权限");
+            }
+
             getList = iWorkOrderInfoService.getList(startTime, endTime);
             return ResultInfo.success("查询成功", getList);
         } catch (Exception e) {

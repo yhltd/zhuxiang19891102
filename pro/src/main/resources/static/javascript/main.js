@@ -14,6 +14,10 @@ function $ajax(options,isLoading,loadingEl,success){
             }
         },
         success: res=> {
+            if(res.code == 401){
+                alert(res.msg);
+                return;
+            }
             success(res);
         },
         error: err=>{
@@ -133,3 +137,43 @@ function setTableSelection(tableEl, rowIndex, isSelect) {
         }
     })
 }
+
+
+$(function (){
+    //点击修改密码显示弹窗
+    $("#update-href").click(function (){
+        $('#update-modal').modal('show');
+    })
+
+    //点击提交按钮
+    $("#update-submit-btn").click(function (){
+        let pwd=$('#update-pwd').val();
+        if(pwd==""){
+            alert("请输入新密码")
+        }else{
+            $ajax({
+                type: 'post',
+                url: '/user/updatePwd',
+                data:{
+                    pwd:pwd
+                }
+            },false, '', function (res){
+                if (res.code==200){
+                    alert("修改成功,请重新登录")
+                    $('#add-modal').modal('hide');
+                    window.location.href="html/main.html";
+                }
+            })
+        }
+    })
+
+
+
+    //点击关闭按钮
+    $("#update-close-btn").click(function (){
+        $('#update-modal').modal('hide');
+    })
+
+
+
+})

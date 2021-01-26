@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>员工管理</title>
+    <script type="text/javascript" src="../javascript/Jquery.js"></script>
+    <!--bootstrap-->
+    <link rel="stylesheet" href="../bootstrap-4.5.0-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../bootstrap-4.5.0-dist/icons/bootstrap-icons.css">
+    <script type="text/javascript" src="../bootstrap-4.5.0-dist/js/bootstrap.min.js"></script>
+
+    <!--bootstrap-table-->
+    <link rel="stylesheet" href="../bootstrap-4.5.0-dist/css/bootstrap-table.css">
+    <script src="../bootstrap-4.5.0-dist/js/bootstrap-table.js"></script>
+    <script src="../bootstrap-4.5.0-dist/js/bootstrap-table-zh-CN.min.js"></script>
+
+    <link rel="stylesheet" href="../css/main.css">
+    <script type="text/javascript" src="../javascript/main.js"></script>
+    <script type="text/javascript" src="../javascript/userInfo.js"></script>
+</head>
+<body>
+    <div id="table-toolbar">
+        <div class="btn-group" role="group">
+            <button id="add-btn" class="btn btn-primary">
+                <i class="bi bi-plus-square icon"></i>
+                新增
+            </button>
+            <button id="update-btn" class="btn btn-primary">
+                <i class="bi bi-pencil-square icon"></i>
+                修改
+            </button>
+            <button id="delete-btn" class="btn btn-primary">
+                <i class="bi bi-trash icon"></i>
+                删除
+            </button>
+        </div>
+    </div>
+
+    <div class="table-div">
+        <table id="userInfoTable"></table>
+    </div>
+
+    <div id="add-modal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title">添加员工</div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="add-form" class="needs-validation">
+                        <div class="form-group">
+                            <label for="add-name">姓名</label>
+                            <input id="add-name" name="name" type="text" class="form-control"
+                                   autocomplete="off" required>
+                            <div class="invalid-feedback">
+                                请输入姓名！
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add-pwd">密码</label>
+                            <input id="add-pwd" name="pwd" type="text" class="form-control"
+                                   autocomplete="off" required>
+                            <div class="invalid-feedback">
+                                请输入密码！
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add-powerName">权限</label>
+                            <input id="add-powerName" name="powerName" type="text" class="form-control"
+                                   autocomplete="off" required>
+                            <div class="invalid-feedback">
+                                请输入权限！
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="border-top" style="padding: 15px;">
+                    <button id="add-submit-btn" type="button" class="btn btn-primary">
+                        <i class="bi bi-arrow-bar-up icon"></i>
+                        提交
+                    </button>
+                    <button id="add-close-btn" type="button" class="btn btn-primary left-margin">
+                        <i class="bi bi-x-circle icon"></i>
+                        关闭
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="update-modal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title">员工信息编辑</div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="update-form" class="needs-validation">
+                        <div class="form-group">
+                            <input id="id" name="id" type="hidden">
+                        </div>
+                        <div class="form-group">
+                            <label for="update-name">姓名</label>
+                            <input id="update-name" name="name" type="text" class="form-control"
+                                   autocomplete="off" required>
+                            <div class="invalid-feedback">
+                                请输入姓名！
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="update-pwd">密码</label>
+                            <input id="update-pwd" name="pwd" type="text" class="form-control"
+                                   autocomplete="off" required>
+                            <div class="invalid-feedback">
+                                请输入密码！
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="update-powerName">权限</label>
+                            <input id="update-powerName" name="powerName" type="text" class="form-control"
+                                   autocomplete="off" required>
+                            <div class="invalid-feedback">
+                                请输入权限！
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="border-top" style="padding: 15px;">
+                    <button id="update-submit-btn" type="button" class="btn btn-primary">
+                        <i class="bi bi-arrow-bar-up icon"></i>
+                        提交
+                    </button>
+                    <button id="update-close-btn" type="button" class="btn btn-primary left-margin">
+                        <i class="bi bi-x-circle icon"></i>
+                        关闭
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<!-- 权限   -->
+    <div id="power-modal" class="modal fade" tabindex="-1">
+        <div id="table-toolbar-userPower">
+            <div class="btn-group" role="group">
+                <button id="add-btn-userPower" class="btn btn-primary">
+                    <i class="bi bi-plus-square icon"></i>
+                    新增
+                </button>
+                <button id="update-btn-userPower" class="btn btn-primary">
+                    <i class="bi bi-pencil-square icon"></i>
+                    修改
+                </button>
+                <button id="delete-btn-userPower" class="btn btn-primary">
+                    <i class="bi bi-trash icon"></i>
+                    删除
+                </button>
+            </div>
+        </div>
+
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title">权限</div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table id="power-table"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--  新增按钮弹窗  -->
+    <div id="add-modal-power" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title">编辑权限</div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="add-form-power" class="needs-validation">
+                        <div class="form-group">
+                            <input id="add-userInfoId-power" name="userInfoId" type="text" hidden="hidden">
+                        </div>
+                        <div class="form-group">
+                            <label for="add-viewName-power">页面</label>
+                            <input id="add-viewName-power" name="viewName" type="text" class="form-control"
+                                   autocomplete="off" required>
+                            <div class="invalid-feedback">
+                                请输入页面名！
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add">新增</label>
+                            <select id="add" name="adds" class="form-control">
+                                <option value="1">可操作</option>
+                                <option value="0">无权限</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="delete">删除</label>
+                            <select id="delete" name="deletes" class="form-control">
+                                <option value="1">可操作</option>
+                                <option value="0">无权限</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="update">修改</label>
+                            <select id="update" name="updates" class="form-control">
+                                <option value="1">可操作</option>
+                                <option value="0">无权限</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="select">查询</label>
+                            <select id="select" name="selects" class="form-control">
+                                <option value="1">可操作</option>
+                                <option value="0">无权限</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="border-top" style="padding: 15px;">
+                    <button id="add-submit-btn-power" type="button" class="btn btn-primary">
+                        <i class="bi bi-arrow-bar-up icon"></i>
+                        提交
+                    </button>
+                    <button id="add-close-btn-power" type="button" class="btn btn-primary left-margin">
+                        <i class="bi bi-x-circle icon"></i>
+                        关闭
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--  修改弹窗  -->
+    <!--  新增按钮弹窗  -->
+    <div id="update-modal-power" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title">编辑权限</div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="update-form-power" class="needs-validation">
+                        <div class="form-group">
+                            <input id="id-update-power" name="id" type="text" hidden="hidden">
+                        </div>
+                        <div class="form-group">
+                            <input id="update-userInfoId-power" name="userInfoId" type="text" hidden="hidden">
+                        </div>
+                        <div class="form-group">
+                            <label for="add-viewName-power">页面</label>
+                            <input id="update-viewName-power" name="viewName" type="text" class="form-control"
+                                   autocomplete="off" required>
+                            <div class="invalid-feedback">
+                                请输入页面名！
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add-update">新增</label>
+                            <select id="add-update" name="adds" class="form-control">
+                                <option value="1">可操作</option>
+                                <option value="0">无权限</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="delete-update">删除</label>
+                            <select id="delete-update" name="deletes" class="form-control">
+                                <option value="1">可操作</option>
+                                <option value="0">无权限</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="update-update">修改</label>
+                            <select id="update-update" name="updates" class="form-control">
+                                <option value="1">可操作</option>
+                                <option value="0">无权限</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="select-update">查询</label>
+                            <select id="select-update" name="selects" class="form-control">
+                                <option value="1">可操作</option>
+                                <option value="0">无权限</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="border-top" style="padding: 15px;">
+                    <button id="update-submit-btn-power" type="button" class="btn btn-primary">
+                        <i class="bi bi-arrow-bar-up icon"></i>
+                        提交
+                    </button>
+                    <button id="update-close-btn-power" type="button" class="btn btn-primary left-margin">
+                        <i class="bi bi-x-circle icon"></i>
+                        关闭
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

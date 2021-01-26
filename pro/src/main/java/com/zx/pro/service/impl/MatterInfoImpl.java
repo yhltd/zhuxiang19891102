@@ -51,6 +51,11 @@ public class MatterInfoImpl extends ServiceImpl<MatterInfoMapper, MatterInfo> im
     }
 
     @Override
+    public List<MatterInfoItem> getListByProjectName(String projectName) {
+        return matterInfoMapper.getListByProjectName(projectName);
+    }
+
+    @Override
     public boolean update(MatterInfo matterInfo) {
         return this.updateById(matterInfo);
     }

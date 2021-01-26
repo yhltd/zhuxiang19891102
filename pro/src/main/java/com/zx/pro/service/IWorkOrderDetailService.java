@@ -5,6 +5,8 @@ import com.zx.pro.entity.WorkOrderDetail;
 import com.zx.pro.entity.WorkOrderDetailItem;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -59,8 +61,27 @@ public interface IWorkOrderDetailService extends IService<WorkOrderDetail> {
      */
     boolean delete(List<Integer>id);
 
+    /**
+     * 查询
+     * @return 车间生产信息集合
+     */
+    List<WorkOrderDetailItem>getProductionListByWorkShop();
 
+    /**
+     * 查询
+     * @return 产线生产信息集合
+     */
+    List<WorkOrderDetailItem>getProductionListByWorkLine();
 
+    /**
+     * 根据时间范围查询
+     * @return 车间生产信息集合
+     */
+    List<WorkOrderDetailItem>getWorkShopByWorkDate(LocalDateTime startDate, LocalDateTime endDate);
 
-
+    /**
+     * 根据时间范围查询
+     * @return 产线生产信息集合
+     */
+    List<WorkOrderDetailItem>getWorkLineByWorkDate(LocalDateTime startDate,LocalDateTime endDate);
 }

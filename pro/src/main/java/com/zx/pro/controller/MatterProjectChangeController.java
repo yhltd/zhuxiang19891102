@@ -3,16 +3,14 @@ package com.zx.pro.controller;
 import com.zx.pro.entity.MatterProjectChange;
 import com.zx.pro.entity.MatterProjectChangeItem;
 import com.zx.pro.service.IMatterProjectChangeService;
-import com.zx.pro.util.DecodeUtil;
-import com.zx.pro.util.GsonUtil;
-import com.zx.pro.util.ResultInfo;
-import com.zx.pro.util.StringUtils;
+import com.zx.pro.util.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,8 +26,13 @@ public class MatterProjectChangeController {
     private IMatterProjectChangeService iMatterProjectChangeService;
 
     @RequestMapping("/post_list")
-    public ResultInfo postList(){
+    public ResultInfo postList(HttpSession session){
         try{
+            PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
+            if(!powerUtil.isSelect("项目物料需求变化表")){
+                return ResultInfo.error(401,"无权限");
+            }
+
             List<MatterProjectChangeItem> list = iMatterProjectChangeService.getList();
 
             if(StringUtils.isNotNull(list)){
@@ -46,8 +49,13 @@ public class MatterProjectChangeController {
     }
 
     @RequestMapping("/select_list")
-    public ResultInfo postList(@RequestBody HashMap map){
+    public ResultInfo postList(@RequestBody HashMap map,HttpSession session){
         try{
+            PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
+            if(!powerUtil.isSelect("项目物料需求变化表")){
+                return ResultInfo.error(401,"无权限");
+            }
+
             //项目名称
             String projectName = map.get("projectName").toString();
             //物料编码
@@ -71,8 +79,13 @@ public class MatterProjectChangeController {
     }
 
     @RequestMapping("/update")
-    public ResultInfo update(@RequestBody String matterProductChangeJson){
+    public ResultInfo update(@RequestBody String matterProductChangeJson,HttpSession session){
         try{
+            PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
+            if(!powerUtil.isUpdate("项目物料需求变化表")){
+                return ResultInfo.error(401,"无权限");
+            }
+
             MatterProjectChange matterProjectChange = DecodeUtil.decodeToJson(matterProductChangeJson,
                     MatterProjectChange.class,"updateTime");
 
@@ -91,10 +104,15 @@ public class MatterProjectChangeController {
     }
 
     @RequestMapping("/delete")
-    public ResultInfo delete(@RequestBody HashMap map){
+    public ResultInfo delete(@RequestBody HashMap map,HttpSession session){
         GsonUtil gsonUtil = new GsonUtil(GsonUtil.toJson(map));
 
         try{
+            PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
+            if(!powerUtil.isDelete("项目物料需求变化表")){
+                return ResultInfo.error(401,"无权限");
+            }
+
             List<Integer> idList = GsonUtil.toList(gsonUtil.get("idList"),Integer.class);
 
             if(iMatterProjectChangeService.delete(idList)){
