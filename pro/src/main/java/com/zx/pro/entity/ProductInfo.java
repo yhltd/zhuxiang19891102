@@ -9,7 +9,7 @@ import lombok.Data;
  * @author dai
  */
 @Data
-@TableName("product_info_copy")
+@TableName("product_info")
 public class ProductInfo {
 
     @TableId(value = "id",type = IdType.AUTO)

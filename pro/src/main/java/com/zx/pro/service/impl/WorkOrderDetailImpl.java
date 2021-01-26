@@ -11,6 +11,8 @@ import com.zx.pro.service.IWorkOrderInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -70,6 +72,25 @@ public class WorkOrderDetailImpl extends ServiceImpl<WorkOrderDetailMapper, Work
         return removeByIds(id);
     }
 
+    @Override
+    public List<WorkOrderDetailItem> getProductionListByWorkShop() {
+        return workOrderDetailMapper.getProductionListByWorkShop();
+    }
+
+    @Override
+    public List<WorkOrderDetailItem> getProductionListByWorkLine() {
+        return workOrderDetailMapper.getProductionListByWorkLine();
+    }
+
+    @Override
+    public List<WorkOrderDetailItem> getWorkShopByWorkDate(LocalDateTime startDate, LocalDateTime endDate) {
+        return workOrderDetailMapper.getWorkShopByWorkDate(startDate,endDate);
+    }
+
+    @Override
+    public List<WorkOrderDetailItem> getWorkLineByWorkDate(LocalDateTime startDate, LocalDateTime endDate) {
+        return workOrderDetailMapper.getWorkLineByWorkDate(startDate,endDate);
+    }
 
 
 }

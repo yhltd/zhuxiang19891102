@@ -92,7 +92,6 @@ $(function(){
                 })
             }
         }
-
     })
 
     //修改项目关闭按钮点击事件
@@ -100,6 +99,8 @@ $(function(){
         $('#update-form')[0].reset();
         $('#detail-modal').modal('hide');
     })
+
+
 })
 
 

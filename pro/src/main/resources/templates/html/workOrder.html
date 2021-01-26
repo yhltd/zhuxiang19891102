@@ -19,174 +19,440 @@
     <script type="text/javascript" src="../javascript/workOrder.js"></script>
 </head>
 <body style="outline:none;-webkit-tap-highlight-color:rgba(0,0,0,0)">
-    <div class="top-toolbar bottom-border">
-        <table class="table" data-toggle="table" id="workOrderTable">
-            <thead>
-            <tr>
-                <th></th>
-                <th>日期</th>
-                <th>选择订单</th>
-                <th>选择产品</th>
-                <th>车间</th>
-                <th>产线</th>
-                <th>本次生产数量</th>
-            <tr>
-            </thead>
-            <tbody>
-            </tr>
-                <td>周一</td>
-                <td><input name="workDate" type="date" class="form-control"></td>
-                <td>
-                    <select name="orderId" class="form-control">
-                        <option></option>
-                        <option value="1">1234</option>
-                        <option value="2">4321</option>
-                    </select>
-                </td>
-                <td>
-                    <select name="productInfoId" class="form-control">
-                        <option></option>
-                        <option value="1">啊啊啊</option>
-                        <option value="2">呃呃呃</option>
-                    </select>
-                </td>
-                <td><input name="workShop" class="form-control"></td>
-                <td><input name="workLine" class="form-control"></td>
-                <td><input name="workNum" class="form-control"></td>
-            </tr>
-            <tr>
-                <td>周二</td>
-                <td><input name="workDate" type="date" class="form-control"></td>
-                <td>
-                    <select name="orderId" class="form-control">
-                        <option></option>
-                        <option value="1">1234</option>
-                        <option value="2">4321</option>
-                    </select>
-                </td>
-                <td>
-                    <select name="productInfoId" class="form-control">
-                        <option></option>
-                        <option value="1">啊啊啊</option>
-                        <option value="2">呃呃呃</option>
-                    </select>
-                </td>
-                <td><input name="workShop" class="form-control"></td>
-                <td><input name="workLine" class="form-control"></td>
-                <td><input name="workNum" class="form-control"></td>
-            </tr>
-            <tr>
-                <td>周三</td>
-                <td><input name="workDate" type="date" class="form-control"></td>
-                <td>
-                    <select name="orderId" class="form-control">
-                        <option></option>
-                        <option value="1">1234</option>
-                        <option value="2">4321</option>
-                    </select>
-                </td>
-                <td>
-                    <select name="productInfoId" class="form-control">
-                        <option></option>
-                        <option value="1">啊啊啊</option>
-                        <option value="2">呃呃呃</option>
-                    </select>
-                </td>
-                <td><input name="workShop" class="form-control"></td>
-                <td><input name="workLine" class="form-control"></td>
-                <td><input name="workNum" class="form-control"></td>
-            </tr>
-            <tr>
-                <td>周四</td>
-                <td><input name="workDate" type="date" class="form-control"></td>
-                <td>
-                    <select name="orderId" class="form-control">
-                        <option></option>
-                        <option value="1">1234</option>
-                        <option value="2">4321</option>
-                    </select>
-                </td>
-                <td>
-                    <select name="productInfoId" class="form-control">
-                        <option></option>
-                        <option value="1">啊啊啊</option>
-                        <option value="2">呃呃呃</option>
-                    </select>
-                </td>
-                <td><input name="workShop" class="form-control"></td>
-                <td><input name="workLine" class="form-control"></td>
-                <td><input name="workNum" class="form-control"></td>
-            </tr>
-            <tr>
-                <td>周五</td>
-                <td><input name="workDate" type="date" class="form-control"></td>
-                <td>
-                    <select name="orderId" class="form-control">
-                        <option></option>
-                        <option value="1">1234</option>
-                        <option value="2">4321</option>
-                    </select>
-                </td>
-                <td>
-                    <select name="productInfoId" class="form-control">
-                        <option></option>
-                        <option value="1">啊啊啊</option>
-                        <option value="2">呃呃呃</option>
-                    </select>
-                </td>
-                <td><input name="workShop" class="form-control"></td>
-                <td><input name="workLine" class="form-control"></td>
-                <td><input name="workNum" class="form-control"></td>
-            </tr>
-            <tr>
-                <td>周六</td>
-                <td><input name="workDate" type="date" class="form-control"></td>
-                <td>
-                    <select name="orderId" class="form-control">
-                        <option></option>
-                        <option value="1">1234</option>
-                        <option value="2">4321</option>
-                    </select>
-                </td>
-                <td>
-                    <select name="productInfoId" class="form-control">
-                        <option></option>
-                        <option value="1">啊啊啊</option>
-                        <option value="2">呃呃呃</option>
-                    </select>
-                </td>
-                <td><input name="workShop" class="form-control"></td>
-                <td><input name="workLine" class="form-control"></td>
-                <td><input name="workNum" class="form-control"></td>
-            </tr>
-            <tr>
-                <td>周日</td>
-                <td><input name="workDate" type="date" class="form-control"></td>
-                <td>
-                    <select name="orderId" class="form-control">
-                        <option></option>
-                        <option value="1">1234</option>
-                        <option value="2">4321</option>
-                    </select>
-                </td>
-                <td>
-                    <select name="productInfoId" class="form-control">
-                        <option></option>
-                        <option value="1">啊啊啊</option>
-                        <option value="2">呃呃呃</option>
-                    </select>
-                </td>
-                <td><input name="workShop" class="form-control"></td>
-                <td><input name="workLine" class="form-control"></td>
-                <td><input name="workNum" class="form-control"></td>
-            </tr>
-            </tbody>
-        </table>
-        <button class="btn btn-primary" id="submit-btn">
-            <i class="bi bi-plus-square icon"></i>
-            提交
-        </button>
+
+<!--    <div class="top-toolbar bottom-border">-->
+<!--        <table class="table" data-toggle="table" id="workOrderTable">-->
+<!--            <thead>-->
+<!--            <tr>-->
+<!--                <th></th>-->
+<!--                <th>日期</th>-->
+<!--                <th>选择订单</th>-->
+<!--                <th>选择产品</th>-->
+<!--                <th>车间</th>-->
+<!--                <th>产线</th>-->
+<!--                <th>本次生产数量</th>-->
+<!--            <tr>-->
+<!--            </thead>-->
+<!--            <tbody>-->
+<!--            </tr>-->
+<!--                <td>周一</td>-->
+<!--                <td><input name="workDate" type="date" class="form-control"></td>-->
+<!--                <td>-->
+<!--                    <select name="orderId" class="form-control">-->
+<!--                        <option></option>-->
+<!--                        <option value="1">1234</option>-->
+<!--                        <option value="2">4321</option>-->
+<!--                    </select>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <select name="productInfoId" class="form-control">-->
+<!--                        <option></option>-->
+<!--                        <option value="1">啊啊啊</option>-->
+<!--                        <option value="2">呃呃呃</option>-->
+<!--                    </select>-->
+<!--                </td>-->
+<!--                <td><input name="workShop" class="form-control" autocomplete="off"></td>-->
+<!--                <td><input name="workLine" class="form-control" autocomplete="off"></td>-->
+<!--                <td><input name="workNum" class="form-control" type="number"></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td>周二</td>-->
+<!--                <td><input name="workDate" type="date" class="form-control"></td>-->
+<!--                <td>-->
+<!--                    <select name="orderId" class="form-control">-->
+<!--                        <option></option>-->
+<!--                        <option value="1">1234</option>-->
+<!--                        <option value="2">4321</option>-->
+<!--                    </select>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <select name="productInfoId" class="form-control">-->
+<!--                        <option></option>-->
+<!--                        <option value="1">啊啊啊</option>-->
+<!--                        <option value="2">呃呃呃</option>-->
+<!--                    </select>-->
+<!--                </td>-->
+<!--                <td><input name="workShop" class="form-control" autocomplete="off"></td>-->
+<!--                <td><input name="workLine" class="form-control" autocomplete="off"></td>-->
+<!--                <td><input name="workNum" class="form-control" type="number"></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td>周三</td>-->
+<!--                <td><input name="workDate" type="date" class="form-control"></td>-->
+<!--                <td>-->
+<!--                    <select name="orderId" class="form-control">-->
+<!--                        <option></option>-->
+<!--                        <option value="1">1234</option>-->
+<!--                        <option value="2">4321</option>-->
+<!--                    </select>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <select name="productInfoId" class="form-control">-->
+<!--                        <option></option>-->
+<!--                        <option value="1">啊啊啊</option>-->
+<!--                        <option value="2">呃呃呃</option>-->
+<!--                    </select>-->
+<!--                </td>-->
+<!--                <td><input name="workShop" class="form-control" autocomplete="off"></td>-->
+<!--                <td><input name="workLine" class="form-control" autocomplete="off"></td>-->
+<!--                <td><input name="workNum" class="form-control" type="number"></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td>周四</td>-->
+<!--                <td><input name="workDate" type="date" class="form-control"></td>-->
+<!--                <td>-->
+<!--                    <select name="orderId" class="form-control">-->
+<!--                        <option></option>-->
+<!--                        <option value="1">1234</option>-->
+<!--                        <option value="2">4321</option>-->
+<!--                    </select>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <select name="productInfoId" class="form-control">-->
+<!--                        <option></option>-->
+<!--                        <option value="1">啊啊啊</option>-->
+<!--                        <option value="2">呃呃呃</option>-->
+<!--                    </select>-->
+<!--                </td>-->
+<!--                <td><input name="workShop" class="form-control" autocomplete="off"></td>-->
+<!--                <td><input name="workLine" class="form-control" autocomplete="off"></td>-->
+<!--                <td><input name="workNum" class="form-control" type="number"></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td>周五</td>-->
+<!--                <td><input name="workDate" type="date" class="form-control"></td>-->
+<!--                <td>-->
+<!--                    <select name="orderId" class="form-control">-->
+<!--                        <option></option>-->
+<!--                        <option value="1">1234</option>-->
+<!--                        <option value="2">4321</option>-->
+<!--                    </select>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <select name="productInfoId" class="form-control">-->
+<!--                        <option></option>-->
+<!--                        <option value="1">啊啊啊</option>-->
+<!--                        <option value="2">呃呃呃</option>-->
+<!--                    </select>-->
+<!--                </td>-->
+<!--                <td><input name="workShop" class="form-control" autocomplete="off"></td>-->
+<!--                <td><input name="workLine" class="form-control" autocomplete="off"></td>-->
+<!--                <td><input name="workNum" class="form-control" type="number"></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td>周六</td>-->
+<!--                <td><input name="workDate" type="date" class="form-control"></td>-->
+<!--                <td>-->
+<!--                    <select name="orderId" class="form-control">-->
+<!--                        <option></option>-->
+<!--                        <option value="1">1234</option>-->
+<!--                        <option value="2">4321</option>-->
+<!--                    </select>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <select name="productInfoId" class="form-control">-->
+<!--                        <option></option>-->
+<!--                        <option value="1">啊啊啊</option>-->
+<!--                        <option value="2">呃呃呃</option>-->
+<!--                    </select>-->
+<!--                </td>-->
+<!--                <td><input name="workShop" class="form-control" autocomplete="off"></td>-->
+<!--                <td><input name="workLine" class="form-control" autocomplete="off"></td>-->
+<!--                <td><input name="workNum" class="form-control" type="number"></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td>周日</td>-->
+<!--                <td><input name="workDate" type="date" class="form-control"></td>-->
+<!--                <td>-->
+<!--                    <select name="orderId" class="form-control">-->
+<!--                        <option></option>-->
+<!--                        <option value="1">1234</option>-->
+<!--                        <option value="2">4321</option>-->
+<!--                    </select>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <select name="productInfoId" class="form-control">-->
+<!--                        <option></option>-->
+<!--                        <option value="1">啊啊啊</option>-->
+<!--                        <option value="2">呃呃呃</option>-->
+<!--                    </select>-->
+<!--                </td>-->
+<!--                <td><input name="workShop" class="form-control" autocomplete="off"></td>-->
+<!--                <td><input name="workLine" class="form-control" autocomplete="off"></td>-->
+<!--                <td><input name="workNum" class="form-control" type="number"></td>-->
+<!--            </tr>-->
+<!--            </tbody>-->
+<!--        </table>-->
+<!--        <button class="btn btn-primary" id="submit-btn">-->
+<!--            <i class="bi bi-plus-square icon"></i>-->
+<!--            提交-->
+<!--        </button>-->
+<!--    </div>-->
+
+<nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a class="nav-link active" id="week1" data-toggle="tab" href="#nav-week1" role="tab" aria-controls="nav-week1" aria-selected="true">周一</a>
+        <a class="nav-link" id="week2" data-toggle="tab" href="#nav-week2" role="tab" aria-controls="nav-week2" aria-selected="false">周二</a>
+        <a class="nav-link" id="week3" data-toggle="tab" href="#nav-week3" role="tab" aria-controls="nav-week3" aria-selected="false">周三</a>
+        <a class="nav-link" id="week4" data-toggle="tab" href="#nav-week4" role="tab" aria-controls="nav-week4" aria-selected="true">周四</a>
+        <a class="nav-link" id="week5" data-toggle="tab" href="#nav-week5" role="tab" aria-controls="nav-week5" aria-selected="false">周五</a>
+        <a class="nav-link" id="week6" data-toggle="tab" href="#nav-week6" role="tab" aria-controls="nav-week6" aria-selected="false">周六</a>
+        <a class="nav-link" id="week7" data-toggle="tab" href="#nav-week7" role="tab" aria-controls="nav-week7" aria-selected="false">周日</a>
     </div>
+</nav>
+
+<div class="tab-content" id="nav-tabContent">
+
+<!-- 周一 -->
+    <div class="tab-pane fade" id="nav-week1" role="tabpanel" aria-labelledby="nav-week1-tab">
+        <div id="table-toolbar1">
+            <div class="btn-group" role="group">
+                <button id="add-btn1" class="btn btn-primary" onclick="javascript:showDetail()">
+                    <i class="bi bi-plus-square icon"></i>
+                    新增一行
+                </button>
+                <button id="delete-btn1" class="btn btn-primary">
+                    <i class="bi bi-trash icon"></i>
+                    删除一行
+                </button>
+                <button id="submit-btn1" class="btn btn-primary">
+                    <i class="bi bi-arrow-bar-up icon"></i>
+                    提交
+                </button>
+            </div>
+        </div>
+
+        <div class="table-div">
+            <table id="table1" class="table"></table>
+        </div>
+    </div>
+<!-- 周二 -->
+    <div class="tab-pane fade" id="nav-week2" role="tabpanel" aria-labelledby="nav-week2-tab">
+        <div id="table-toolbar2">
+            <div class="btn-group" role="group">
+                <button id="add-btn2" class="btn btn-primary" onclick="javascript:showDetail()">
+                    <i class="bi bi-plus-square icon"></i>
+                    新增一行
+                </button>
+                <button id="delete-btn2" class="btn btn-primary">
+                    <i class="bi bi-trash icon"></i>
+                    删除一行
+                </button>
+                <button id="submit-btn2" class="btn btn-primary">
+                    <i class="bi bi-arrow-bar-up icon"></i>
+                    提交
+                </button>
+            </div>
+        </div>
+
+        <div class="table-div">
+            <table id="table2" class="table"></table>
+        </div>
+    </div>
+<!-- 周三 -->
+    <div class="tab-pane fade" id="nav-week3" role="tabpanel" aria-labelledby="nav-week3-tab">
+        <div id="table-toolbar3">
+            <div class="btn-group" role="group">
+                <button id="add-btn3" class="btn btn-primary" onclick="javascript:showDetail()">
+                    <i class="bi bi-plus-square icon"></i>
+                    新增一行
+                </button>
+                <button id="delete-btn3" class="btn btn-primary">
+                    <i class="bi bi-trash icon"></i>
+                    删除一行
+                </button>
+                <button id="submit-btn3" class="btn btn-primary">
+                    <i class="bi bi-arrow-bar-up icon"></i>
+                    提交
+                </button>
+            </div>
+        </div>
+
+        <div class="table-div">
+            <table id="table3" class="table"></table>
+        </div>
+    </div>
+<!-- 周四 -->
+    <div class="tab-pane fade" id="nav-week4" role="tabpanel" aria-labelledby="nav-week4-tab">
+        <div id="table-toolbar4">
+            <div class="btn-group" role="group">
+                <button id="add-btn4" class="btn btn-primary" onclick="javascript:showDetail()">
+                    <i class="bi bi-plus-square icon"></i>
+                    新增一行
+                </button>
+                <button id="delete-btn4" class="btn btn-primary">
+                    <i class="bi bi-trash icon"></i>
+                    删除一行
+                </button>
+                <button id="submit-btn4" class="btn btn-primary">
+                    <i class="bi bi-arrow-bar-up icon"></i>
+                    提交
+                </button>
+            </div>
+        </div>
+
+        <div class="table-div">
+            <table id="table4" class="table"></table>
+        </div>
+    </div>
+<!-- 周五 -->
+    <div class="tab-pane fade" id="nav-week5" role="tabpanel" aria-labelledby="nav-week5-tab">
+        <div id="table-toolbar5">
+            <div class="btn-group" role="group">
+                <button id="add-btn5" class="btn btn-primary" onclick="javascript:showDetail()">
+                    <i class="bi bi-plus-square icon"></i>
+                    新增一行
+                </button>
+                <button id="delete-btn5" class="btn btn-primary">
+                    <i class="bi bi-trash icon"></i>
+                    删除一行
+                </button>
+                <button id="submit-btn5" class="btn btn-primary">
+                    <i class="bi bi-arrow-bar-up icon"></i>
+                    提交
+                </button>
+            </div>
+        </div>
+
+        <div class="table-div">
+            <table id="table5" class="table"></table>
+        </div>
+    </div>
+<!-- 周六 -->
+    <div class="tab-pane fade" id="nav-week6" role="tabpanel" aria-labelledby="nav-week6-tab">
+        <div id="table-toolbar6">
+            <div class="btn-group" role="group">
+                <button id="add-btn6" class="btn btn-primary" onclick="javascript:showDetail()">
+                    <i class="bi bi-plus-square icon"></i>
+                    新增一行
+                </button>
+                <button id="delete-btn6" class="btn btn-primary">
+                    <i class="bi bi-trash icon"></i>
+                    删除一行
+                </button>
+                <button id="submit-btn6" class="btn btn-primary">
+                    <i class="bi bi-arrow-bar-up icon"></i>
+                    提交
+                </button>
+            </div>
+        </div>
+
+        <div class="table-div">
+            <table id="table6" class="table"></table>
+        </div>
+    </div>
+<!-- 周日 -->
+    <div class="tab-pane fade" id="nav-week7" role="tabpanel" aria-labelledby="nav-week7-tab">
+        <div id="table-toolbar7">
+            <div class="btn-group" role="group">
+                <button id="add-btn7" class="btn btn-primary" onclick="javascript:showDetail()">
+                    <i class="bi bi-plus-square icon"></i>
+                    新增一行
+                </button>
+                <button id="delete-btn7" class="btn btn-primary">
+                    <i class="bi bi-trash icon"></i>
+                    删除一行
+                </button>
+                <button id="submit-btn7" class="btn btn-primary">
+                    <i class="bi bi-arrow-bar-up icon"></i>
+                    提交
+                </button>
+            </div>
+        </div>
+
+        <div class="table-div">
+            <table id="table7" class="table"></table>
+        </div>
+    </div>
+
+
+    <div id="add-modal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title">添加一行</div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="add-form" class="needs-validation">
+<!--                        <div class="form-group">-->
+<!--                            <select name="orderInfoId" id="orderInfoId"></select>-->
+<!--                        </div>-->
+<!--                        <div class="form-group">-->
+<!--                            <select name="productId" id="productId"></select>-->
+<!--                        </div>-->
+                        <div class="form-group">
+                            <label for="add-workDate">日期</label>
+                            <input id="add-workDate" name="workDate" type="date" class="form-control"
+                                   autocomplete="off" required>
+                            <div class="invalid-feedback">
+                                请选择日期！
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add-orderInfoId">订单</label>
+                            <select id="add-orderInfoId" name="orderInfoId" class="form-control">
+                                <option value="1">啊啊啊</option>
+                                <option value="2">呃呃呃</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                请选择订单！
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add-productName">产品</label>
+                            <select id="add-productName" name="productInfoId" class="form-control">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                请选择产品！
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add-workShop">车间</label>
+                            <input id="add-workShop" name="workShop" class="form-control" autocomplete="off" required>
+                            <div class="invalid-feedback">
+                                请输入车间！
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add-workLine">产线</label>
+                            <input id="add-workLine" name="workLine" class="form-control" autocomplete="off" required>
+                            <div class="invalid-feedback">
+                                请输入产线！
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add-workNum">产品数量</label>
+                            <input id="add-workNum" name="workNum" class="form-control" autocomplete="off" required>
+                            <div class="invalid-feedback">
+                                请输入产品数量！
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="border-top" style="padding: 15px;">
+                    <button id="add-submit-btn" type="button" class="btn btn-primary">
+                        <i class="bi bi-arrow-bar-up icon"></i>
+                        提交
+                    </button>
+                    <button id="add-close-btn" type="button" class="btn btn-primary left-margin">
+                        <i class="bi bi-x-circle icon"></i>
+                        关闭
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
 </body>
 <script>
 

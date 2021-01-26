@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>物料配置</title>
+    <script type="text/javascript" src="../javascript/Jquery.js"></script>
+    <!--bootstrap-->
+    <link rel="stylesheet" href="../bootstrap-4.5.0-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../bootstrap-4.5.0-dist/icons/bootstrap-icons.css">
+    <script type="text/javascript" src="../bootstrap-4.5.0-dist/js/bootstrap.min.js"></script>
+
+    <!--bootstrap-table-->
+    <link rel="stylesheet" href="../bootstrap-4.5.0-dist/css/bootstrap-table.css">
+    <script src="../bootstrap-4.5.0-dist/js/bootstrap-table.js"></script>
+    <script src="../bootstrap-4.5.0-dist/js/bootstrap-table-zh-CN.min.js"></script>
+
+    <link rel="stylesheet" href="../css/main.css">
+    <script type="text/javascript" src="../javascript/main.js"></script>
+    <script type="text/javascript" src="../javascript/matterInfo.js"></script>
+</head>
+<body>
+    <div class="top-toolbar bottom-border">
+        <input id="projectName" type="text" class="form-control" style="width: 200px" placeholder="项目名称">
+        <button id="select-btn1" class="btn btn-primary left-margin" style="width: 90px">
+            <i class="bi bi-search icon"></i>
+            查询
+        </button>
+    </div>
+
+    <div id="table-toolbar">
+        <div class="btn-group" role="group">
+            <button id="add-btn" class="btn btn-primary">
+                <i class="bi bi-plus-square icon"></i>
+                新增
+            </button>
+            <button id="update-btn" class="btn btn-primary">
+                <i class="bi bi-pencil-square icon"></i>
+                修改
+            </button>
+            <button id="delete-btn" class="btn btn-primary">
+                <i class="bi bi-trash icon"></i>
+                删除
+            </button>
+        </div>
+    </div>
+
+    <div class="table-div">
+        <table id="matterInfoTable"></table>
+    </div>
+
+    <div id="add-modal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title">添加物料</div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="add-form" class="needs-validation">
+                        <div class="form-group">
+                            <label for="add-code">物料代码</label>
+                            <input id="add-code" name="code" type="text" class="form-control"
+                                   autocomplete="off" required>
+                            <div class="invalid-feedback">
+                                请输入物料代码！
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add-type">类别</label>
+                            <select id="add-type" name="type" class="form-control"autocomplete="off" required>
+                                <option>标准件</option>
+                                <option>普通件</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                请选择类别！
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add-size">长度(英尺)</label>
+                            <input id="add-size" name="size" type="number" class="form-control"
+                                   autocomplete="off" required>
+                            <div class="invalid-feedback">
+                                请输入长度！
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add-yieldStrength">屈服强度</label>
+                            <input id="add-yieldStrength" name="yieldStrength" type="number" class="form-control"
+                                   autocomplete="off" required>
+                            <div class="invalid-feedback">
+                                请输入屈服强度！
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add-chartThickness">图层厚度</label>
+                            <input id="add-chartThickness" name="chartThickness" type="text" class="form-control"
+                                   autocomplete="off" required>
+                            <div class="invalid-feedback">
+                                请输入图层厚度！
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add-color">颜色</label>
+                            <input id="add-color" name="color" type="text" class="form-control"
+                                   autocomplete="off" required>
+                            <div class="invalid-feedback">
+                                请输入颜色！
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add-fittingsProportion">配件比例</label>
+                            <input id="add-fittingsProportion" name="fittingsProportion" type="text" class="form-control"
+                                   autocomplete="off" required>
+                            <div class="invalid-feedback">
+                                请输入配件比例！
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add-fittingsNum">配件数量</label>
+                            <input id="add-fittingsNum" name="fittingsNum" type="number" class="form-control"
+                                   autocomplete="off" required>
+                            <div class="invalid-feedback">
+                                请输入配件数量！
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add-supplier">供应商</label>
+                            <input id="add-supplier" name="supplier" type="text" class="form-control"
+                                   autocomplete="off" required>
+                            <div class="invalid-feedback">
+                                请输入供应商！
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="border-top" style="padding: 15px;">
+                    <button id="add-submit-btn" type="button" class="btn btn-primary">
+                        <i class="bi bi-arrow-bar-up icon"></i>
+                        提交
+                    </button>
+                    <button id="add-close-btn" type="button" class="btn btn-primary left-margin">
+                        <i class="bi bi-x-circle icon"></i>
+                        关闭
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="update-modal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title">物料编辑</div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="update-form" class="needs-validation">
+                        <div class="form-group">
+                            <input id="id" name="id" type="hidden">
+                        </div>
+                        <div class="form-group">
+                            <label for="update-code">物料代码</label>
+                            <input id="update-code" name="code" type="text" class="form-control"
+                                   autocomplete="off" required>
+                            <div class="invalid-feedback">
+                                请输入物料代码！
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="update-type">类别</label>
+                            <select id="update-type" name="type" class="form-control"autocomplete="off" required>
+                                <option>标准件</option>
+                                <option>普通件</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                请选择类别！
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="update-size">长度(英尺)</label>
+                            <input id="update-size" name="size" type="number" class="form-control"
+                                   autocomplete="off" required>
+                            <div class="invalid-feedback">
+                                请输入长度！
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="update-yieldStrength">屈服强度</label>
+                            <input id="update-yieldStrength" name="yieldStrength" type="number" class="form-control"
+                                   autocomplete="off" required>
+                            <div class="invalid-feedback">
+                                请输入屈服强度！
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="update-chartThickness">图层厚度</label>
+                            <input id="update-chartThickness" name="chartThickness" type="text" class="form-control"
+                                   autocomplete="off" required>
+                            <div class="invalid-feedback">
+                                请输入图层厚度！
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="update-color">颜色</label>
+                            <input id="update-color" name="color" type="text" class="form-control"
+                                   autocomplete="off" required>
+                            <div class="invalid-feedback">
+                                请输入颜色！
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="update-fittingsProportion">配件比例</label>
+                            <input id="update-fittingsProportion" name="fittingsProportion" type="text" class="form-control"
+                                   autocomplete="off" required>
+                            <div class="invalid-feedback">
+                                请输入配件比例！
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="update-fittingsNum">配件数量</label>
+                            <input id="update-fittingsNum" name="fittingsNum" type="number" class="form-control"
+                                   autocomplete="off" required>
+                            <div class="invalid-feedback">
+                                请输入配件数量！
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="update-supplier">供应商</label>
+                            <input id="update-supplier" name="supplier" type="text" class="form-control"
+                                   autocomplete="off" required>
+                            <div class="invalid-feedback">
+                                请输入供应商！
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="border-top" style="padding: 15px;">
+                    <button id="update-submit-btn" type="button" class="btn btn-primary">
+                        <i class="bi bi-arrow-bar-up icon"></i>
+                        提交
+                    </button>
+                    <button id="update-close-btn" type="button" class="btn btn-primary left-margin">
+                        <i class="bi bi-x-circle icon"></i>
+                        关闭
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

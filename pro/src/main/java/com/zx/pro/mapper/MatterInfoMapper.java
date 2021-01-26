@@ -39,4 +39,15 @@ public interface MatterInfoMapper extends BaseMapper<MatterInfo> {
             "group by mp.matter_info_id) as mi_info " +
             "where mi_info.matter_num > 0")
     List<MatterInfoItem> getListOfUse(Integer projectInfoId);
+
+    /**
+     * 查询一个项目下所有物料信息
+     * @param projectName 项目名
+     * @return
+     */
+    @Select("select mi.*,mp.project_info_id from matter_info mi LEFT JOIN matter_project mp on mi.id=mp.matter_info_id LEFT JOIN project_info pi on pi.id=mp.project_info_id where pi.project_name like CONCAT('%',#{projectName},'%') ")
+    List<MatterInfoItem>getListByProjectName(String projectName);
+    //like ('%',#{projectName},'%')
+
+
 }

@@ -23,4 +23,10 @@ public class ProductInfoServiceImpl extends ServiceImpl<ProductInfoMapper, Produ
     public boolean add(List<ProductInfo> productInfoList) {
         return this.saveBatch(productInfoList,50);
     }
+
+    @Override
+    public List<ProductInfo> getList() {
+        return this.list();
+    }
+
 }

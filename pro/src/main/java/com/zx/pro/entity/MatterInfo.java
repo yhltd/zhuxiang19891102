@@ -17,6 +17,12 @@ public class MatterInfo {
      * 物料代码
      */
     private String code;
+
+    /**
+     * 类别
+     */
+    private String type;
+
     /**
      * 长度（英尺）
      */
@@ -24,7 +30,7 @@ public class MatterInfo {
     /**
      * 屈服强度
      */
-    private String yieldStrength;
+    private Double yieldStrength;
     /**
      * 图层厚度
      */
@@ -41,4 +47,9 @@ public class MatterInfo {
      * 配件数量
      */
     private Double fittingsNum;
+    /**
+     * 供应商
+     */
+    private String supplier;
 }
+

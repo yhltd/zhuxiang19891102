@@ -6,6 +6,7 @@ import com.zx.pro.entity.WorkOrderInfo;
 import com.zx.pro.mapper.WorkOrderInfoMapper;
 import com.zx.pro.service.IWorkOrderDetailService;
 import com.zx.pro.service.IWorkOrderInfoService;
+import com.zx.pro.util.OrderUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,8 +29,9 @@ public class WorkOrderInfoImpl extends ServiceImpl<WorkOrderInfoMapper, WorkOrde
     public WorkOrderInfo add() {
         WorkOrderInfo workOrderInfo = new WorkOrderInfo();
         workOrderInfo.setCreateTime(LocalDateTime.now());
-        String workOrder = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")).replace("-","").replace(":","");
-        workOrderInfo.setWorkOrder("P"+workOrder);
+//        String workOrder = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")).replace("-","").replace(":","");
+//        workOrderInfo.setWorkOrder("P"+workOrder);
+        workOrderInfo.setWorkOrder(OrderUtil.getOrder("P"));
         workOrderInfo.setState("未开始");
         return this.save(workOrderInfo) ? workOrderInfo : null;
     }

@@ -3,10 +3,7 @@ package com.zx.pro.controller;
 import com.zx.pro.entity.MatterProject;
 import com.zx.pro.entity.UserInfo;
 import com.zx.pro.service.IMatterProjectService;
-import com.zx.pro.util.GsonUtil;
-import com.zx.pro.util.ResultInfo;
-import com.zx.pro.util.SessionUtil;
-import com.zx.pro.util.StringUtils;
+import com.zx.pro.util.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,7 +33,7 @@ public class MatterProjectController {
      * @return ResultInfo
      */
     @PostMapping("/getList")
-    public ResultInfo getMatterProductList(){
+    public ResultInfo getMatterProductList(HttpSession session){
         try {
             return ResultInfo.success("获取成功", iMatterProjectService.getList());
         }catch (Exception e){

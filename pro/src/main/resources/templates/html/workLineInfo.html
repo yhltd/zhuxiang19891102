@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>产线生产总汇</title>
+    <script type="text/javascript" src="../javascript/Jquery.js"></script>
+    <!--bootstrap-->
+    <link rel="stylesheet" href="../bootstrap-4.5.0-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../bootstrap-4.5.0-dist/icons/bootstrap-icons.css">
+    <script type="text/javascript" src="../bootstrap-4.5.0-dist/js/bootstrap.min.js"></script>
+
+    <!--bootstrap-table-->
+    <link rel="stylesheet" href="../bootstrap-4.5.0-dist/css/bootstrap-table.css">
+    <script src="../bootstrap-4.5.0-dist/js/bootstrap-table.js"></script>
+    <script src="../bootstrap-4.5.0-dist/js/bootstrap-table-zh-CN.min.js"></script>
+
+    <link rel="stylesheet" href="../css/main.css">
+    <script type="text/javascript" src="../javascript/main.js"></script>
+    <script type="text/javascript" src="../javascript/workLineInfo.js"></script>
+</head>
+<body>
+    <div class="top-toolbar bottom-border">
+        <div class="input-group left-margin" style="width: 550px">
+            <div class="input-group-prepend">
+                <span class="input-group-text">时间</span>
+            </div>
+            <input id="startDate" type="datetime-local" class="form-control">
+            <input id="endDate" type="datetime-local" class="form-control">
+            <button id="select-btn" class="btn btn-primary left-margin" style="width: 90px">
+                <i class="bi bi-search icon"></i>
+                查询
+            </button>
+        </div>
+    </div>
+    <div class="table-div">
+        <table id="workLineTable"></table>
+    </div>
+</body>
+</html>

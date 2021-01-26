@@ -25,4 +25,6 @@ public interface IProductInfoService extends IService<ProductInfo> {
      * @return
      */
     boolean add(List<ProductInfo> productInfoList);
+
+    List<ProductInfo> getList();
 }

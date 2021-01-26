@@ -43,6 +43,13 @@ public interface IMatterInfoService extends IService<MatterInfo> {
     List<MatterInfoItem> getListOfUse(Integer projectId);
 
     /**
+     * 根据项目名查所有可用物料
+     * @param projectName 项目名
+     * @return
+     */
+    List<MatterInfoItem>getListByProjectName(String projectName);
+
+    /**
      * 修改
      * @param matterInfo 修改过的物料对象
      * @return 是否修改成功
