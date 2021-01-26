@@ -11,7 +11,7 @@ function getList(){
 }
 
 $(function () {
-    //获取数据
+    //获取数据getListByWorkOrder
     getList();
 
     //删除

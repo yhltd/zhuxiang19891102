@@ -18,4 +18,11 @@ public interface IProductMatterService extends IService<ProductMatter> {
      * @return
      */
     boolean add(List<ProductMatter> productMatterList);
+
+    /**
+     * 批量修改
+     * @param productMatterList
+     * @return
+     */
+    boolean update(Integer productInfoId,List<ProductMatter> productMatterList);
 }

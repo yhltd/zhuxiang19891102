@@ -39,4 +39,19 @@ public interface MatterInfoMapper extends BaseMapper<MatterInfo> {
             "group by mp.matter_info_id) as mi_info " +
             "where mi_info.matter_num > 0")
     List<MatterInfoItem> getListOfUse(Integer projectInfoId);
+
+
+    /**
+     * 查询一个产品所需的物料信息
+     * @param productId 产品id
+     * @return
+     */
+    @Select("select mi.*,pm.num,pm.price,pm.matter_project_id " +
+            "from product_matter as pm " +
+            "left join matter_project as mp " +
+            "on pm.matter_project_id = mp.id " +
+            "left join matter_info as mi " +
+            "on mp.matter_info_id = mi.id " +
+            "where pm.product_info_id = #{productId}")
+    List<MatterInfoItem> getListByProductId(Integer productId);
 }

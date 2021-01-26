@@ -65,6 +65,7 @@ $(function () {
         productInfoList.push({
             productName: '',
             productNum: 0,
+            productPrice: 0,
             matterInfo: []
         })
         setProductTable();
@@ -386,6 +387,14 @@ function setProductTable() {
                     return '<input type="text" class="form-control" value="' + value + '"/>'
                 }
             }, {
+                field: 'productPrice',
+                title: '单价',
+                align: 'left',
+                width: 70,
+                formatter: function (value, row, index) {
+                    return '<input type="text" class="form-control" value="' + value + '"/>'
+                }
+            }, {
                 field: 'matterInfo',
                 title: '操作',
                 align: 'left',
@@ -419,12 +428,14 @@ function setProductTable() {
 function showMatterInfo(index) {
     let productName = $('#product-table tbody tr:eq(' + index + ') td:eq(0)').children().val();
     let productNum = parseInt($('#product-table tbody tr:eq(' + index + ') td:eq(1)').children().val());
-    if (productName == '' || productNum == 0) {
+    let productPrice = parseInt($('#product-table tbody tr:eq(' + index + ') td:eq(2)').children().val());
+    if (productName == '' || productNum == 0 || productPrice == 0) {
         alert('请先填写产品信息')
         return;
     } else {
         productInfoList[index].productName = productName;
         productInfoList[index].productNum = productNum;
+        productInfoList[index].productPrice = productPrice;
     }
 
     $('#product-modal').modal('hide');

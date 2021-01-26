@@ -7,7 +7,6 @@ import com.zx.pro.entity.MatterInfo;
 import com.zx.pro.entity.MatterInfoItem;
 import com.zx.pro.mapper.MatterInfoMapper;
 import com.zx.pro.service.IMatterInfoService;
-import com.zx.pro.service.IMatterProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,9 +19,6 @@ import java.util.List;
  */
 @Service
 public class MatterInfoImpl extends ServiceImpl<MatterInfoMapper, MatterInfo> implements IMatterInfoService {
-
-    @Autowired
-    private IMatterProjectService iMatterProjectService;
 
     @Autowired
     private MatterInfoMapper matterInfoMapper;
@@ -42,6 +38,11 @@ public class MatterInfoImpl extends ServiceImpl<MatterInfoMapper, MatterInfo> im
     @Override
     public List<MatterInfoItem> getList(Integer projectId) {
         return matterInfoMapper.getList(projectId);
+    }
+
+    @Override
+    public List<MatterInfoItem> getListByProductId(Integer productId) {
+        return matterInfoMapper.getListByProductId(productId);
     }
 
     @Override

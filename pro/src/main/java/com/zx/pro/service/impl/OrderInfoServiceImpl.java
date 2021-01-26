@@ -10,13 +10,10 @@ import com.zx.pro.util.GsonUtil;
 import com.zx.pro.util.OrderUtil;
 import com.zx.pro.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
-import javax.print.DocFlavor;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -37,7 +34,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
 
     @Override
     public List<OrderInfoItem> getList() {
-        return orderInfoMapper.getList();
+        return orderInfoMapper.postList();
     }
 
     @Override
@@ -50,6 +47,16 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
                 LocalDateTime.parse(endDateStr) :
                 StringUtils.MAX_DATETIME;
         return orderInfoMapper.getList(projectName,orderId,startDate,endDate);
+    }
+
+    @Override
+    public List<OrderState> getOrderStateList() {
+        return orderInfoMapper.getOrderStateList();
+    }
+
+    @Override
+    public List<OrderState> getOrderStateList(String orderId) {
+        return orderInfoMapper.getOrderStateList(orderId);
     }
 
     @Override
@@ -75,7 +82,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
             //产品信息
             ProductInfo productInfo = new ProductInfo();
             //订单表id
-            productInfo.setOrderInfoId(orderInfo.getId());
+            productInfo.setOrderInfoId(orderInfo.getOrderId());
             //产品名称
             productInfo.setProductName(StringUtils.cast(hashMap.get("productName")));
             //产品数量
@@ -94,7 +101,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
                 //产品所需物料
                 ProductMatter productMatter = new ProductMatter();
                 //产品信息表id
-                productMatter.setProductInfoId(productInfo.getOrderInfoId());
+                productMatter.setProductInfoId(productInfo.getId());
                 //项目物料表id
                 productMatter.setMatterProjectId(matterInfoItem.getMatterProjectId());
                 //数量

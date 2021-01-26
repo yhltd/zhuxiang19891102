@@ -9,7 +9,7 @@ import lombok.Data;
  * @author dai
  */
 @Data
-@TableName("product_info_copy")
+@TableName("product_info")
 public class ProductInfo {
 
     @TableId(value = "id",type = IdType.AUTO)
@@ -17,7 +17,7 @@ public class ProductInfo {
     /**
      * 订单表id
      */
-    private int orderInfoId;
+    private String orderInfoId;
     /**
      * 产品名称
      */
@@ -26,4 +26,8 @@ public class ProductInfo {
      * 产品数量
      */
     private Double productNum;
+    /**
+     * 产品单价
+     */
+    private Double productPrice;
 }

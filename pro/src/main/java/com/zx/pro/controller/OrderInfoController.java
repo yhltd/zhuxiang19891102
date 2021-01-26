@@ -2,6 +2,7 @@ package com.zx.pro.controller;
 
 import com.zx.pro.entity.OrderInfo;
 import com.zx.pro.entity.OrderInfoItem;
+import com.zx.pro.entity.OrderState;
 import com.zx.pro.service.IOrderInfoService;
 import com.zx.pro.util.*;
 import lombok.extern.slf4j.Slf4j;
@@ -66,6 +67,43 @@ public class OrderInfoController {
         }
     }
 
+    @RequestMapping("/post_state_list")
+    public ResultInfo postStateList() {
+        try {
+            List<OrderState> list = iOrderInfoService.getOrderStateList("");
+
+            if (StringUtils.isNotNull(list)) {
+                return ResultInfo.success("查询成功", list);
+            } else {
+                return ResultInfo.success("查询失败");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("查询失败：{}", e.getMessage());
+            return ResultInfo.error("查询失败");
+        }
+    }
+
+    @RequestMapping("/select_state_list")
+    public ResultInfo postStateList(@RequestBody HashMap map) {
+        try {
+            String orderId = map.get("orderId").toString();
+
+            List<OrderState> list = iOrderInfoService.getOrderStateList(orderId);
+
+            if (StringUtils.isNotNull(list)) {
+                return ResultInfo.success("查询成功", list);
+            } else {
+                return ResultInfo.success("查询失败");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("查询失败：{}", e.getMessage());
+            return ResultInfo.error("查询失败");
+        }
+    }
+
     @RequestMapping("/update")
     public ResultInfo update(@RequestBody String orderInfoItemJson){
         try{
@@ -112,7 +150,7 @@ public class OrderInfoController {
         GsonUtil gsonUtil = new GsonUtil(GsonUtil.toJson(map));
 
         try{
-            OrderInfo orderInfo = GsonUtil.toEntity(gsonUtil.get("orderInfo"),OrderInfo.class);
+            OrderInfo orderInfo = GsonUtil.toEntity(gsonUtil.get("orderInfo"), OrderInfo.class);
             List<HashMap> list = GsonUtil.toList(gsonUtil.get("productInfoList"),HashMap.class);
 
             if(iOrderInfoService.add(orderInfo,list)){

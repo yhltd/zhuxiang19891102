@@ -18,6 +18,10 @@ public class MatterInfo {
      */
     private String code;
     /**
+     * 物料类型
+     */
+    private String type;
+    /**
      * 长度（英尺）
      */
     private Double size;

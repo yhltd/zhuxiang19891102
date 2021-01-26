@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>库存</title>
+
+    <script type="text/javascript" src="../javascript/Jquery.js"></script>
+    <!--bootstrap-->
+    <link rel="stylesheet" href="../bootstrap-4.5.0-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../bootstrap-4.5.0-dist/icons/bootstrap-icons.css">
+    <script type="text/javascript" src="../bootstrap-4.5.0-dist/js/popper.js"></script>
+    <script type="text/javascript" src="../bootstrap-4.5.0-dist/js/bootstrap.min.js"></script>
+
+    <!--bootstrap-table-->
+    <link rel="stylesheet" href="../bootstrap-4.5.0-dist/css/bootstrap-table.css">
+    <script src="../bootstrap-4.5.0-dist/js/bootstrap-table.js"></script>
+    <script src="../bootstrap-4.5.0-dist/js/bootstrap-table-zh-CN.min.js"></script>
+    <!--自定义js-->
+    <link rel="stylesheet" href="../css/dcLoading.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <script type="text/javascript" src="../javascript/main.js"></script>
+    <script type="text/javascript" src="../javascript/stock.js"></script>
+</head>
+<body>
+<div class="top-toolbar bottom-border">
+    <input id="productName-select" type="text" class="form-control left-margin"
+           style="width: 200px" placeholder="产品名称" autocomplete="off">
+
+    <button id="select-btn" class="btn btn-primary left-margin" style="width: 90px">
+        <i class="bi bi-search icon"></i>
+        查询
+    </button>
+</div>
+
+
+<div id="table-toolbar">
+    <div class="btn-group" role="group">
+        <button id="edit-btn" class="btn btn-primary">
+            <i class="bi bi-pencil-square icon"></i>
+            修改
+        </button>
+        <button id="delete-btn" class="btn btn-primary">
+            <i class="bi bi-trash icon"></i>
+            删除
+        </button>
+        <button id="refresh-btn" class="btn btn-primary">
+            <i class="bi bi-arrow-clockwise icon"></i>
+        </button>
+    </div>
+</div>
+<div class="table-div">
+    <table id="table"></table>
+</div>
+
+<div id="edit-modal" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">修改库存</div>
+            </div>
+            <div class="modal-body">
+                <form id="edit-form" class="needs-validation">
+                    <div class="form-group">
+                        <label for="upd-stockNum">库存数量</label>
+                        <input id="upd-stockNum" name="stockNum" type="number" class="form-control"
+                               autocomplete="off" required>
+                        <div class="invalid-feedback">
+                            请输入库存数量！
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="border-top" style="padding: 15px;">
+                <button id="edit-form-submit-btn" type="button" class="btn btn-primary">
+                    <i class="bi bi-arrow-bar-up icon"></i>
+                    提交
+                </button>
+                <button id="edit-form-close-btn" type="button" class="btn btn-primary left-margin">
+                    <i class="bi bi-x-circle icon"></i>
+                    关闭
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="delete-modal" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">提示</div>
+            </div>
+            <div id="delete-modal-body" class="modal-body">
+                确定删除吗？
+            </div>
+            <div class="border-top" style="padding: 15px;">
+                <button id="delete-submit-btn" type="button" class="btn btn-primary">
+                    <i class="bi bi-arrow-bar-up icon"></i>
+                    确定
+                </button>
+                <button id="delete-close-btn" type="button" class="btn btn-primary left-margin">
+                    <i class="bi bi-x-circle icon"></i>
+                    取消
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

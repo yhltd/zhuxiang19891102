@@ -25,6 +25,7 @@ public class LoginConfig implements WebMvcConfigurer {
                 "/",
                 "/error",
                 "/index.html",
+                "/test.html",
                 "/user/login",
                 "/css/**",
                 "/javascript/**",

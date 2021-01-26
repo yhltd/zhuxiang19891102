@@ -30,6 +30,21 @@ public interface IWorkOrderInfoService extends IService<WorkOrderInfo> {
 
     /**
      * 查询派工单信息
+     * @param state 状态
+     * @return
+     */
+    List<WorkOrderInfo> getListByState(String state);
+
+    /**
+     * 修改状态
+     * @param workOrder
+     * @param state
+     * @return
+     */
+    boolean updateState(String workOrder,String state);
+
+    /**
+     * 查询派工单信息
      * @param workOrder 根据派工单单号查询
      * @return 派工单信息list
      */

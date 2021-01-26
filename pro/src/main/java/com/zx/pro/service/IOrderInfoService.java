@@ -3,9 +3,9 @@ package com.zx.pro.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zx.pro.entity.OrderInfo;
 import com.zx.pro.entity.OrderInfoItem;
+import com.zx.pro.entity.OrderState;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,6 +19,9 @@ public interface IOrderInfoService extends IService<OrderInfo> {
 
     List<OrderInfoItem> getList(String projectName,String orderId,String startDateStr,String endDateStr);
 
+    List<OrderState> getOrderStateList();
+
+    List<OrderState> getOrderStateList(String orderId);
     /**
      * 修改操作
      * @param orderInfoItem 订单信息的子类

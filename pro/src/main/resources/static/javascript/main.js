@@ -1,3 +1,10 @@
+$(function(){
+    $('table').bootstrapTable('post-body.bs.table',function(){
+        alert('OK');
+    })
+})
+
+
 function $ajax(options,isLoading,loadingEl,success){
     $.ajax({
         ...options,

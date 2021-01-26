@@ -275,8 +275,8 @@ function setMatterTable(data) {
         sortStable: true,
         classes: 'table table-hover',
         idField: 'id',
-        pagination: true,
-        clickToSelect: true,
+        pagination: false,
+        clickToSelect: false,
         locale: 'zh-CN',
         columns: [
             {
@@ -336,7 +336,7 @@ function setTable(data) {
         sortStable: true,
         classes: 'table table-hover',
         idField: 'id',
-        pagination: false,
+        pagination: true,
         clickToSelect: true,
         locale: 'zh-CN',
         toolbar: '#table-toolbar',

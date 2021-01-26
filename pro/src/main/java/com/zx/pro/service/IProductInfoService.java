@@ -12,6 +12,21 @@ import java.util.List;
 @Service
 public interface IProductInfoService extends IService<ProductInfo> {
 
+
+    /**
+     * 查询所有信息
+     * @return
+     */
+    List<ProductInfo> getList();
+
+    /**
+     * 条件查询
+     * @param orderId 订单号
+     * @param productName 产品名称
+     * @return
+     */
+    List<ProductInfo> getList(String orderId,String productName);
+
     /**
      * 新增产品
      * @param productInfo
@@ -25,4 +40,18 @@ public interface IProductInfoService extends IService<ProductInfo> {
      * @return
      */
     boolean add(List<ProductInfo> productInfoList);
+
+    /**
+     * 修改
+     * @param productInfo 产品信息
+     * @return
+     */
+    boolean update(ProductInfo productInfo);
+
+    /**
+     * 批量删除
+     * @param idList id集合
+     * @return
+     */
+    boolean delete(List<Integer> idList);
 }

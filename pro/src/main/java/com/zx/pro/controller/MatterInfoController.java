@@ -1,6 +1,7 @@
 package com.zx.pro.controller;
 
 import com.zx.pro.entity.MatterInfo;
+import com.zx.pro.entity.MatterInfoItem;
 import com.zx.pro.entity.ProjectInfo;
 import com.zx.pro.service.IMatterInfoService;
 import com.zx.pro.util.ResultInfo;
@@ -28,14 +29,17 @@ public class MatterInfoController {
     /**
      * 查询物料信息
      *
-     * @return 物料信息的集合
      * @return ResultInfo
      */
     @PostMapping("/getList")
     public ResultInfo getList() {
         try {
-            List<MatterInfo> matterInfoList = iMatterInfoService.getList();
-            return ResultInfo.success("获取成功", matterInfoList);
+            List<MatterInfo> list = iMatterInfoService.getList();
+            if (StringUtils.isNotNull(list)) {
+                return ResultInfo.success("获取成功", list);
+            } else {
+                return ResultInfo.success("获取失败");
+            }
         } catch (Exception e) {
             e.printStackTrace();
             log.error("获取失败：{}", e.getMessage());
@@ -44,11 +48,16 @@ public class MatterInfoController {
     }
 
     @RequestMapping("/selectListByProjectId")
-    public ResultInfo getList(@RequestBody HashMap map){
+    public ResultInfo getList(@RequestBody HashMap map) {
         try {
             Integer projectId = Integer.parseInt(map.get("projectId").toString());
 
-            return ResultInfo.success("获取成功", iMatterInfoService.getList(projectId));
+            List<MatterInfoItem> list = iMatterInfoService.getList(projectId);
+            if (StringUtils.isNotNull(list)) {
+                return ResultInfo.success("获取成功", list);
+            } else {
+                return ResultInfo.success("获取失败");
+            }
         } catch (Exception e) {
             e.printStackTrace();
             log.error("获取失败：{}", e.getMessage());
@@ -58,11 +67,35 @@ public class MatterInfoController {
     }
 
     @RequestMapping("/selectListOfUseByProjectId")
-    public ResultInfo getListOfUse(@RequestBody HashMap map){
+    public ResultInfo getListOfUse(@RequestBody HashMap map) {
         try {
             Integer projectId = Integer.parseInt(map.get("projectId").toString());
 
-            return ResultInfo.success("获取成功", iMatterInfoService.getListOfUse(projectId));
+            List<MatterInfoItem> list = iMatterInfoService.getListOfUse(projectId);
+            if (StringUtils.isNotNull(list)) {
+                return ResultInfo.success("获取成功", list);
+            } else {
+                return ResultInfo.success("获取失败");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("获取失败：{}", e.getMessage());
+            log.error("参数：{}", map);
+            return ResultInfo.error("错误!");
+        }
+    }
+
+    @RequestMapping("/selectListByProductId")
+    public ResultInfo getListByProductId(@RequestBody HashMap map) {
+        try {
+            Integer productId = Integer.parseInt(map.get("productId").toString());
+
+            List<MatterInfoItem> list = iMatterInfoService.getListByProductId(productId);
+            if (StringUtils.isNotNull(list)) {
+                return ResultInfo.success("获取成功", list);
+            } else {
+                return ResultInfo.success("获取失败");
+            }
         } catch (Exception e) {
             e.printStackTrace();
             log.error("获取失败：{}", e.getMessage());

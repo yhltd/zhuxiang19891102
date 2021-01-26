@@ -3,6 +3,7 @@ package com.zx.pro.controller;
 import com.zx.pro.entity.WorkOrderInfo;
 import com.zx.pro.service.IWorkOrderInfoService;
 import com.zx.pro.util.ResultInfo;
+import com.zx.pro.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -68,6 +69,23 @@ public class WorkOrderInfoController {
             return ResultInfo.success("查询成功", getList);
         } catch (Exception e) {
             log.error("获取派工单信息集合失败：{}，参数：[]", e.getMessage());
+            return ResultInfo.error("错误!");
+        }
+    }
+
+
+    @PostMapping("/getListByState")
+    public ResultInfo getListByState() {
+        try {
+            List<WorkOrderInfo> list = iWorkOrderInfoService.getListByState("0");
+
+            if(StringUtils.isNotNull(list)){
+                return ResultInfo.success("查询成功", list);
+            }else{
+                return ResultInfo.success("查询失败");
+            }
+        } catch (Exception e) {
+            log.error("获取派工单信息集合失败：{}", e.getMessage());
             return ResultInfo.error("错误!");
         }
     }
