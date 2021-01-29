@@ -1,9 +1,13 @@
 package com.zx.pro.mapper;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.zx.pro.entity.MatterProjectChange;
 import com.zx.pro.entity.MatterProjectChangeItem;
+import com.zx.pro.entity.ProductInfo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -34,9 +38,11 @@ public interface MatterProjectChangeMapper extends BaseMapper<MatterProjectChang
             "left join matter_project as mp on mpc.matter_project_id = mp.id " +
             "left join project_info as pi on mp.project_info_id = pi.id " +
             "left join matter_info as mi on mp.matter_info_id = mi.id " +
-            "where pi.project_name like CONCAT('%',#{projectName},'%') and " +
-            "mi.code like CONCAT('%',#{code},'%') and " +
-            "mpc.update_man like CONCAT('%',#{updateMan},'%') " +
+            "where pi.project_name like concat('%',#{projectName},'%') " +
+            "and mi.code like concat('%',#{code},'%') " +
+            "and mpc.update_man like concat('%',#{updateMan},'%') " +
             "order by mpc.update_time desc")
-    List<MatterProjectChangeItem> getList(String projectName, String code, String updateMan);
+    List<MatterProjectChangeItem> selectList(@Param("projectName") String projectName,
+                                             @Param("code") String code,
+                                             @Param("updateMan") String updateMan);
 }

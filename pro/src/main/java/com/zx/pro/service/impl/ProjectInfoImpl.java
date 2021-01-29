@@ -7,6 +7,7 @@ import com.zx.pro.entity.ProjectInfo;
 import com.zx.pro.mapper.ProjectInfoMapper;
 import com.zx.pro.service.IMatterProjectChangeService;
 import com.zx.pro.service.IMatterProjectService;
+import com.zx.pro.service.IOrderInfoService;
 import com.zx.pro.service.IProjectInfoService;
 import com.zx.pro.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ import java.util.List;
  */
 @Service
 public class ProjectInfoImpl extends ServiceImpl<ProjectInfoMapper, ProjectInfo> implements IProjectInfoService {
+
+    @Autowired
+    private IOrderInfoService iOrderInfoService;
 
     @Autowired
     private IMatterProjectService iMatterProjectService;
@@ -90,21 +94,22 @@ public class ProjectInfoImpl extends ServiceImpl<ProjectInfoMapper, ProjectInfo>
     @Override
     public boolean delete(List<Integer> idList) {
         //获取选择的项目下的项目物料信息
-        List<MatterProject> matterProductList = iMatterProjectService.getList(idList);
+        List<MatterProject> matterProjectList = iMatterProjectService.getList(idList);
         //循环获取id
-        if(StringUtils.isNotNull(matterProductList)) {
+        if(StringUtils.isNotNull(matterProjectList)) {
             List<Integer> matterProductIdList = new ArrayList<>();
-            matterProductList.forEach(matterProduct -> {
-                matterProductIdList.add(matterProduct.getId());
-            });
-
-            //删除项目信息
-            if(this.removeByIds(idList)){
-                //删除项目物料需求变化表
-                iMatterProjectChangeService.deleteByMatterProjectId(matterProductIdList);
-                //删除项目关联的项目物料表
-                return iMatterProjectService.deleteByProjectId(idList);
+            for(MatterProject matterProject : matterProjectList){
+                matterProductIdList.add(matterProject.getId());
             }
+
+            //删除该项目下的所有订单
+            iOrderInfoService.deleteByProjectId(idList);
+            //删除项目物料需求变化表
+            iMatterProjectChangeService.deleteByMatterProjectId(matterProductIdList);
+            //删除项目关联的项目物料表
+            iMatterProjectService.deleteByProjectId(idList);
+            //删除项目信息
+            return this.removeByIds(idList);
         }
         return false;
     }

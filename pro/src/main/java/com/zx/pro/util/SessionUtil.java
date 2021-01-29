@@ -24,8 +24,9 @@ public class SessionUtil {
      * @return 是否过期
      */
     public static boolean checkToken(HttpSession session) {
-        Object data = session.getAttribute("token");
-        return StringUtils.isNotNull(data);
+        Object token = session.getAttribute("token");
+        Object power = session.getAttribute("power");
+        return StringUtils.isNotNull(token) && StringUtils.isNotNull(power);
     }
 
     /**
@@ -40,7 +41,6 @@ public class SessionUtil {
     }
 
     public static void setPower(HttpSession session, List<UserPower> userPower){
-        String powerJson = GsonUtil.toJson(userPower);
         //设置session过期时间
         session.setMaxInactiveInterval(MAX_INTERVAL);
         session.setAttribute("power", userPower);

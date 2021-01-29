@@ -7,9 +7,12 @@ import com.zx.pro.entity.WorkOrderInfo;
 import com.zx.pro.mapper.WorkOrderInfoMapper;
 import com.zx.pro.service.IWorkOrderDetailService;
 import com.zx.pro.service.IWorkOrderInfoService;
+import com.zx.pro.util.OrderUtil;
+import com.zx.pro.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.print.DocFlavor;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -32,15 +35,30 @@ public class WorkOrderInfoImpl extends ServiceImpl<WorkOrderInfoMapper, WorkOrde
     public WorkOrderInfo add() {
         WorkOrderInfo workOrderInfo = new WorkOrderInfo();
         workOrderInfo.setCreateTime(LocalDateTime.now());
-        String workOrder = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")).replace("-", "").replace(":", "");
-        workOrderInfo.setWorkOrder("P" + workOrder);
-        workOrderInfo.setState("未开始");
+        workOrderInfo.setWorkOrder(OrderUtil.getOrder("WO"));
+        workOrderInfo.setState("0");
         return this.save(workOrderInfo) ? workOrderInfo : null;
     }
 
     @Override
     public List<WorkOrderInfo> getList() {
         return this.list();
+    }
+
+    @Override
+    public List<WorkOrderInfo> selectList(String workOrder, String startDateStr, String endDateStr) {
+        LocalDateTime startDate = StringUtils.isNotEmpty(startDateStr) ?
+                LocalDateTime.parse(startDateStr) :
+                StringUtils.MIN_DATETIME;
+
+        LocalDateTime endDate = StringUtils.isNotEmpty(endDateStr) ?
+                LocalDateTime.parse(endDateStr) :
+                StringUtils.MAX_DATETIME;
+
+        QueryWrapper<WorkOrderInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.between("create_time", startDate, endDate);
+        queryWrapper.like("work_order", workOrder);
+        return this.list(queryWrapper);
     }
 
     @Override
@@ -53,19 +71,5 @@ public class WorkOrderInfoImpl extends ServiceImpl<WorkOrderInfoMapper, WorkOrde
     @Override
     public boolean updateState(String workOrder, String state) {
         return workOrderInfoMapper.updateState(workOrder, state) > 0;
-    }
-
-    @Override
-    public List<WorkOrderInfo> getList(String workOrder) {
-        QueryWrapper<WorkOrderInfo> wrapper = new QueryWrapper<>();
-        wrapper.like("work_order", workOrder);
-        return this.list(wrapper);
-    }
-
-    @Override
-    public List<WorkOrderInfo> getList(LocalDateTime startTime, LocalDateTime endTime) {
-        QueryWrapper<WorkOrderInfo> wrapper = new QueryWrapper<>();
-        wrapper.between("create_time", startTime, endTime);
-        return this.list(wrapper);
     }
 }

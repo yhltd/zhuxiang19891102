@@ -26,37 +26,53 @@ public class PowerUtil{
     }
 
     public boolean isAdd(String viewName) {
-        for(UserPower userPower : powerList){
-            if(userPower.getViewName().equals(viewName)){
-                return userPower.getAdds() > 0;
+        try{
+            for(UserPower userPower : powerList){
+                if(userPower.getViewName().equals(viewName)){
+                    return userPower.getAdds() > 0;
+                }
             }
+        }catch (Exception e){
+            return false;
         }
         return false;
     }
 
     public boolean isDelete(String viewName) {
-        for(UserPower userPower : powerList){
-            if(userPower.getViewName().equals(viewName)){
-                return userPower.getDeletes() > 0;
+        try{
+            for(UserPower userPower : powerList){
+                if(userPower.getViewName().equals(viewName)){
+                    return userPower.getDeletes() > 0;
+                }
             }
+        }catch (Exception e){
+            return false;
         }
         return false;
     }
 
     public boolean isUpdate(String viewName) {
-        for(UserPower userPower : powerList){
-            if(userPower.getViewName().equals(viewName)){
-                return userPower.getUpdates() > 0;
+        try{
+            for(UserPower userPower : powerList){
+                if(userPower.getViewName().equals(viewName)){
+                    return userPower.getUpdates() > 0;
+                }
             }
+        }catch (Exception e){
+            return false;
         }
         return false;
     }
 
     public boolean isSelect(String viewName) {
-        for(UserPower userPower : powerList){
-            if(userPower.getViewName().equals(viewName)){
-                return userPower.getSelects() > 0;
+        try{
+            for(UserPower userPower : powerList){
+                if(userPower.getViewName().equals(viewName)){
+                    return userPower.getSelects() > 0;
+                }
             }
+        }catch (Exception e){
+            return false;
         }
         return false;
     }

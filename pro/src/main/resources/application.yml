@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: dev
   datasource:
     druid:
       max-wait: 10000
@@ -13,3 +15,10 @@ spring:
     static-path-pattern: /**
   resources:
     static-locations: classpath:/templates/,classpath:/static/
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+server:
+  port: 8084
+
+

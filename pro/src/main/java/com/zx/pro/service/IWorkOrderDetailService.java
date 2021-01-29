@@ -19,6 +19,7 @@ public interface IWorkOrderDetailService extends IService<WorkOrderDetail> {
 
     /**
      * 添加
+     *
      * @param workOrderDetail 添加物料订单表对象
      * @return 是否添加成功
      */
@@ -26,6 +27,7 @@ public interface IWorkOrderDetailService extends IService<WorkOrderDetail> {
 
     /**
      * 批量添加
+     *
      * @param list
      * @return
      */
@@ -33,6 +35,7 @@ public interface IWorkOrderDetailService extends IService<WorkOrderDetail> {
 
     /**
      * 查询派工单明细
+     *
      * @return 派工单明细集合
      */
     List<WorkOrderDetailItem> getList();
@@ -59,29 +62,39 @@ public interface IWorkOrderDetailService extends IService<WorkOrderDetail> {
      * @param id 根据id删除
      * @return 是否删除成功
      */
-    boolean delete(List<Integer>id);
+    boolean delete(List<Integer> id);
 
     /**
      * 查询
+     *
      * @return 车间生产信息集合
      */
-    List<WorkOrderDetailItem>getProductionListByWorkShop();
+    List<WorkOrderDetailItem> getProductionListByWorkShop();
 
     /**
      * 查询
+     *
      * @return 产线生产信息集合
      */
-    List<WorkOrderDetailItem>getProductionListByWorkLine();
+    List<WorkOrderDetailItem> getProductionListByWorkLine();
 
     /**
      * 根据时间范围查询
+     *
      * @return 车间生产信息集合
      */
-    List<WorkOrderDetailItem>getWorkShopByWorkDate(LocalDateTime startDate, LocalDateTime endDate);
+    List<WorkOrderDetailItem> getWorkShopByWorkDate(String startDateStr, String endDateStr);
 
     /**
      * 根据时间范围查询
+     *
      * @return 产线生产信息集合
      */
-    List<WorkOrderDetailItem>getWorkLineByWorkDate(LocalDateTime startDate,LocalDateTime endDate);
+    List<WorkOrderDetailItem> getWorkLineByWorkDate(String startDateStr, String endDateStr);
+
+    /**
+     * 获取可添加派工单的最小日期
+     * @return
+     */
+    Date getMinDetailByWorkDate();
 }

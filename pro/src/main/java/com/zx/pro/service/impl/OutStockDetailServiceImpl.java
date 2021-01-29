@@ -40,7 +40,7 @@ public class OutStockDetailServiceImpl extends ServiceImpl<OutStockDetailMapper,
 
     @Override
     public List<OutStockDetail> getList(String outOrder, String productName) {
-        return outStockDetailMapper.getList(outOrder, productName);
+        return outStockDetailMapper.selectList(outOrder, productName);
     }
 
     @Override

@@ -14,6 +14,7 @@ public interface MatterInfoMapper extends BaseMapper<MatterInfo> {
 
     /**
      * 查询一个项目下所有物料信息
+     *
      * @param projectInfoId 项目id
      * @return
      */
@@ -25,6 +26,7 @@ public interface MatterInfoMapper extends BaseMapper<MatterInfo> {
 
     /**
      * 查询一个项目下所有可用的物料信息
+     *
      * @param projectInfoId 项目id
      * @return
      */
@@ -43,6 +45,7 @@ public interface MatterInfoMapper extends BaseMapper<MatterInfo> {
 
     /**
      * 查询一个产品所需的物料信息
+     *
      * @param productId 产品id
      * @return
      */
@@ -54,4 +57,20 @@ public interface MatterInfoMapper extends BaseMapper<MatterInfo> {
             "on mp.matter_info_id = mi.id " +
             "where pm.product_info_id = #{productId}")
     List<MatterInfoItem> getListByProductId(Integer productId);
+
+
+    /**
+     * 查询一个项目下所有物料信息
+     *
+     * @param projectName 项目名
+     * @return
+     */
+    @Select("select mi.*,mp.project_info_id from matter_info mi " +
+            "LEFT JOIN matter_project mp " +
+            "on mi.id=mp.matter_info_id " +
+            "LEFT JOIN project_info pi " +
+            "on pi.id=mp.project_info_id " +
+            "where pi.project_name " +
+            "like CONCAT('%',#{projectName},'%') ")
+    List<MatterInfoItem> getListByProjectName(String projectName);
 }

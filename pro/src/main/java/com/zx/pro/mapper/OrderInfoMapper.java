@@ -77,5 +77,5 @@ public interface OrderInfoMapper extends BaseMapper<OrderInfo> {
             "left join work_order_detail as wod " +
             "on wod.product_info_id = pi.id " +
             "where oi.order_id like CONCAT('%',#{orderId},'%')")
-    List<OrderState> getOrderStateList(String orderId);
+    List<OrderState> selectOrderStateList(String orderId);
 }

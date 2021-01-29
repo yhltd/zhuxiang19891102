@@ -30,8 +30,13 @@ public class OutStockController {
     private IOutStockDetailService iOutStockDetailService;
 
     @RequestMapping("/post_list")
-    public ResultInfo postList(){
+    public ResultInfo postList(HttpSession session){
         try {
+            PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
+            if (!powerUtil.isSelect("出库明细")) {
+                return ResultInfo.error(401, "无权限");
+            }
+
             List<OutStockDetail> list = iOutStockDetailService.getList();
             if(StringUtils.isNotNull(list)){
                 return ResultInfo.success("获取成功", list);
@@ -45,12 +50,17 @@ public class OutStockController {
     }
 
     @RequestMapping("/select_list")
-    public ResultInfo selectList(@RequestBody HashMap map){
+    public ResultInfo selectList(HttpSession session,@RequestBody HashMap map){
         try {
-            String setOrder = map.get("outOrder").toString();
+            PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
+            if (!powerUtil.isSelect("出库明细")) {
+                return ResultInfo.error(401, "无权限");
+            }
+
+            String outOrder = map.get("outOrder").toString();
             String productName = map.get("productName").toString();
 
-            List<OutStockDetail> list = iOutStockDetailService.getList(setOrder,productName);
+            List<OutStockDetail> list = iOutStockDetailService.getList(outOrder,productName);
 
             if (StringUtils.isNotNull(list)) {
                 return ResultInfo.success("查询成功", list);
@@ -65,8 +75,13 @@ public class OutStockController {
     }
 
     @RequestMapping("/select_list_outStock")
-    public ResultInfo selectListByOrderId(@RequestBody HashMap map){
+    public ResultInfo selectListByOrderId(HttpSession session,@RequestBody HashMap map){
         try {
+            PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
+            if (!powerUtil.isAdd("出库明细")) {
+                return ResultInfo.error(401, "无权限");
+            }
+
             String orderId = map.get("orderId").toString();
 
             List<OutStockDetail> list = iOutStockDetailService.getList(orderId);
@@ -88,6 +103,11 @@ public class OutStockController {
     public ResultInfo add(HttpSession session, @RequestBody HashMap map){
         GsonUtil gsonUtil = new GsonUtil(GsonUtil.toJson(map));
         try {
+            PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
+            if (!powerUtil.isAdd("出库明细")) {
+                return ResultInfo.error(401, "无权限");
+            }
+
             List<OutStockDetail> outStockDetailList =
                     GsonUtil.toList(gsonUtil.get("list"),OutStockDetail.class);
             UserInfo userInfo = GsonUtil.toEntity(SessionUtil.getToken(session),UserInfo.class);
@@ -109,8 +129,13 @@ public class OutStockController {
     }
 
     @RequestMapping("/update")
-    public ResultInfo update(@RequestBody String outStockDetaillJson){
+    public ResultInfo update(HttpSession session,@RequestBody String outStockDetaillJson){
         try {
+            PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
+            if (!powerUtil.isUpdate("出库明细")) {
+                return ResultInfo.error(401, "无权限");
+            }
+
             OutStockDetail outStockDetail =
                     DecodeUtil.decodeToJson(outStockDetaillJson,OutStockDetail.class,"createTime");
             if (iOutStockDetailService.update(outStockDetail)) {
@@ -127,9 +152,14 @@ public class OutStockController {
     }
 
     @RequestMapping("/delete")
-    public ResultInfo delete(@RequestBody HashMap map){
+    public ResultInfo delete(HttpSession session,@RequestBody HashMap map){
         GsonUtil gsonUtil = new GsonUtil(GsonUtil.toJson(map));
         try {
+            PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
+            if (!powerUtil.isDelete("出库明细")) {
+                return ResultInfo.error(401, "无权限");
+            }
+
             List<Integer> idList = GsonUtil.toList(gsonUtil.get("idList"),Integer.class);
             if (iOutStockDetailService.delete(idList)) {
                 return ResultInfo.success("删除成功", null);

@@ -1,5 +1,6 @@
 package com.zx.pro.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zx.pro.entity.WorkOrderDetail;
@@ -8,10 +9,12 @@ import com.zx.pro.entity.WorkOrderInfo;
 import com.zx.pro.mapper.WorkOrderDetailMapper;
 import com.zx.pro.service.IWorkOrderDetailService;
 import com.zx.pro.service.IWorkOrderInfoService;
+import com.zx.pro.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -38,9 +41,9 @@ public class WorkOrderDetailImpl extends ServiceImpl<WorkOrderDetailMapper, Work
     @Override
     public boolean add(List<WorkOrderDetail> list) {
         WorkOrderInfo workOrderInfo = iWorkOrderInfoService.add();
-        list.forEach(workOrderDetail -> {
+        for (WorkOrderDetail workOrderDetail : list) {
             workOrderDetail.setWorkOrderInfoId(workOrderInfo.getId());
-        });
+        }
         //批量插入，插入批次50
         return this.saveBatch(list, 50);
     }
@@ -57,18 +60,13 @@ public class WorkOrderDetailImpl extends ServiceImpl<WorkOrderDetailMapper, Work
 
     @Override
     public boolean update(WorkOrderDetail workOrderDetail) {
-        UpdateWrapper<WorkOrderDetail> updateWrapper=new UpdateWrapper<>();
-        updateWrapper.eq("id",workOrderDetail.getId());
-        return this.update(workOrderDetail,updateWrapper);
+        UpdateWrapper<WorkOrderDetail> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("id", workOrderDetail.getId());
+        return this.update(workOrderDetail, updateWrapper);
     }
 
-//    @Override
-//    public boolean update(WorkOrderDetail workOrderDetail) {
-//        return workOrderDetailMapper.update(workOrderDetail);
-//    }
-
     @Override
-    public boolean delete(List<Integer>id) {
+    public boolean delete(List<Integer> id) {
         return removeByIds(id);
     }
 
@@ -83,14 +81,43 @@ public class WorkOrderDetailImpl extends ServiceImpl<WorkOrderDetailMapper, Work
     }
 
     @Override
-    public List<WorkOrderDetailItem> getWorkShopByWorkDate(LocalDateTime startDate, LocalDateTime endDate) {
-        return workOrderDetailMapper.getWorkShopByWorkDate(startDate,endDate);
+    public List<WorkOrderDetailItem> getWorkShopByWorkDate(String startDateStr, String endDateStr) {
+        LocalDateTime startDate = StringUtils.isNotEmpty(startDateStr) ?
+                LocalDateTime.parse(startDateStr) :
+                StringUtils.MIN_DATETIME;
+        LocalDateTime endDate = StringUtils.isNotEmpty(endDateStr) ?
+                LocalDateTime.parse(endDateStr) :
+                StringUtils.MAX_DATETIME;
+
+        return workOrderDetailMapper.getWorkShopByWorkDate(startDate, endDate);
     }
 
     @Override
-    public List<WorkOrderDetailItem> getWorkLineByWorkDate(LocalDateTime startDate, LocalDateTime endDate) {
-        return workOrderDetailMapper.getWorkLineByWorkDate(startDate,endDate);
+    public List<WorkOrderDetailItem> getWorkLineByWorkDate(String startDateStr, String endDateStr) {
+        LocalDateTime startDate = StringUtils.isNotEmpty(startDateStr) ?
+                LocalDateTime.parse(startDateStr) :
+                StringUtils.MIN_DATETIME;
+        LocalDateTime endDate = StringUtils.isNotEmpty(endDateStr) ?
+                LocalDateTime.parse(endDateStr) :
+                StringUtils.MAX_DATETIME;
+
+        return workOrderDetailMapper.getWorkLineByWorkDate(startDate, endDate);
     }
 
-
+    @Override
+    public Date getMinDetailByWorkDate() {
+        QueryWrapper<WorkOrderDetail> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("work_date");
+        queryWrapper.orderByDesc("work_date");
+        queryWrapper.last("limit 1");
+        WorkOrderDetail workOrderDetail = this.getOne(queryWrapper);
+        if (StringUtils.isNotNull(workOrderDetail)) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(workOrderDetail.getWorkDate());
+            int w = cal.get(Calendar.DAY_OF_WEEK);
+            cal.add(Calendar.DAY_OF_MONTH, 9 - w);
+            return cal.getTime();
+        }
+        return null;
+    }
 }

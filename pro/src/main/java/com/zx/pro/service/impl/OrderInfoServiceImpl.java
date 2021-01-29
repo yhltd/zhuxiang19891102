@@ -1,5 +1,7 @@
 package com.zx.pro.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zx.pro.entity.*;
 import com.zx.pro.mapper.OrderInfoMapper;
@@ -46,7 +48,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
         LocalDateTime endDate = StringUtils.isNotEmpty(endDateStr) ?
                 LocalDateTime.parse(endDateStr) :
                 StringUtils.MAX_DATETIME;
-        return orderInfoMapper.getList(projectName,orderId,startDate,endDate);
+        return orderInfoMapper.getList(projectName, orderId, startDate, endDate);
     }
 
     @Override
@@ -56,7 +58,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
 
     @Override
     public List<OrderState> getOrderStateList(String orderId) {
-        return orderInfoMapper.getOrderStateList(orderId);
+        return orderInfoMapper.selectOrderStateList(orderId);
     }
 
     @Override
@@ -70,7 +72,14 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
     }
 
     @Override
-    public boolean add(OrderInfo orderInfo, List<HashMap> hashMapList){
+    public boolean deleteByProjectId(List<Integer> idList) {
+        QueryWrapper<OrderInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.in("project_info_id",idList);
+        return this.remove(queryWrapper);
+    }
+
+    @Override
+    public boolean add(OrderInfo orderInfo, List<HashMap> hashMapList) {
         //订单号
         orderInfo.setOrderId(OrderUtil.getOrder("O"));
         //创建时间
@@ -78,7 +87,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
         //添加订单
         this.save(orderInfo);
 
-        for(HashMap hashMap : hashMapList){
+        for (HashMap hashMap : hashMapList) {
             //产品信息
             ProductInfo productInfo = new ProductInfo();
             //订单表id
@@ -87,6 +96,8 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
             productInfo.setProductName(StringUtils.cast(hashMap.get("productName")));
             //产品数量
             productInfo.setProductNum(Double.parseDouble(hashMap.get("productNum").toString()));
+            //产品单价
+            productInfo.setProductPrice(Double.parseDouble(hashMap.get("productPrice").toString()));
             //添加产品
             iProductInfoService.add(productInfo);
 
@@ -97,7 +108,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
             //产品所需物料表集合
             List<ProductMatter> productMatterList = new ArrayList<>();
 
-            for(MatterInfoItem matterInfoItem : matterInfoItemList){
+            for (MatterInfoItem matterInfoItem : matterInfoItemList) {
                 //产品所需物料
                 ProductMatter productMatter = new ProductMatter();
                 //产品信息表id
@@ -112,10 +123,26 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
                 productMatterList.add(productMatter);
             }
             //如果添加不成功直接return结束方法
-            if(!iProductMatterService.add(productMatterList)){
+            if (!iProductMatterService.add(productMatterList)) {
                 return false;
             }
         }
         return true;
+    }
+
+    @Override
+    public boolean updateState(Integer orderInfoId, String state) {
+        UpdateWrapper<OrderInfo> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("id", orderInfoId);
+        updateWrapper.set("state", state);
+        return this.update(updateWrapper);
+    }
+
+    @Override
+    public boolean updateState(String orderId, String state) {
+        UpdateWrapper<OrderInfo> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("order_id", orderId);
+        updateWrapper.set("state", state);
+        return this.update(updateWrapper);
     }
 }

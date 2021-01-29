@@ -6,10 +6,7 @@ import com.zx.pro.entity.WorkOrderDetailItem;
 import com.zx.pro.service.IProductInfoService;
 import com.zx.pro.service.IWorkOrderDetailService;
 import com.zx.pro.service.IWorkOrderInfoService;
-import com.zx.pro.util.DecodeUtil;
-import com.zx.pro.util.GsonUtil;
-import com.zx.pro.util.PowerUtil;
-import com.zx.pro.util.ResultInfo;
+import com.zx.pro.util.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -45,14 +43,15 @@ public class WorkOrderDetailController {
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @Transactional
-    public ResultInfo add(@RequestBody HashMap map,HttpSession session) {
+    public ResultInfo add(@RequestBody HashMap map, HttpSession session) {
         GsonUtil gsonUtil = new GsonUtil(GsonUtil.toJson(map));
         try {
             PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
-            if(!powerUtil.isAdd("派工单录入")){
-                return ResultInfo.error(401,"无权限");
+            if (!powerUtil.isAdd("派工单")) {
+                return ResultInfo.error(401, "无权限");
             }
-            List<WorkOrderDetail> list = GsonUtil.toList(gsonUtil.get("workOrderDetailList"),WorkOrderDetail.class);
+
+            List<WorkOrderDetail> list = GsonUtil.toList(gsonUtil.get("workOrderDetailList"), WorkOrderDetail.class);
             if (iWorkOrderDetailService.add(list)) {
                 return ResultInfo.success("录入成功", list);
             } else {
@@ -78,8 +77,8 @@ public class WorkOrderDetailController {
         List<WorkOrderDetailItem> getList = null;
         try {
             PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
-            if(!powerUtil.isSelect("派工单明细")){
-                return ResultInfo.error(401,"无权限");
+            if (!powerUtil.isSelect("派工单")) {
+                return ResultInfo.error(401, "无权限");
             }
 
             getList = iWorkOrderDetailService.getList();
@@ -97,12 +96,12 @@ public class WorkOrderDetailController {
      * @return ResultInfo
      */
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public ResultInfo update(@RequestBody String workOrderDetailJson,HttpSession session) {
+    public ResultInfo update(@RequestBody String workOrderDetailJson, HttpSession session) {
         WorkOrderDetail workOrderDetail = null;
         try {
             PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
-            if(!powerUtil.isUpdate("派工单明细")){
-                return ResultInfo.error(401,"无权限");
+            if (!powerUtil.isUpdate("派工单")) {
+                return ResultInfo.error(401, "无权限");
             }
 
             workOrderDetail = DecodeUtil.decodeToJson(workOrderDetailJson, WorkOrderDetail.class);
@@ -124,15 +123,15 @@ public class WorkOrderDetailController {
      * @return ResultInfo
      */
     @PostMapping("/delete")
-    public ResultInfo delete(@RequestBody HashMap map,HttpSession session) {
+    public ResultInfo delete(@RequestBody HashMap map, HttpSession session) {
         GsonUtil gsonUtil = new GsonUtil(GsonUtil.toJson(map));
 
         List<Integer> idList = GsonUtil.toList(gsonUtil.get("idList"), Integer.class);
 
         try {
             PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
-            if(!powerUtil.isDelete("派工单明细")){
-                return ResultInfo.error(401,"无权限");
+            if (!powerUtil.isDelete("派工单")) {
+                return ResultInfo.error(401, "无权限");
             }
 
             if (iWorkOrderDetailService.delete(idList)) {
@@ -153,12 +152,12 @@ public class WorkOrderDetailController {
      * @return ResultInfo
      */
     @PostMapping("/getListByWorkOrder")
-    public ResultInfo getListByWorkOrder(String workOrder,HttpSession session) {
+    public ResultInfo getListByWorkOrder(String workOrder, HttpSession session) {
         List<WorkOrderDetailItem> getListByWorkOrder = null;
         try {
             PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
-            if(!powerUtil.isSelect("派工单汇总")){
-                return ResultInfo.error(401,"无权限");
+            if (!powerUtil.isSelect("派工单")) {
+                return ResultInfo.error(401, "无权限");
             }
 
             getListByWorkOrder = iWorkOrderDetailService.getList(workOrder);
@@ -171,20 +170,21 @@ public class WorkOrderDetailController {
 
     /**
      * 查询车间生产信息集合
+     *
      * @return
      */
     @PostMapping("/getListByWorkShop")
-    public ResultInfo getListByWorkShop(HttpSession session){
-        List<WorkOrderDetailItem>getListByWorkShop=null;
+    public ResultInfo getListByWorkShop(HttpSession session) {
+        List<WorkOrderDetailItem> getListByWorkShop = null;
         try {
             PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
-            if(!powerUtil.isSelect("车间生产汇总")){
-                return ResultInfo.error(401,"无权限");
+            if (!powerUtil.isSelect("车间生产汇总")) {
+                return ResultInfo.error(401, "无权限");
             }
 
-            getListByWorkShop=iWorkOrderDetailService.getProductionListByWorkShop();
+            getListByWorkShop = iWorkOrderDetailService.getProductionListByWorkShop();
             return ResultInfo.success("查询成功", getListByWorkShop);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             log.error("查询失败：{}", e.getMessage());
             log.error("参数：{}", getListByWorkShop);
@@ -194,20 +194,21 @@ public class WorkOrderDetailController {
 
     /**
      * 查询产线生产信息集合
+     *
      * @return
      */
     @PostMapping("/getListByWorkLine")
-    public ResultInfo getListByWorkLine(HttpSession session){
-        List<WorkOrderDetailItem>getListByWorkLine=null;
+    public ResultInfo getListByWorkLine(HttpSession session) {
+        List<WorkOrderDetailItem> getListByWorkLine = null;
         try {
             PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
-            if(!powerUtil.isSelect("产线生产汇总")){
-                return ResultInfo.error(401,"无权限");
+            if (!powerUtil.isSelect("产线生产汇总")) {
+                return ResultInfo.error(401, "无权限");
             }
 
-            getListByWorkLine=iWorkOrderDetailService.getProductionListByWorkLine();
+            getListByWorkLine = iWorkOrderDetailService.getProductionListByWorkLine();
             return ResultInfo.success("查询成功", getListByWorkLine);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             log.error("查询失败：{}", e.getMessage());
             log.error("参数：{}", getListByWorkLine);
@@ -216,40 +217,68 @@ public class WorkOrderDetailController {
     }
 
     @RequestMapping("/getWorkShopListDate")
-    public ResultInfo getWorkShopListDate(@RequestBody HashMap map,HttpSession session){
-        List<WorkOrderDetailItem> getList = null;
-        LocalDateTime startDate=LocalDateTime.parse(map.get("startDate").toString());
-        LocalDateTime endDate=LocalDateTime.parse(map.get("endDate").toString());
+    public ResultInfo getWorkShopListDate(@RequestBody HashMap map, HttpSession session) {
         try {
             PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
-            if(!powerUtil.isSelect("车间生产汇总")){
-                return ResultInfo.error(401,"无权限");
+            if (!powerUtil.isSelect("车间生产汇总")) {
+                return ResultInfo.error(401, "无权限");
             }
 
-            getList=iWorkOrderDetailService.getWorkShopByWorkDate(startDate,endDate);
-            return ResultInfo.success("查询成功", getList);
-        }catch (Exception e){
+            String startDate = map.get("startDate").toString();
+            String endDate = map.get("endDate").toString();
+
+
+            List<WorkOrderDetailItem> list =
+                    iWorkOrderDetailService.getWorkShopByWorkDate(startDate, endDate);
+
+            if (StringUtils.isNotNull(list)) {
+                return ResultInfo.success("查询成功", list);
+            } else {
+                return ResultInfo.success("查询成功");
+            }
+
+        } catch (Exception e) {
             e.printStackTrace();
             log.error("查询失败：{}", e.getMessage());
-            log.error("参数：{}", getList);
+            log.error("参数：{}", map);
             return ResultInfo.error("错误");
         }
     }
 
     @RequestMapping("/getWorkLineListDate")
-    public ResultInfo getWorkLineListDate(@RequestBody HashMap map, HttpSession session){
-        List<WorkOrderDetailItem> getList = null;
-        LocalDateTime startDate=LocalDateTime.parse(map.get("startDate").toString());
-        LocalDateTime endDate=LocalDateTime.parse(map.get("endDate").toString());
+    public ResultInfo getWorkLineListDate(@RequestBody HashMap map, HttpSession session) {
         try {
             PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
-            if(!powerUtil.isSelect("产线生产汇总")){
-                return ResultInfo.error(401,"无权限");
+            if (!powerUtil.isSelect("产线生产汇总")) {
+                return ResultInfo.error(401, "无权限");
             }
 
-            getList=iWorkOrderDetailService.getWorkLineByWorkDate(startDate,endDate);
+            String startDate = map.get("startDate").toString();
+            String endDate = map.get("endDate").toString();
+
+            List<WorkOrderDetailItem> list =
+                    iWorkOrderDetailService.getWorkLineByWorkDate(startDate, endDate);
+            if (StringUtils.isNotNull(list)) {
+                return ResultInfo.success("查询成功", list);
+            } else {
+                return ResultInfo.success("查询成功");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("查询失败：{}", e.getMessage());
+            log.error("参数：{}", map);
+            return ResultInfo.error("错误");
+        }
+    }
+
+    @RequestMapping("/getProductList")
+    public ResultInfo getProductList() {
+        List<ProductInfo> getList = null;
+        try {
+            getList = iProductInfoService.getList();
             return ResultInfo.success("查询成功", getList);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             log.error("查询失败：{}", e.getMessage());
             log.error("参数：{}", getList);
@@ -257,19 +286,24 @@ public class WorkOrderDetailController {
         }
     }
 
-    @RequestMapping("/getProductList")
-    public ResultInfo getProductList(){
-        List<ProductInfo> getList=null;
+    @RequestMapping("/get_min")
+    public ResultInfo getMin(HttpSession session) {
         try {
-            getList=iProductInfoService.getList();
-            return ResultInfo.success("查询成功", getList);
-        }catch (Exception e){
+            PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
+            if(!powerUtil.isAdd("派工单")){
+                return ResultInfo.error(401,"无权限");
+            }
+
+            Date date = iWorkOrderDetailService.getMinDetailByWorkDate();
+            if (StringUtils.isNotNull(date)) {
+                return ResultInfo.success(date);
+            } else {
+                return ResultInfo.success();
+            }
+        } catch (Exception e) {
             e.printStackTrace();
             log.error("查询失败：{}", e.getMessage());
-            log.error("参数：{}", getList);
-            return  ResultInfo.error("错误");
+            return ResultInfo.error("错误");
         }
     }
-
-
 }

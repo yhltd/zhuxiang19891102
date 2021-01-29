@@ -30,7 +30,8 @@ public interface SetStockDetailMapper extends BaseMapper<SetStockDetail>{
      */
     @Select("select ssd.*,pi.* from set_stock_detail as ssd " +
             "left join product_info as pi " +
-            "on ssd.product_info_id = pi.id and pi.product_name like CONCAT('%',#{productName},'%') " +
-            "where ssd.set_order like CONCAT('%',#{setOrder},'%') ")
-    List<SetStockDetail> getList(String setOrder,String productName);
+            "on ssd.product_info_id = pi.id " +
+            "where ssd.set_order like CONCAT('%',#{setOrder},'%') " +
+            "and pi.product_name like CONCAT('%',#{productName},'%')")
+    List<SetStockDetail> selectList(String setOrder,String productName);
 }

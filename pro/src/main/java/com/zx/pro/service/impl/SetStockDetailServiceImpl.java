@@ -37,7 +37,7 @@ public class SetStockDetailServiceImpl extends ServiceImpl<SetStockDetailMapper,
 
     @Override
     public List<SetStockDetail> getList(String setOrder, String productName) {
-        return setStockDetailMapper.getList(setOrder, productName);
+        return setStockDetailMapper.selectList(setOrder, productName);
     }
 
     @Override

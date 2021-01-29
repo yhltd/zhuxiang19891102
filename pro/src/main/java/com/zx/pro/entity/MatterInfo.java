@@ -22,11 +22,6 @@ public class MatterInfo {
      * 类别
      */
     private String type;
-
-    /**
-     * 物料类型
-     */
-    private String type;
     /**
      * 长度（英尺）
      */

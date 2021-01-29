@@ -54,13 +54,4 @@ public interface IUserInfoService extends IService<UserInfo> {
      * @return 是否删除成功
      */
     boolean delete(List<Integer> idList);
-
-
-    /**
-     * 修改密码
-     * @param pwd 密码
-     * @param userInfo 用户名和旧密码
-     * @return
-     */
-    boolean updatePwd(String pwd,UserInfo userInfo);
 }

@@ -74,9 +74,4 @@ public class UserInfoImpl extends ServiceImpl<UserInfoMapper,UserInfo> implement
     public boolean delete(List<Integer> idList) {
         return removeByIds(idList);
     }
-
-    @Override
-    public boolean updatePwd(String pwd, UserInfo userInfo) {
-        return userInfoMapper.updatePwd(pwd,userInfo);
-    }
 }

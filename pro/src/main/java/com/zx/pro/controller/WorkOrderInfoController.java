@@ -2,6 +2,7 @@ package com.zx.pro.controller;
 
 import com.zx.pro.entity.WorkOrderInfo;
 import com.zx.pro.service.IWorkOrderInfoService;
+import com.zx.pro.util.GsonUtil;
 import com.zx.pro.util.PowerUtil;
 import com.zx.pro.util.ResultInfo;
 import com.zx.pro.util.StringUtils;
@@ -37,8 +38,8 @@ public class WorkOrderInfoController {
         List<WorkOrderInfo> getList = null;
         try {
             PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
-            if(!powerUtil.isSelect("派工单汇总")){
-                return ResultInfo.error(401,"无权限");
+            if (!powerUtil.isSelect("派工单汇总")) {
+                return ResultInfo.error(401, "无权限");
             }
 
             getList = iWorkOrderInfoService.getList();
@@ -55,9 +56,9 @@ public class WorkOrderInfoController {
         try {
             List<WorkOrderInfo> list = iWorkOrderInfoService.getListByState("0");
 
-            if(StringUtils.isNotNull(list)){
+            if (StringUtils.isNotNull(list)) {
                 return ResultInfo.success("查询成功", list);
-            }else{
+            } else {
                 return ResultInfo.success("查询失败");
             }
         } catch (Exception e) {
@@ -66,51 +67,29 @@ public class WorkOrderInfoController {
         }
     }
 
-    /**
-     * 查询派工单信息
-     *
-     * @param workOrder 根据派工单单号查询
-     * @return ResultInfo
-     */
-    @PostMapping("/getListByWorkOrder")
-    public ResultInfo workOrderListByWorkOrder(@RequestBody String workOrder,HttpSession session) {
-        List<WorkOrderInfo> getList = null;
+    @PostMapping("/selectList")
+    public ResultInfo workOrderListByWorkOrder(HttpSession session, @RequestBody HashMap map) {
+        GsonUtil gsonUtil = new GsonUtil(GsonUtil.toJson(map));
         try {
             PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
-            if(!powerUtil.isSelect("派工单汇总")){
-                return ResultInfo.error(401,"无权限");
+            if (!powerUtil.isSelect("派工单")) {
+                return ResultInfo.error(401, "无权限");
             }
 
-            getList = iWorkOrderInfoService.getList(workOrder.split("=")[1]);
-            return ResultInfo.success("查询成功", getList);
-        } catch (Exception e) {
-            log.error("通过派工单id获取派工单信息集合失败：{}，参数：[getList: {}]", e.getMessage(), getList);
-            return ResultInfo.error("错误!");
-        }
-    }
+            String workOrder = gsonUtil.get("workOrder");
+            String startDate = gsonUtil.get("startDate");
+            String endDate = gsonUtil.get("endDate");
 
-    /**
-     * 查询派工单信息
-     *
-     * @param map 根据创建时间查询
-     * @return ResultInfo
-     */
-    @RequestMapping("/getListByCreateTime")
-    public ResultInfo workOrderListByCreatTime(@RequestBody HashMap map, HttpSession session) {
-        LocalDateTime startTime = LocalDateTime.parse(map.get("startTime").toString());
-        LocalDateTime endTime = LocalDateTime.parse(map.get("endTime").toString());
-        List<WorkOrderInfo> getList = null;
-        try {
-            PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
-            if(!powerUtil.isSelect("派工单汇总")){
-                return ResultInfo.error(401,"无权限");
+            List<WorkOrderInfo> list = iWorkOrderInfoService.selectList(workOrder, startDate, endDate);
+            if (StringUtils.isNotNull(list)) {
+                return ResultInfo.success("查询成功", list);
+            } else {
+                return ResultInfo.success("查询成功");
             }
 
-            getList = iWorkOrderInfoService.getList(startTime, endTime);
-            return ResultInfo.success("查询成功", getList);
         } catch (Exception e) {
-            e.printStackTrace();
-            log.error("通过创建时间获取派工单信息集合失败{}，参数：[getList: {}]", e.getMessage(), getList);
+            log.error("查询失败：{}", e.getMessage());
+            log.error("参数：{}", map);
             return ResultInfo.error("错误!");
         }
     }

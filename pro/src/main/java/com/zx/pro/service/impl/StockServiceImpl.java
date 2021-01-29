@@ -54,7 +54,7 @@ public class StockServiceImpl extends ServiceImpl<StockMapper, Stock> implements
 
     @Override
     public List<Stock> getList(String productName) {
-        return stockMapper.getList(productName);
+        return stockMapper.selectList(productName);
     }
 
     @Override

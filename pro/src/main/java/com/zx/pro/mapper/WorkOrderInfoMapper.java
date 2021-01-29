@@ -9,5 +9,5 @@ import org.apache.ibatis.annotations.Update;
 public interface WorkOrderInfoMapper extends BaseMapper<WorkOrderInfo> {
 
     @Update("update work_order_info set state = #{state} where work_order = #{workOrder}")
-    int updateState(String workOrder,String state);
+    int updateState(String workOrder, String state);
 }

@@ -2,6 +2,7 @@ package com.zx.pro.service.impl;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zx.pro.entity.MatterInfo;
 import com.zx.pro.entity.MatterInfoItem;
@@ -61,8 +62,8 @@ public class MatterInfoImpl extends ServiceImpl<MatterInfoMapper, MatterInfo> im
     }
 
     @Override
-    public MatterInfo add(MatterInfo matterInfo) {
-        return this.save(matterInfo) ? matterInfo : null;
+    public boolean add(MatterInfo matterInfo) {
+        return this.save(matterInfo);
     }
 
     @Override

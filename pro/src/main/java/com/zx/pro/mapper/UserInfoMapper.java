@@ -13,7 +13,5 @@ import org.apache.ibatis.annotations.Select;
  */
 @Mapper
 public interface UserInfoMapper extends BaseMapper<UserInfo> {
-    @Select("update user_info set pwd=#{pwd} where name=#{userInfo.name} and pwd=#{userInfo.pwd}")
-    boolean updatePwd(String pwd, UserInfo userInfo);
 
 }

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zx.pro.entity.MatterProject;
 import com.zx.pro.entity.MatterProjectChange;
 import com.zx.pro.entity.MatterProjectChangeItem;
+import com.zx.pro.entity.ProductInfo;
 import com.zx.pro.mapper.MatterProjectChangeMapper;
 import com.zx.pro.service.IMatterProjectChangeService;
 import com.zx.pro.service.IMatterProjectService;
@@ -34,7 +35,12 @@ public class MatterProjectChangeImpl extends ServiceImpl<MatterProjectChangeMapp
 
     @Override
     public List<MatterProjectChangeItem> getList(String projectName, String code, String updateMan) {
-        return matterProjectChangeMapper.getList(projectName, code, updateMan);
+        QueryWrapper<ProductInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like("pi.project_name", projectName);
+        queryWrapper.like("mi.code",code);
+        queryWrapper.like("mpc.update_man",updateMan);
+        queryWrapper.orderByDesc("mpc.update_time");
+        return matterProjectChangeMapper.selectList(projectName,code,updateMan);
     }
 
     @Override
@@ -65,7 +71,7 @@ public class MatterProjectChangeImpl extends ServiceImpl<MatterProjectChangeMapp
     @Override
     public boolean add(List<MatterProjectChange> list) {
         //插入批次10
-         return this.saveBatch(list, 50);
+        return this.saveBatch(list, 50);
     }
 
     @Override
@@ -86,7 +92,7 @@ public class MatterProjectChangeImpl extends ServiceImpl<MatterProjectChangeMapp
     @Override
     public boolean deleteByMatterProjectId(List<Integer> matterProductIdList) {
         QueryWrapper<MatterProjectChange> matterProductChangeQueryWrapper = new QueryWrapper<>();
-        matterProductChangeQueryWrapper.in("matter_product_id",matterProductIdList);
+        matterProductChangeQueryWrapper.in("matter_project_id", matterProductIdList);
         return remove(matterProductChangeQueryWrapper);
     }
 }

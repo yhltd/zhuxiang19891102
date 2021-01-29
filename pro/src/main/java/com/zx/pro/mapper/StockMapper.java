@@ -23,6 +23,6 @@ public interface StockMapper extends BaseMapper<Stock> {
             "from stock as s " +
             "left join product_info as pi " +
             "on s.product_info_id = pi.id " +
-            "and pi.product_name like CONCAT('%',#{productName},'%')")
-    List<Stock> getList(String productName);
+            "where pi.product_name like CONCAT('%',#{productName},'%')")
+    List<Stock> selectList(String productName);
 }

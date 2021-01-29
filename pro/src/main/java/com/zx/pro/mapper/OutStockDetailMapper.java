@@ -5,6 +5,7 @@ import com.zx.pro.entity.OutStockDetail;
 import com.zx.pro.entity.SetStockDetail;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -32,9 +33,10 @@ public interface OutStockDetailMapper extends BaseMapper<OutStockDetail>{
      */
     @Select("select ssd.*,pi.* from set_stock_detail as ssd " +
             "left join product_info as pi " +
-            "on ssd.product_info_id = pi.id and pi.product_name like CONCAT('%',#{productName},'%') " +
-            "where osd.out_order like CONCAT('%',#{outOrder},'%') ")
-    List<OutStockDetail> getList(String outOrder,String productName);
+            "on ssd.product_info_id = pi.id " +
+            "where osd.out_order like CONCAT('%',#{outOrder},'%') " +
+            "and pi.product_name like CONCAT('%',#{productName},'%')")
+    List<OutStockDetail> selectList(String outOrder,String productName);
 
 
 }

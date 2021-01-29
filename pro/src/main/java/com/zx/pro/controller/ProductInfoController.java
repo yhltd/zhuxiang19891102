@@ -4,10 +4,7 @@ import com.zx.pro.entity.OrderInfoItem;
 import com.zx.pro.entity.ProductInfo;
 import com.zx.pro.entity.ProjectInfo;
 import com.zx.pro.service.IProductInfoService;
-import com.zx.pro.util.DecodeUtil;
-import com.zx.pro.util.GsonUtil;
-import com.zx.pro.util.ResultInfo;
-import com.zx.pro.util.StringUtils;
+import com.zx.pro.util.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 
@@ -31,8 +29,13 @@ public class ProductInfoController {
     private IProductInfoService iProductInfoService;
 
     @RequestMapping("/post_list")
-    public ResultInfo postList() {
+    public ResultInfo postList(HttpSession session) {
         try {
+            PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
+            if(!powerUtil.isSelect("订单明细")){
+                return ResultInfo.error(401,"无权限");
+            }
+
             List<ProductInfo> list = iProductInfoService.getList();
             if (StringUtils.isNotNull(list)) {
                 return ResultInfo.success("获取成功", list);
@@ -47,8 +50,13 @@ public class ProductInfoController {
     }
 
     @RequestMapping("/select_list")
-    public ResultInfo selectList(@RequestBody HashMap map) {
+    public ResultInfo selectList(HttpSession session,@RequestBody HashMap map) {
         try {
+            PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
+            if(!powerUtil.isSelect("订单明细")){
+                return ResultInfo.error(401,"无权限");
+            }
+
             String orderId = map.get("orderId").toString();
             String productName = map.get("productName").toString();
 
@@ -68,8 +76,13 @@ public class ProductInfoController {
     }
 
     @RequestMapping("/update")
-    public ResultInfo update(@RequestBody String productInfoJson){
+    public ResultInfo update(HttpSession session, @RequestBody String productInfoJson){
         try{
+            PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
+            if(!powerUtil.isUpdate("订单明细")){
+                return ResultInfo.error(401,"无权限");
+            }
+
             ProductInfo productInfo = DecodeUtil.decodeToJson(productInfoJson,
                     ProductInfo.class);
 
@@ -88,9 +101,14 @@ public class ProductInfoController {
     }
 
     @RequestMapping("/delete")
-    public ResultInfo delete(@RequestBody HashMap map){
+    public ResultInfo delete(HttpSession session,@RequestBody HashMap map){
         GsonUtil gsonUtil = new GsonUtil(GsonUtil.toJson(map));
         try{
+            PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
+            if(!powerUtil.isDelete("订单明细")){
+                return ResultInfo.error(401,"无权限");
+            }
+
             List<Integer> idList = GsonUtil.toList(gsonUtil.get("idList"),Integer.class);
 
             if(iProductInfoService.delete(idList)){

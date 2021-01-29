@@ -24,16 +24,16 @@ public class UserPowerController {
     private IUserPowerService iUserPowerService;
 
     @PostMapping("/getList")
-    public ResultInfo getList(int id, HttpSession session){
+    public ResultInfo getList(int id, HttpSession session) {
         try {
             PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
-            if(!powerUtil.isSelect("员工管理")){
-                return ResultInfo.error(401,"无权限");
+            if (!powerUtil.isSelect("员工管理")) {
+                return ResultInfo.error(401, "无权限");
             }
 
-            List<UserPower> getList=iUserPowerService.getList(id);
+            List<UserPower> getList = iUserPowerService.getList(id);
             return ResultInfo.success("获取成功", getList);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             log.error("获取失败：{}", e.getMessage());
             return ResultInfo.error("错误!");
@@ -41,22 +41,22 @@ public class UserPowerController {
     }
 
     @PostMapping("/add")
-    public ResultInfo add(@RequestBody HashMap map,HttpSession session){
+    public ResultInfo add(@RequestBody HashMap map, HttpSession session) {
         GsonUtil gsonUtil = new GsonUtil(GsonUtil.toJson(map));
         try {
             PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
-            if(!powerUtil.isAdd("员工管理")){
-                return ResultInfo.error(401,"无权限");
+            if (!powerUtil.isUpdate("员工管理")) {
+                return ResultInfo.error(401, "无权限");
             }
 
-            UserPower userPower=GsonUtil.toEntity(gsonUtil.get("addUserPower"), UserPower.class);
-            userPower=iUserPowerService.add(userPower);
+            UserPower userPower = GsonUtil.toEntity(gsonUtil.get("addUserPower"), UserPower.class);
+            userPower = iUserPowerService.add(userPower);
             if (StringUtils.isNotNull(userPower)) {
                 return ResultInfo.success("添加成功", userPower);
             } else {
                 return ResultInfo.success("添加失败", null);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             log.error("添加失败：{}", e.getMessage());
             log.error("参数：{}", map);
@@ -65,21 +65,21 @@ public class UserPowerController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public ResultInfo update(@RequestBody String userPowerJson,HttpSession session){
-        UserPower userPower=null;
+    public ResultInfo update(@RequestBody String userPowerJson, HttpSession session) {
+        UserPower userPower = null;
         try {
             PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
-            if(!powerUtil.isUpdate("员工管理")){
-                return ResultInfo.error(401,"无权限");
+            if (!powerUtil.isUpdate("员工管理")) {
+                return ResultInfo.error(401, "无权限");
             }
 
-            userPower= DecodeUtil.decodeToJson(userPowerJson,UserPower.class);
+            userPower = DecodeUtil.decodeToJson(userPowerJson, UserPower.class);
             if (iUserPowerService.update(userPower)) {
                 return ResultInfo.success("修改成功", userPower);
             } else {
                 return ResultInfo.success("修改失败", userPower);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             log.error("修改失败：{}", e.getMessage());
             log.error("参数：{}", userPower);
@@ -88,13 +88,13 @@ public class UserPowerController {
     }
 
     @PostMapping("/delete")
-    public ResultInfo delete(@RequestBody HashMap map,HttpSession session){
+    public ResultInfo delete(@RequestBody HashMap map, HttpSession session) {
         GsonUtil gsonUtil = new GsonUtil(GsonUtil.toJson(map));
         List<Integer> idList = GsonUtil.toList(gsonUtil.get("idList"), Integer.class);
         try {
             PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
-            if(!powerUtil.isDelete("员工管理")){
-                return ResultInfo.error(401,"无权限");
+            if (!powerUtil.isUpdate("员工管理")) {
+                return ResultInfo.error(401, "无权限");
             }
 
             if (iUserPowerService.delete(idList)) {
@@ -102,15 +102,11 @@ public class UserPowerController {
             } else {
                 return ResultInfo.success("删除失败", idList);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             log.error("删除失败：{}", e.getMessage());
             log.error("参数：{}", idList);
             return ResultInfo.error("删除失败");
         }
     }
-
-
-
-
 }

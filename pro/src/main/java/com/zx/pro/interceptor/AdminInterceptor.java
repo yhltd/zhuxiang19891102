@@ -6,10 +6,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * 拦截器
@@ -36,13 +38,14 @@ public class AdminInterceptor implements HandlerInterceptor {
             HttpSession session = request.getSession();
             //判断session中有没有登录信息
             if (!SessionUtil.checkToken(session)) {
-                //跳转到登陆页
-                response.sendRedirect(request.getContextPath() + "/");
+                //跳转到首页
+                response.sendRedirect("/");
                 log.info("请求被拦截");
                 return false;
             }
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            log.error("拦截器错误：{}",e.getMessage());
+            return false;
         }
         log.info("请求成功");
         return true;

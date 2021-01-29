@@ -37,10 +37,33 @@ public interface IOrderInfoService extends IService<OrderInfo> {
     boolean delete(List<Integer> idList);
 
     /**
+     * 根据项目id删除
+     * @param idList 项目id集合
+     * @return
+     */
+    boolean deleteByProjectId(List<Integer> idList);
+
+    /**
      * 新增订单
      * @param orderInfo 订单信息
      * @param hashMapList 订单下的产品信息和物料信息
      * @return
      */
     boolean add(OrderInfo orderInfo, List<HashMap> hashMapList);
+
+    /**
+     * 修改订单状态
+     * @param orderInfoId 订单信息id
+     * @param state 状态
+     * @return
+     */
+    boolean updateState(Integer orderInfoId,String state);
+
+    /**
+     * 修改订单状态
+     * @param orderId 订单号
+     * @param state 状态
+     * @return
+     */
+    boolean updateState(String orderId,String state);
 }

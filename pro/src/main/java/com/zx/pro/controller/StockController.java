@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,8 +29,13 @@ public class StockController {
     private IStockService iStockService;
 
     @RequestMapping("/post_list")
-    public ResultInfo postList(){
+    public ResultInfo postList(HttpSession session){
         try {
+            PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
+            if (!powerUtil.isSelect("库存")) {
+                return ResultInfo.error(401, "无权限");
+            }
+
             List<Stock> list = iStockService.getList();
             if(StringUtils.isNotNull(list)){
                 return ResultInfo.success("获取成功", list);
@@ -43,8 +49,13 @@ public class StockController {
     }
 
     @RequestMapping("/select_list")
-    public ResultInfo selectList(@RequestBody HashMap map){
+    public ResultInfo selectList(HttpSession session,@RequestBody HashMap map){
         try {
+            PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
+            if (!powerUtil.isSelect("库存")) {
+                return ResultInfo.error(401, "无权限");
+            }
+
             String productName = map.get("productName").toString();
 
             List<Stock> list = iStockService.getList(productName);
@@ -63,8 +74,13 @@ public class StockController {
 
     @RequestMapping("/update")
     @Transactional
-    public ResultInfo update(@RequestBody String stockJson){
+    public ResultInfo update(HttpSession session,@RequestBody String stockJson){
         try {
+            PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
+            if (!powerUtil.isUpdate("库存")) {
+                return ResultInfo.error(401, "无权限");
+            }
+
             Stock stock = DecodeUtil.decodeToJson(stockJson,Stock.class);
 
             if (iStockService.update(stock)) {
@@ -81,9 +97,14 @@ public class StockController {
     }
 
     @RequestMapping("/delete")
-    public ResultInfo delete(@RequestBody HashMap map){
+    public ResultInfo delete(HttpSession session,@RequestBody HashMap map){
         GsonUtil gsonUtil = new GsonUtil(GsonUtil.toJson(map));
         try {
+            PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
+            if (!powerUtil.isDelete("库存")) {
+                return ResultInfo.error(401, "无权限");
+            }
+
             List<Integer> idList = GsonUtil.toList(gsonUtil.get("idList"),Integer.class);
             if (iStockService.delete(idList)) {
                 return ResultInfo.success("删除成功", null);

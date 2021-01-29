@@ -28,8 +28,13 @@ public class SetStockDetailController {
     private ISetStockDetailService iSetStockDetailService;
 
     @RequestMapping("/post_list")
-    public ResultInfo postList(){
+    public ResultInfo postList(HttpSession session){
         try {
+            PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
+            if (!powerUtil.isSelect("入库明细")) {
+                return ResultInfo.error(401, "无权限");
+            }
+
             List<SetStockDetail> list = iSetStockDetailService.getList();
             if(StringUtils.isNotNull(list)){
                 return ResultInfo.success("获取成功", list);
@@ -43,8 +48,13 @@ public class SetStockDetailController {
     }
 
     @RequestMapping("/select_list")
-    public ResultInfo selectList(@RequestBody HashMap map){
+    public ResultInfo selectList(HttpSession session,@RequestBody HashMap map){
         try {
+            PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
+            if (!powerUtil.isSelect("入库明细")) {
+                return ResultInfo.error(401, "无权限");
+            }
+
             String setOrder = map.get("setOrder").toString();
             String productName = map.get("productName").toString();
 
@@ -67,6 +77,11 @@ public class SetStockDetailController {
     public ResultInfo add(HttpSession session, @RequestBody HashMap map){
         GsonUtil gsonUtil = new GsonUtil(GsonUtil.toJson(map));
         try {
+            PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
+            if (!powerUtil.isAdd("入库明细")) {
+                return ResultInfo.error(401, "无权限");
+            }
+
             String workOrder = map.get("workOrder").toString();
             List<SetStockDetail> setStockDetailList =
                     GsonUtil.toList(gsonUtil.get("list"),SetStockDetail.class);
@@ -89,8 +104,13 @@ public class SetStockDetailController {
     }
 
     @RequestMapping("/update")
-    public ResultInfo update(@RequestBody String setStockDetailJson){
+    public ResultInfo update(HttpSession session,@RequestBody String setStockDetailJson){
         try {
+            PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
+            if (!powerUtil.isUpdate("入库明细")) {
+                return ResultInfo.error(401, "无权限");
+            }
+
             SetStockDetail setStockDetail =
                     DecodeUtil.decodeToJson(setStockDetailJson,SetStockDetail.class,"createTime");
             if (iSetStockDetailService.update(setStockDetail)) {
@@ -107,9 +127,14 @@ public class SetStockDetailController {
     }
 
     @RequestMapping("/delete")
-    public ResultInfo delete(@RequestBody HashMap map){
+    public ResultInfo delete(HttpSession session,@RequestBody HashMap map){
         GsonUtil gsonUtil = new GsonUtil(GsonUtil.toJson(map));
         try {
+            PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
+            if (!powerUtil.isDelete("入库明细")) {
+                return ResultInfo.error(401, "无权限");
+            }
+
             List<Integer> idList = GsonUtil.toList(gsonUtil.get("idList"),Integer.class);
             if (iSetStockDetailService.delete(idList)) {
                 return ResultInfo.success("删除成功", null);

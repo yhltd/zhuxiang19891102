@@ -18,18 +18,30 @@ import java.util.List;
 public interface IWorkOrderInfoService extends IService<WorkOrderInfo> {
     /**
      * 录入
+     *
      * @return 实体类
      */
     WorkOrderInfo add();
 
     /**
      * 查询派工单信息
+     *
      * @return 派工单信息list
      */
     List<WorkOrderInfo> getList();
 
     /**
+     * 条件查询
+     * @param workOrder 派工单号
+     * @param startDateStr 开始日期
+     * @param endDateStr 结束日期
+     * @return
+     */
+    List<WorkOrderInfo> selectList(String workOrder, String startDateStr, String endDateStr);
+
+    /**
      * 查询派工单信息
+     *
      * @param state 状态
      * @return
      */
@@ -37,33 +49,12 @@ public interface IWorkOrderInfoService extends IService<WorkOrderInfo> {
 
     /**
      * 修改状态
+     *
      * @param workOrder
      * @param state
      * @return
      */
-    boolean updateState(String workOrder,String state);
-
-    /**
-     * 查询派工单信息
-     * @param workOrder 根据派工单单号查询
-     * @return 派工单信息list
-     */
-    List<WorkOrderInfo> getList(String workOrder);
-
-    /**
-     * 查询派工单信息
-     * @param startTime,endTime 根据时间区间查询
-     * @return 派工单信息list
-     */
-    List<WorkOrderInfo> getList(LocalDateTime startTime, LocalDateTime endTime);
-
-
-
-
-
-
-
-
+    boolean updateState(String workOrder, String state);
 
 
 }
