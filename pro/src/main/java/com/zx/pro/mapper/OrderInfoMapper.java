@@ -51,15 +51,18 @@ public interface OrderInfoMapper extends BaseMapper<OrderInfo> {
      *
      * @return
      */
-    @Select("select pri.project_name,oi.*,sum(pi.product_num) as order_num,min(wod.work_date) as work_date,sum(wod.work_num) as work_num " +
-            "from order_info as oi " +
-            "left join project_info as pri " +
-            "on oi.project_info_id = pri.id " +
-            "left join product_info as pi " +
-            "on oi.order_id = pi.order_info_id " +
-            "left join work_order_detail as wod " +
-            "on wod.product_info_id = pi.id" +
-            "where oi.order_id like CONCAT('%','','%')")
+    @Select("select pri.project_name,oi.order_id,oi.create_time,sum(pi.product_num) as order_num,min(wod.work_date) as work_date,min(ssd.create_time) as set_stock_date,sum(ssd.set_num) as set_num,min(osd.create_time) as out_stock_date,sum(osd.out_num) as out_num " +
+            "FROM order_info as oi " +
+            "LEFT JOIN project_info as pri " +
+            "ON oi.project_info_id = pri.id " +
+            "LEFT JOIN product_info as pi " +
+            "ON oi.order_id = pi.order_info_id " +
+            "LEFT JOIN work_order_detail as wod " +
+            "ON wod.product_info_id = pi.id " +
+            "LEFT JOIN set_stock_detail as ssd " +
+            "ON ssd.product_info_id = pi.id " +
+            "LEFT JOIN out_stock_detail as osd " +
+            "ON osd.product_info_id = pi.id;")
     List<OrderState> getOrderStateList();
 
 
@@ -68,14 +71,18 @@ public interface OrderInfoMapper extends BaseMapper<OrderInfo> {
      * @param orderId 订单号
      * @return
      */
-    @Select("select pri.project_name,oi.*,sum(pi.product_num) as order_num,min(wod.work_date) as work_date,sum(wod.work_num) as work_num " +
-            "from order_info as oi " +
-            "left join project_info as pri " +
-            "on oi.project_info_id = pri.id " +
-            "left join product_info as pi " +
-            "on oi.order_id = pi.order_info_id " +
-            "left join work_order_detail as wod " +
-            "on wod.product_info_id = pi.id " +
-            "where oi.order_id like CONCAT('%',#{orderId},'%')")
+    @Select("select pri.project_name,oi.order_id,oi.create_time,sum(pi.product_num) as order_num,min(wod.work_date) as work_date,min(ssd.create_time) as set_stock_date,sum(ssd.set_num) as set_num,min(osd.create_time) as out_stock_date,sum(osd.out_num) as out_num " +
+            "FROM order_info as oi " +
+            "LEFT JOIN project_info as pri " +
+            "ON oi.project_info_id = pri.id " +
+            "LEFT JOIN product_info as pi " +
+            "ON oi.order_id = pi.order_info_id " +
+            "LEFT JOIN work_order_detail as wod " +
+            "ON wod.product_info_id = pi.id " +
+            "LEFT JOIN set_stock_detail as ssd " +
+            "ON ssd.product_info_id = pi.id " +
+            "LEFT JOIN out_stock_detail as osd " +
+            "ON osd.product_info_id = pi.id " +
+            "WHERE oi.order_id like CONCAT('%',#{orderId},'%');")
     List<OrderState> selectOrderStateList(String orderId);
 }

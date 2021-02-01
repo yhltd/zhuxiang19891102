@@ -38,7 +38,7 @@ public class WorkOrderInfoController {
         List<WorkOrderInfo> getList = null;
         try {
             PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
-            if (!powerUtil.isSelect("派工单汇总")) {
+            if (!powerUtil.isSelect("派工单")) {
                 return ResultInfo.error(401, "无权限");
             }
 
