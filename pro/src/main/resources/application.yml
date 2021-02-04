@@ -1,6 +1,5 @@
 server:
   port: 8888
-
 spring:
   profiles:
     active: dev
@@ -21,10 +20,3 @@ spring:
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-
-# nohup java -jar xx.jar
-# ps aux|grep jar
-# 111 xxx xxx xxx  xxx xx.jar
-# kill -9 进程号
-
-# java -jar xx.jar

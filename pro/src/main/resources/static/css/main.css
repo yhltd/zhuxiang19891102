@@ -14,6 +14,11 @@ html,body,#main{
     justify-content: center;
     transition: .3s;
 }
+
+table tbody tr td{
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 a{
     cursor: pointer;
 }
@@ -121,4 +126,25 @@ table{
 }
 .pagination-detail{
     display: none;
+}
+.bg{
+    padding-top: 60px;
+    margin: 0;
+}
+.bg-image{
+    /**
+    no-repeat:背景图片不平铺
+    repeat:背景图片平铺
+     */
+    background: url("../img/backgroundGrassGreen.jpg") center fixed;
+    background-size: cover;
+}
+.log-image{
+    background: url("../img/login1.jpg") center fixed;
+    background-size: cover;
+}
+.stamp-a{
+    color: grey;
+    font-size: 12px;
+    text-align: center;
 }
