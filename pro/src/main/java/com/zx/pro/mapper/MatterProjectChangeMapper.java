@@ -18,7 +18,7 @@ import java.util.List;
 @Mapper
 public interface MatterProjectChangeMapper extends BaseMapper<MatterProjectChange> {
 
-    @Select("select pi.project_name,mi.code,mpc.* from matter_project_change as mpc " +
+    @Select("select pi.project_name,mi.code,mi.material_description,mpc.* from matter_project_change as mpc " +
             "left join matter_project as mp on mpc.matter_project_id = mp.id " +
             "left join project_info as pi on mp.project_info_id = pi.id " +
             "left join matter_info as mi " +
@@ -34,7 +34,7 @@ public interface MatterProjectChangeMapper extends BaseMapper<MatterProjectChang
      * @param updateMan   修改人
      * @return
      */
-    @Select("select pi.project_name,mi.code,mpc.* from matter_project_change as mpc " +
+    @Select("select pi.project_name,mi.code,mi.material_description,mpc.* from matter_project_change as mpc " +
             "left join matter_project as mp on mpc.matter_project_id = mp.id " +
             "left join project_info as pi on mp.project_info_id = pi.id " +
             "left join matter_info as mi on mp.matter_info_id = mi.id " +

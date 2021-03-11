@@ -76,19 +76,31 @@ $(function(){
         $.each(rows,function(index,row){
             let setNum = $('#work-table tbody tr:eq('+index+') td:eq(4) input').val();
 
-            if(setNum == '' || parseFloat(setNum) > row.workNum){
-                alert('入库数量不能为0或者大于生产数量，行号：' + (index+1));
-                check = false;
-                return false;
-            }else{
-                list.push({
-                    productInfoId: row.productInfoId,
-                    setNum: parseFloat(setNum)
-                })
-            }
+             if(setNum == '' || parseFloat(setNum) > row.workNum){
+            //     // alert('入库数量不能为0或者大于生产数量，行号：' + (index+1));
+            //     // check = false;
+            //     // return false;
+            //     list.push({
+            //         productInfoId: row.productInfoId,
+            //         setNum: parseFloat(setNum)
+            //     })
+            // }else{
+            //     list.push({
+            //         productInfoId: row.productInfoId,
+            //         setNum: parseFloat(setNum)
+            //     })
+                 setNum = 0;
+             }
+
+
+            list.push({
+                        productInfoId: row.productInfoId,
+                        setNum: parseFloat(setNum)
+                    })
         })
 
         if(check){
+            console.log(list)
             $ajax({
                 type: 'post',
                 url: '/set_stock/add',

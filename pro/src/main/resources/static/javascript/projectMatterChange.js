@@ -137,7 +137,7 @@ function getList(callback) {
 }
 
 function setTable(data) {
-
+console.log(data)
     if ($('#table').html != '') {
         $('#table').bootstrapTable('load', data);
     }
@@ -174,6 +174,12 @@ function setTable(data) {
                 align: 'left',
                 sortable: true,
                 width: 100
+            },{
+                field: 'materialDescription',
+                title: '物料描述',
+                align: 'left',
+                sortable: true,
+                width: 150
             }, {
                 field: 'oldNum',
                 title: '修改前数量',

@@ -27,13 +27,14 @@ $(function () {
         })
     })
 
-    //新增按钮点击事件
+    //新增按钮点击事件(新增订单：查询projectInfo表得到项目信息)
     $('#add-btn').click(function () {
         $('#add-form')[0].reset();
         $ajax({
             type: 'post',
             url: '/project_info/getList'
         }, false, '', function (res) {
+            console.log(res.data)
             if (res.code == 200) {
                 if (res.data.length == 0) {
                     alert('请先添加一个项目')
@@ -43,6 +44,7 @@ $(function () {
                         let option = $('<option value="' + projectInfo.id + '">' + projectInfo.projectName + '</option>')
                         $('#projectSelect').append(option);
                     })
+                    //add-modal:新增订单的form表单的id
                     $('#add-modal').modal('show');
                 }
             }
@@ -53,14 +55,23 @@ $(function () {
     $('#add-form-submit-btn').click(function () {
         if (checkForm('#add-form')) {
             productInfoList = [];
-            matterList = [];
+            //matterList = [];
+                //获取物料集合
+                 getMatterList();
+            console.log(matterList)
+            //新增订单add-modal表单hide隐藏
             $('#add-modal').modal('hide');
-            $('#product-modal').modal('show');
-            setProductTable();
+            //show选择产品表单
+            //$('#product-modal').modal('show');
+            $('#matter-modal').modal('show')
+            //设置产品表格
+            //setProductTable();
+            //设置物料表格
+            //setMatterTable()
         }
     })
 
-    //新增产品按钮点击事件
+    //新增产品按钮点击事件(添加产品)
     $('#add-product').click(function () {
         productInfoList.push({
             productName: '',
@@ -70,6 +81,7 @@ $(function () {
         })
         setProductTable();
         if (matterList.length == 0) {
+            //获取物料集合
             getMatterList();
         }
     })
@@ -81,6 +93,7 @@ $(function () {
             return;
         }
         $.each(function(index,p){
+            console.log(index,p)
             if(p.matterInfo.length == 0){
                 alert('请选择物料，序号：'+(index+1))
                 return;
@@ -160,7 +173,8 @@ $(function () {
     //选择物料返回按钮
     $('#matter-back-btn').click(function () {
         $('#matter-modal').modal('hide');
-        $('#product-modal').modal('show');
+        //$('#product-modal').modal('show');
+        $('#add-modal').modal('show');
     })
 
     //新增订单关闭按钮
@@ -463,13 +477,17 @@ function getMatterList() {
             alert(res.msg)
         } else {
             matterList = res.data;
+            console.log(matterList)
+            //设置物料表格
+            setMatterTable(matterList)
         }
     })
 }
 
 //设置物料表格
 function setMatterTable(idx) {
-
+// function setMatterTable(matterList) {
+    console.log(matterList)
     if ($('#matter-table').html() != '') {
         $('#matter-table').bootstrapTable('load', matterList);
     }
@@ -503,22 +521,24 @@ function setMatterTable(idx) {
                 field: 'num',
                 title: '订单数量',
                 align: 'left',
-                width: 100,
-                formatter: function (value, row, index) {
-                    let idx = parseInt($('#productIndex').val());
-                    let num = productInfoList[idx].matterInfo.num
-                    return '<input type="number" class="form-control" value="' + num + '"/>'
-                }
+                width: 70,
+                 formatter: function (value, row, index) {
+                     // let idx = parseInt($('#productIndex').val());
+                     // let num = productInfoList[idx].matterInfo.num
+                     // return '<input type="number" class="form-control" value="' + num + '"/>'
+                     return '<input type="number" class="form-control"/>'
+                 }
             }, {
                 field: 'price',
                 title: '单价',
                 align: 'left',
                 width: 70,
-                formatter: function (value, row, index) {
-                    let idx = parseInt($('#productIndex').val());
-                    let price = productInfoList[idx].matterInfo.price
-                    return '<input type="number" class="form-control" value="' + price + '"/>'
-                }
+                 formatter: function (value, row, index) {
+                    // let idx = parseInt($('#productIndex').val());
+                    // let price = productInfoList[idx].matterInfo.price
+                    // return '<input type="number" class="form-control" value="' + price + '"/>'
+                     return '<input type="number" class="form-control"/>'
+                 }
             }
         ]
     })

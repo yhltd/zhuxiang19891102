@@ -224,11 +224,13 @@ function selectMatterByProjectId(projectId) {
 }
 
 function setShowMatterTable(data) {
+    console.log(data)
     if ($('#show-table-matter').html() != '') {
         $('#show-table-matter').bootstrapTable('load', data);
         return;
     }
     $('#show-table-matter').bootstrapTable({
+
         data: data,
         sortStable: true,
         classes: 'table table-hover',
@@ -253,7 +255,68 @@ function setShowMatterTable(data) {
                 align: 'left',
                 sortable: true,
                 width: 100
+            },  {
+                field: 'type',
+                title: '类别',
+                align: 'left',
+                sortable: true,
+                width: 150,
             }, {
+                field: 'size',
+                title: '长度(英尺)',
+                align: 'left',
+                sortable: true,
+                width: 150
+            },{
+                field: 'meter',
+                title: '长度(米)',
+                align: 'left',
+                sortable: true,
+                width: 150
+            }, {
+                field: 'yieldStrength',
+                title: '屈服强度',
+                align: 'left',
+                sortable: true,
+                width: 150
+            },
+            {
+                field: 'chartThickness',
+                title: '图层厚度',
+                align: 'left',
+                sortable: true,
+                width: 150
+            },{
+                field: 'thickness',
+                title: '料厚',
+                align: 'left',
+                sortable: true,
+                width: 150
+            }, {
+                field: 'color',
+                title: '颜色',
+                align: 'left',
+                sortable: true,
+                width: 150
+            }, {
+                field: 'supplier',
+                title: '供应商',
+                align: 'left',
+                sortable: true,
+                width: 150
+            }, {
+                field: 'materialDescription',
+                title: '物料描述',
+                align: 'left',
+                sortable: true,
+                width: 150
+            }, {
+                field: 'createTime',
+                title: '录入时间',
+                align: 'left',
+                sortable: true,
+                width: 150
+            },{
                 field: 'matterNum',
                 title: '所需数量',
                 align: 'left',
@@ -297,7 +360,68 @@ function setMatterTable(data) {
                 align: 'left',
                 sortable: true,
                 width: 100
+            },  {
+                field: 'type',
+                title: '类别',
+                align: 'left',
+                sortable: true,
+                width: 150,
             }, {
+                field: 'size',
+                title: '长度(英尺)',
+                align: 'left',
+                sortable: true,
+                width: 150
+            },{
+                field: 'meter',
+                title: '长度(米)',
+                align: 'left',
+                sortable: true,
+                width: 150
+            }, {
+                field: 'yieldStrength',
+                title: '屈服强度',
+                align: 'left',
+                sortable: true,
+                width: 150
+            },
+            {
+                field: 'chartThickness',
+                title: '图层厚度',
+                align: 'left',
+                sortable: true,
+                width: 150
+            },{
+                field: 'thickness',
+                title: '料厚',
+                align: 'left',
+                sortable: true,
+                width: 150
+            }, {
+                field: 'color',
+                title: '颜色',
+                align: 'left',
+                sortable: true,
+                width: 150
+            }, {
+                field: 'supplier',
+                title: '供应商',
+                align: 'left',
+                sortable: true,
+                width: 150
+            }, {
+                field: 'materialDescription',
+                title: '物料描述',
+                align: 'left',
+                sortable: true,
+                width: 150
+            }, {
+                field: 'createTime',
+                title: '录入时间',
+                align: 'left',
+                sortable: true,
+                width: 150
+            },{
                 field: 'matterNum',
                 title: '所需数量',
                 align: 'left',
@@ -366,6 +490,12 @@ function setTable(data) {
             }, {
                 field: 'customerName',
                 title: '客户名称',
+                align: 'left',
+                sortable: true,
+                width: 150
+            },{
+                field: 'postcode',
+                title: '邮政编码',
                 align: 'left',
                 sortable: true,
                 width: 150

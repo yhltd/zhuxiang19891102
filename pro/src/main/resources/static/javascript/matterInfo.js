@@ -155,6 +155,27 @@ $(function () {
     })
 })
 
+//点击导出按钮事件
+// $(document).ready(function (){
+//     $('#studentTable').tableExport({
+//         type: 'excel',//导出文件类型，[ 'csv', 'txt', 'sql', 'doc', 'excel', 'xlsx', 'pdf']
+//         exportDataType: "basic",//'basic':当前页的数据, 'all':全部的数据, 'selected':选中的数据
+//         ignoreColumn: [0],//忽略某一列的索引
+//         fileName: '物料配置',//下载文件名称
+//         onCellHtmlData: function (cell, row, col, data){//处理导出内容,自定义某一行、某一列、某个单元格的内容
+//             console.info(data);
+//             return data;
+//         },
+//     });
+// })
+$(document).ready(function () {
+    $("#import-btn").click(function () {
+        $("#matterInfoTable").table2excel({
+            exclude  : ".noExl", //过滤位置的 css 类名
+            filename : "成绩单-" + new Date().getTime() + ".xls" //文件名称
+        });
+    });
+});
 /**
  * 动态表格
  * @param data
@@ -202,6 +223,12 @@ function setTable(data) {
                 align: 'left',
                 sortable: true,
                 width: 150
+            },{
+                field: 'meter',
+                title: '长度(米)',
+                align: 'left',
+                sortable: true,
+                width: 150
             }, {
                 field: 'yieldStrength',
                 title: '屈服强度',
@@ -215,6 +242,12 @@ function setTable(data) {
                 align: 'left',
                 sortable: true,
                 width: 150
+            },{
+                field: 'thickness',
+                title: '料厚',
+                align: 'left',
+                sortable: true,
+                width: 150
             }, {
                 field: 'color',
                 title: '颜色',
@@ -222,20 +255,20 @@ function setTable(data) {
                 sortable: true,
                 width: 150
             }, {
-                field: 'fittingsProportion',
-                title: '配件比例',
-                align: 'left',
-                sortable: true,
-                width: 150
-            }, {
-                field: 'fittingsNum',
-                title: '配件数量',
-                align: 'left',
-                sortable: true,
-                width: 150
-            }, {
                 field: 'supplier',
                 title: '供应商',
+                align: 'left',
+                sortable: true,
+                width: 150
+            }, {
+                field: 'materialDescription',
+                title: '物料描述',
+                align: 'left',
+                sortable: true,
+                width: 150
+            }, {
+                field: 'createTime',
+                title: '录入时间',
                 align: 'left',
                 sortable: true,
                 width: 150

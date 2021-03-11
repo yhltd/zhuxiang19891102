@@ -13,7 +13,13 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -23,6 +29,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/matter_info")
 public class MatterInfoController {
+
 
 
     @Autowired
@@ -40,7 +47,6 @@ public class MatterInfoController {
             if (!powerUtil.isSelect("物料配置")) {
                 return ResultInfo.error(401, "无权限");
             }
-
             List<MatterInfo> list = iMatterInfoService.getList();
             if (StringUtils.isNotNull(list)) {
                 return ResultInfo.success("获取成功", list);
@@ -89,6 +95,7 @@ public class MatterInfoController {
             Integer projectId = Integer.parseInt(map.get("projectId").toString());
 
             List<MatterInfoItem> list = iMatterInfoService.getListOfUse(projectId);
+            //System.out.println("执行了getMatterList方法");
             if (StringUtils.isNotNull(list)) {
                 return ResultInfo.success("获取成功", list);
             } else {
@@ -134,7 +141,7 @@ public class MatterInfoController {
                 return ResultInfo.error(401, "无权限");
             }
 
-            MatterInfo matterInfo = DecodeUtil.decodeToJson(matterInfoJson, MatterInfo.class);
+            MatterInfo matterInfo = DecodeUtil.decodeToJson(matterInfoJson, MatterInfo.class,"createTime");
 
             if (iMatterInfoService.update(matterInfo)) {
                 return ResultInfo.success("修改成功", matterInfo);
@@ -150,15 +157,16 @@ public class MatterInfoController {
     }
 
     @PostMapping("/add")
-    public ResultInfo add(HttpSession session,@RequestBody String matterInfoJson) {
+    //@RequestBody HashMap map  String MatterInfoJson
+    public ResultInfo add(HttpSession session,@RequestBody  String matterInfoJson) {
+        //GsonUtil gsonUtil = new GsonUtil(GsonUtil.toJson(PushbackInputStream));
         try {
             PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
             if (!powerUtil.isAdd("物料配置")) {
                 return ResultInfo.error(401, "无权限");
             }
-
-            MatterInfo matterInfo = DecodeUtil.decodeToJson(matterInfoJson, MatterInfo.class);
-
+            MatterInfo matterInfo = DecodeUtil.decodeToJson(matterInfoJson, MatterInfo.class,"createTime");
+              //MatterInfo matterInfo = GsonUtil.toEntity(gsonUtil.get("projectInfo"),MatterInfo.class);
             if (iMatterInfoService.add(matterInfo)) {
                 return ResultInfo.success("添加成功", matterInfo);
             } else {

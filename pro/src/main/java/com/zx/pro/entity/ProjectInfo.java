@@ -31,6 +31,10 @@ public class ProjectInfo {
      */
     private String projectAddress;
     /**
+     * 邮政编码
+     */
+    private String postcode;
+    /**
      * 创建时间
      */
     private LocalDateTime createTime;

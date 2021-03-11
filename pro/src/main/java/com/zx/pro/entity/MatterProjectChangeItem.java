@@ -17,4 +17,8 @@ public class MatterProjectChangeItem extends MatterProjectChange {
      * 物料编码
      */
     private String code;
+    /**
+     * 物料描述
+     */
+    private String materialDescription;
 }
