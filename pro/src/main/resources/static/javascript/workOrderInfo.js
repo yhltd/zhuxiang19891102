@@ -73,8 +73,8 @@ function showDetail(workOrder) {
                         width: 100
                     }
                     , {
-                        field: 'productName',
-                        title: '产品',
+                        field: 'mattername',
+                        title: '物料',
                         align: 'left',
                         sortable: true,
                         width: 100

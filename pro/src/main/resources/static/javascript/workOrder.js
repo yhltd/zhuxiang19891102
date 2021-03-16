@@ -53,13 +53,13 @@ function getProducts(orderId) {
     }, false, '', function (res) {
         let $s = $('#add-productName');
         $s.html('');
-        let $o = $('<option value="">请选择产品</option>');
+        let $o = $('<option value="">请选择物料</option>');
         $s.append($o)
 
         if (res.code == 200) {
             products = res.data;
             $.each(products, function (index, o) {
-                $o = $('<option value="' + o.id + '">' + o.productName + '</option>')
+                $o = $('<option value="' + o.matterid + '">' + o.mattername + '</option>')
                 $s.append($o)
             })
         } else {
@@ -76,10 +76,10 @@ function getProducts(orderId) {
 function setProductNum(num, id) {
     let result = true;
     $.each(products, function (index, product) {
-        if (product.id == id) {
-            result = product.productNum - num >= 0;
-            product.productNum = result ? product.productNum -= num : product.productNum;
-            $('#add-productNum').val(product.productNum);
+        if (product.matterid == id) {
+            result = product.matternum - num >= 0;
+            product.matternum = result ? product.matternum -= num : product.matternum;
+            $('#add-productNum').val(product.matternum);
             return false;
         }
     })
@@ -290,7 +290,7 @@ function setTable() {
                 width: 150,
             }, {
                 field: 'productName',
-                title: '产品',
+                title: '物料',
                 align: 'left',
                 sortable: false,
                 width: 100,

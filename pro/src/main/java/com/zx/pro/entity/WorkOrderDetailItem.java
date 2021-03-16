@@ -17,7 +17,7 @@ public class WorkOrderDetailItem extends WorkOrderDetail{
     /**
      * 产品名称
      */
-    private String productName;
+    private String mattername;
 
     /**
      * 派工单单号

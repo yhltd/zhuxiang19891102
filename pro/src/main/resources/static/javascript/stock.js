@@ -160,32 +160,36 @@ function setTable(data) {
                     return index + 1;
                 }
             }, {
-                field: 'productName',
-                title: '产品名称',
+                field: 'mattername',
+                title: '物料名称',
                 align: 'left',
                 sortable: true,
-                width: 120
-            }, {
-                field: 'productPrice',
-                title: '产品单价',
-                align: 'left',
-                sortable: true,
-                width: 100
-            }, {
+                width: 120,
+            // }
+            // , {
+            //     field: 'productPrice',
+            //     title: '产品单价',
+            //     align: 'left',
+            //     sortable: true,
+            //     width: 100
+            // }
+            // ,
+            // {
                 field: 'stockNum',
                 title: '库存数量',
                 align: 'left',
                 sortable: true,
                 width: 100
-            }, {
-                field: 'stockPrice',
-                title: '库存金额',
-                align: 'left',
-                sortable: true,
-                width: 100,
-                formatter: function (value, row, index) {
-                    return (row.stockNum * row.productPrice).toFixed(2);
-                }
+            // },
+            // {
+            //     field: 'stockPrice',
+            //     title: '库存金额',
+            //     align: 'left',
+            //     sortable: true,
+            //     width: 100,
+            //     formatter: function (value, row, index) {
+            //         return (row.stockNum * row.productPrice).toFixed(2);
+            //     }
             }
         ],
         onClickRow: function (row, el) {

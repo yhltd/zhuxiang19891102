@@ -5,7 +5,6 @@ $(function(){
             orderId: $('#orderId-select').val(),
             productName: $('#productName-select').val()
         }
-
         $ajax({
             type: 'post',
             url: '/product_info/select_list',
@@ -36,12 +35,11 @@ $(function(){
     $('#edit-form-submit-btn').click(function(){
         if(checkForm('#edit-form')){
             let params = formToJson('#edit-form');
-
             $ajax({
                 type: 'post',
                 url: '/product_info/update',
                 data: {
-                    productInfoJson: JSON.stringify(params)
+                    OrsermatterJson: JSON.stringify(params)
                 },
                 contentType: 'application/json;charset=utf-8',
                 dataType: 'json'
@@ -196,40 +194,57 @@ function setTable(data) {
                     return index + 1;
                 }
             }, {
-                field: 'orderInfoId',
+                field: 'orderid',
                 title: '订单号',
                 align: 'left',
                 sortable: true,
                 width: 150
             }, {
-                field: 'productName',
-                title: '产品名称',
+                field: 'mattername',
+                title: '物料编号',
                 align: 'left',
                 sortable: true,
                 width: 150
             }, {
-                field: 'productNum',
+                field: 'matternum',
                 title: '数量',
                 align: 'left',
                 sortable: true,
                 width: 100
-            }, {
-                field: 'productPrice',
-                title: '单价',
+            }
+            , {
+                field: 'type',
+                title: '类别',
+                align: 'left',
+                sortable: true,
+                width: 100,
+                // formatter: function (value, row, index) {
+                //     return '<button onclick="javascript:selectMatterByOrderId(' + row.id + ')" type="button" class="btn btn-primary">' +
+                //         '<i class="bi bi-inbox icon"></i>' +
+                //         '查看物料' +
+                //         '</button>'
+                // }
+            }
+            , {
+                field: 'size',
+                title: '长度',
                 align: 'left',
                 sortable: true,
                 width: 100
-            }, {
-                field: 'id',
-                title: '操作',
+            }
+            , {
+                field: 'yie',
+                title: '屈展度',
                 align: 'left',
-                width: 100,
-                formatter: function (value, row, index) {
-                    return '<button onclick="javascript:selectMatterByOrderId(' + row.id + ')" type="button" class="btn btn-primary">' +
-                        '<i class="bi bi-inbox icon"></i>' +
-                        '查看物料' +
-                        '</button>'
-                }
+                sortable: true,
+                width: 100
+            }
+            , {
+                field: 'color',
+                title: '颜色',
+                align: 'left',
+                sortable: true,
+                width: 100
             }
         ],
         onClickRow: function (row, el) {
@@ -243,74 +258,74 @@ function setTable(data) {
     })
 }
 
-function selectMatterByOrderId(id) {
-    $('#productId').val(id);
-    $ajax({
-        type: 'post',
-        url: '/matter_info/selectListByProductId',
-        data: JSON.stringify({
-            productId: id
-        }),
-        contentType: 'application/json;charset=utf-8',
-        dataType: 'json'
-    }, false, '', function (res) {
-        if(res.code == 200){
-            $('#show-matter-modal').modal('show')
-            setMatterTable(res.data);
-        }else{
-            alert(res.msg);
-        }
-    })
-}
+// function selectMatterByOrderId(id) {
+//     $('#productId').val(id);
+//     $ajax({
+//         type: 'post',
+//         url: '/matter_info/selectListByProductId',
+//         data: JSON.stringify({
+//             productId: id
+//         }),
+//         contentType: 'application/json;charset=utf-8',
+//         dataType: 'json'
+//     }, false, '', function (res) {
+//         if(res.code == 200){
+//             $('#show-matter-modal').modal('show')
+//             setMatterTable(res.data);
+//         }else{
+//             alert(res.msg);
+//         }
+//     })
+// }
 
-function setMatterTable(data) {
-    if ($('#matter-table').html() != '') {
-        $('#matter-table').bootstrapTable('load', data);
-        return;
-    }
-
-    $('#matter-table').bootstrapTable({
-        data: data,
-        sortStable: true,
-        classes: 'table table-hover',
-        idField: 'id',
-        pagination: false,
-        clickToSelect: false,
-        locale: 'zh-CN',
-        columns: [
-            {
-                field: 'id',
-                title: '序号',
-                align: 'center',
-                width: 50,
-                formatter: function (value, row, index) {
-                    return index + 1;
-                }
-            }, {
-                field: 'code',
-                title: '物料代码',
-                align: 'left',
-                sortable: true,
-                width: 150
-            }, {
-                field: 'num',
-                title: '数量',
-                align: 'left',
-                sortable: true,
-                width: 70,
-                formatter: function (value, row, index) {
-                    return '<input type="number" class="form-control" value="' + value + '"/>'
-                }
-            }, {
-                field: 'price',
-                title: '单价',
-                align: 'left',
-                sortable: true,
-                width: 70,
-                formatter: function (value, row, index) {
-                    return '<input type="number" class="form-control" value="' + value + '"/>'
-                }
-            }
-        ]
-    })
-}
+// function setMatterTable(data) {
+//     if ($('#matter-table').html() != '') {
+//         $('#matter-table').bootstrapTable('load', data);
+//         return;
+//     }
+//
+//     $('#matter-table').bootstrapTable({
+//         data: data,
+//         sortStable: true,
+//         classes: 'table table-hover',
+//         idField: 'id',
+//         pagination: false,
+//         clickToSelect: false,
+//         locale: 'zh-CN',
+//         columns: [
+//             {
+//                 field: 'id',
+//                 title: '序号',
+//                 align: 'center',
+//                 width: 50,
+//                 formatter: function (value, row, index) {
+//                     return index + 1;
+//                 }
+//             }, {
+//                 field: 'code',
+//                 title: '物料代码',
+//                 align: 'left',
+//                 sortable: true,
+//                 width: 150
+//             }, {
+//                 field: 'num',
+//                 title: '数量',
+//                 align: 'left',
+//                 sortable: true,
+//                 width: 70,
+//                 formatter: function (value, row, index) {
+//                     return '<input type="number" class="form-control" value="' + value + '"/>'
+//                 }
+//             }, {
+//                 field: 'price',
+//                 title: '单价',
+//                 align: 'left',
+//                 sortable: true,
+//                 width: 70,
+//                 formatter: function (value, row, index) {
+//                     return '<input type="number" class="form-control" value="' + value + '"/>'
+//                 }
+//             }
+//         ]
+//     })
+// }

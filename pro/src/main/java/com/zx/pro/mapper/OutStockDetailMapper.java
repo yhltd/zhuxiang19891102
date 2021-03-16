@@ -19,10 +19,7 @@ public interface OutStockDetailMapper extends BaseMapper<OutStockDetail>{
      * 查询出库明细
      * @return
      */
-    @Select("select osd.*,pi.* " +
-            "from out_stock_detail as osd " +
-            "left join product_info as pi " +
-            "on osd.product_info_id = pi.id")
+    @Select("select osd.*,m.code as mattername from out_stock_detail as osd left join matter_info as m on osd.matter_id = m.id")
     List<OutStockDetail> getList();
 
     /**
@@ -31,11 +28,8 @@ public interface OutStockDetailMapper extends BaseMapper<OutStockDetail>{
      * @param productName 产品名称
      * @return
      */
-    @Select("select ssd.*,pi.* from set_stock_detail as ssd " +
-            "left join product_info as pi " +
-            "on ssd.product_info_id = pi.id " +
-            "where osd.out_order like CONCAT('%',#{outOrder},'%') " +
-            "and pi.product_name like CONCAT('%',#{productName},'%')")
+    @Select("select osd.*,m.code as mattername from out_stock_detail as osd left join matter_info as m on osd.matter_id = m.id " +
+            "where osd.out_order like '%${outOrder}%' and m.code like '%${productName}%'")
     List<OutStockDetail> selectList(String outOrder,String productName);
 
 

@@ -57,15 +57,14 @@ public class OutStockController {
                 return ResultInfo.error(401, "无权限");
             }
 
-            String outOrder = map.get("outOrder").toString();
+            String outOrder = map.get("setOrder").toString();
             String productName = map.get("productName").toString();
-
             List<OutStockDetail> list = iOutStockDetailService.getList(outOrder,productName);
 
             if (StringUtils.isNotNull(list)) {
                 return ResultInfo.success("查询成功", list);
             } else {
-                return ResultInfo.success("查询失败");
+                return ResultInfo.success("查询失败",outOrder);
             }
         } catch (Exception e) {
             e.printStackTrace();

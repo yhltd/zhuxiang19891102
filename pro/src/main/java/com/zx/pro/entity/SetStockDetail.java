@@ -43,9 +43,10 @@ public class SetStockDetail {
     /**
      * 产品名称
      */
-    private String productName;
-    /**
-     * 产品单价
-     */
-    private Double productPrice;
+//    private String productName;
+//    /**
+//     * 产品单价
+//     */
+//    private Double productPrice;
+    private String mattername;
 }

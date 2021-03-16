@@ -54,9 +54,8 @@ public interface MatterInfoMapper extends BaseMapper<MatterInfo> {
             "left join matter_project as mp " +
             "on pm.matter_project_id = mp.id " +
             "left join matter_info as mi " +
-            "on mp.matter_info_id = mi.id " +
-            "where pm.product_info_id = #{productId}")
-    List<MatterInfoItem> getListByProductId(Integer productId);
+            "on mp.matter_info_id = mi.id ")
+    List<MatterInfoItem> getListByProductId();
 
 
     /**

@@ -52,6 +52,7 @@ public class WorkOrderDetailController {
             }
 
             List<WorkOrderDetail> list = GsonUtil.toList(gsonUtil.get("workOrderDetailList"), WorkOrderDetail.class);
+            log.error("参数：{}", map);
             if (iWorkOrderDetailService.add(list)) {
                 return ResultInfo.success("录入成功", list);
             } else {

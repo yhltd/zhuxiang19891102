@@ -18,7 +18,7 @@ public interface WorkOrderDetailMapper extends BaseMapper<WorkOrderDetail> {
      * @param workOrder 根据派工单单号查询
      * @return 派工单明细集合
      */
-    @Select("SELECT p.product_name,wi.work_order,o.order_id,wd.* from work_order_info wi right join work_order_detail wd on wd.work_order_info_id=wi.id LEFT JOIN product_info p on wd.product_info_id = p.id LEFT JOIN order_info o on p.id=o.project_info_id where wi.work_order= #{workOrder} ")
+    @Select("SELECT m.code as mattername,wi.work_order,o.order_id,wd.* from work_order_info wi right join work_order_detail wd on wd.work_order_info_id=wi.id LEFT JOIN matter_info m on wd.matter_id= m.id LEFT JOIN order_info o on m.id=o.matterid where wi.work_order= #{workOrder} ")
     List<WorkOrderDetailItem> getListByWorkOrder(String workOrder);
 
     /**
@@ -26,7 +26,7 @@ public interface WorkOrderDetailMapper extends BaseMapper<WorkOrderDetail> {
      *
      * @return 派工单明细集合
      */
-    @Select("SELECT p.product_name,wi.work_order,o.order_id,wd.* from work_order_info wi right join work_order_detail wd on wd.work_order_info_id=wi.id LEFT JOIN product_info p on wd.product_info_id = p.id LEFT JOIN order_info o on p.id=o.project_info_id order by wd.work_date desc")
+    @Select("SELECT m.code as mattername,wi.work_order,o.order_id,wd.* from work_order_info wi right join work_order_detail wd on wd.work_order_info_id=wi.id LEFT JOIN matter_info m on wd.matter_id = m.id LEFT JOIN order_info o on m.id=o.matterid order by wd.work_date desc")
     List<WorkOrderDetailItem> getList();
 
     /**
@@ -34,7 +34,7 @@ public interface WorkOrderDetailMapper extends BaseMapper<WorkOrderDetail> {
      *
      * @return 车间生产信息集合
      */
-    @Select("select wod.work_shop,pi.product_name,sum(wod.work_num) as work_num from work_order_detail as wod left join product_info as pi on wod.product_info_id = pi.id group by wod.work_shop,pi.id")
+    @Select("select wod.work_shop,m.code as mattername,sum(wod.work_num) as work_num from work_order_detail as wod left join matter_info as m on wod.matter_id = m.id group by wod.work_shop,m.id")
     List<WorkOrderDetailItem> getProductionListByWorkShop();
 
 
@@ -43,7 +43,7 @@ public interface WorkOrderDetailMapper extends BaseMapper<WorkOrderDetail> {
      *
      * @return 产线生产信息集合
      */
-    @Select("select wod.work_line,pi.product_name,sum(wod.work_num) as work_num from work_order_detail as wod left join product_info as pi on wod.product_info_id = pi.id group by wod.work_line,pi.id")
+    @Select("select wod.work_line,m.code as mattername,sum(wod.work_num) as work_num from work_order_detail as wod left join matter_info as m on wod.matter_id = m.id group by wod.work_line,m.id")
     List<WorkOrderDetailItem> getProductionListByWorkLine();
 
 
@@ -52,7 +52,7 @@ public interface WorkOrderDetailMapper extends BaseMapper<WorkOrderDetail> {
      *
      * @return 车间生产信息集合
      */
-    @Select("select wod.work_shop,pi.product_name,sum(wod.work_num) as work_num from work_order_detail as wod left join product_info as pi on wod.product_info_id = pi.id where wod.work_date between #{startDate} and #{endDate} group by wod.work_shop,pi.id")
+    @Select("select wod.work_shop,m.code as mattername,sum(wod.work_num) as work_num from work_order_detail as wod left join matter_info as m on wod.matter_id = m.id where wod.work_date between #{startDate} and #{endDate} group by wod.work_shop,m.id")
     List<WorkOrderDetailItem> getWorkShopByWorkDate(LocalDateTime startDate, LocalDateTime endDate);
 
 
@@ -61,7 +61,7 @@ public interface WorkOrderDetailMapper extends BaseMapper<WorkOrderDetail> {
      *
      * @return 产线生产信息集合
      */
-    @Select("select wod.work_line,pi.product_name,sum(wod.work_num) as work_num from work_order_detail as wod left join product_info as pi on wod.product_info_id = pi.id where wod.work_date between #{startDate} and #{endDate} group by wod.work_line,pi.id")
+    @Select("select wod.work_line,m.code as mattername,sum(wod.work_num) as work_num from work_order_detail as wod left join matter_info as m on wod.matter_id = m.id where wod.work_date  between #{startDate} and #{endDate} group by wod.work_line,m.id")
     List<WorkOrderDetailItem> getWorkLineByWorkDate(LocalDateTime startDate, LocalDateTime endDate);
 
 

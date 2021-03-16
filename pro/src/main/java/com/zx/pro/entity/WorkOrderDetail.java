@@ -22,9 +22,10 @@ public class WorkOrderDetail {
     private int workOrderInfoId;
 
     /**
-     * 产品信息表id
+     * 物料信息表id
      */
-    private int productInfoId;
+
+    private int matter_id;
 
     /**
      * 生产时间
@@ -45,5 +46,6 @@ public class WorkOrderDetail {
      * 数量
      */
     private int workNum;
+
 
 }

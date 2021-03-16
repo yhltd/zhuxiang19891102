@@ -42,8 +42,8 @@ public class MatterInfoImpl extends ServiceImpl<MatterInfoMapper, MatterInfo> im
     }
 
     @Override
-    public List<MatterInfoItem> getListByProductId(Integer productId) {
-        return matterInfoMapper.getListByProductId(productId);
+    public List<MatterInfoItem> getListByProductId() {
+        return matterInfoMapper.getListByProductId();
     }
 
     @Override

@@ -45,7 +45,7 @@ public interface IMatterInfoService extends IService<MatterInfo> {
      * @param productId 产品id
      * @return
      */
-    List<MatterInfoItem> getListByProductId(Integer productId);
+    List<MatterInfoItem> getListByProductId();
 
     /**
      * 根基项目id查询所有可用物料

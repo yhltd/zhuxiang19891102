@@ -20,7 +20,10 @@ public class Stock {
     /**
      * 产品信息id
      */
-    private int productInfoId;
+//    private int productInfoId;
+
+    private int matter_id;
+
     /**
      * 库存数量
      */
@@ -28,7 +31,10 @@ public class Stock {
     /**
      * 产品名称
      */
-    private String productName;
+//    private String productName;
+
+    private String mattername;
+
     /**
      * 产品单价
      */

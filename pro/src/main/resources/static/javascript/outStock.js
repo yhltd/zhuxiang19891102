@@ -3,11 +3,11 @@ $(function(){
 
     //查询方法
     $('#select-btn').click(function(){
+
         let params = {
             setOrder: $('#setOrder-select').val(),
             productName: $('#productName-select').val()
         }
-
         $ajax({
             type: 'post',
             url: '/out_stock/select_list',
@@ -217,8 +217,8 @@ function setTable(data) {
                 sortable: true,
                 width: 150
             }, {
-                field: 'productName',
-                title: '产品名称',
+                field: 'mattername',
+                title: '物料名称',
                 align: 'left',
                 sortable: true,
                 width: 120
@@ -237,22 +237,24 @@ function setTable(data) {
                 align: 'left',
                 sortable: true,
                 width: 100
-            }, {
-                field: 'productPrice',
-                title: '产品单价',
-                align: 'left',
-                sortable: true,
-                width: 100
-            }, {
-                field: 'outPrice',
-                title: '出库金额',
-                align: 'left',
-                sortable: true,
-                width: 100,
-                formatter: function (value, row, index) {
-                    return (row.outNum * row.productPrice).toFixed(2);
-                }
-            }, {
+            },
+                // {
+            //     field: 'productPrice',
+            //     title: '产品单价',
+            //     align: 'left',
+            //     sortable: true,
+            //     width: 100
+            // }, {
+            //     field: 'outPrice',
+            //     title: '出库金额',
+            //     align: 'left',
+            //     sortable: true,
+            //     width: 100,
+            //     formatter: function (value, row, index) {
+            //         return (row.outNum * row.productPrice).toFixed(2);
+            //     }
+            // },
+        {
                 field: 'man',
                 title: '出库人',
                 align: 'left',
@@ -299,8 +301,8 @@ function setProductTable(data){
                     return index + 1;
                 }
             }, {
-                field: 'productName',
-                title: '产品名称',
+                field: 'mattername',
+                title: '物料名称',
                 align: 'left',
                 sortable: true,
                 width: 120

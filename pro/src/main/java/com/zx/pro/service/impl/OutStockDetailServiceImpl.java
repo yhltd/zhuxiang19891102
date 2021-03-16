@@ -65,7 +65,7 @@ public class OutStockDetailServiceImpl extends ServiceImpl<OutStockDetailMapper,
             //出库
             Stock stock = new Stock();
             //产品id
-            stock.setProductInfoId(outStockDetail.getProductInfoId());
+            stock.setMatter_id(outStockDetail.getMatter_id());
             //出库数量
             stock.setStockNum(outStockDetail.getOutNum());
             if(!iStockService.addOrUpdate(stock,false)){

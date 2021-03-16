@@ -57,7 +57,7 @@ public class SetStockDetailServiceImpl extends ServiceImpl<SetStockDetailMapper,
             //入库
             Stock stock = new Stock();
             //产品id
-            stock.setProductInfoId(setStockDetail.getProductInfoId());
+            stock.setMatter_id(setStockDetail.getProductInfoId());
             //入库数量
             stock.setStockNum(setStockDetail.getSetNum());
             if(!iStockService.addOrUpdate(stock,true)){

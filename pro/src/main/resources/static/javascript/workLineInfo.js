@@ -74,8 +74,8 @@ function setTable(data) {
                 sortable: true,
                 width: 100
             }, {
-                field: 'productName',
-                title: '产品名称',
+                field: 'mattername',
+                title: '物料代码',
                 align: 'left',
                 sortable: true,
                 width: 100

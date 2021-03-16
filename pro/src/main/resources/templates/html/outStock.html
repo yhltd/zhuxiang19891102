@@ -11,6 +11,37 @@
     <script type="text/javascript" src="../bootstrap-4.5.0-dist/js/popper.js"></script>
     <script type="text/javascript" src="../bootstrap-4.5.0-dist/js/bootstrap.min.js"></script>
 
+
+    <!--    导出excel所用包-->
+    <script type="text/javascript" src="../javascript/Getexcel.js"></script>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!--fontawesome-->
+    <script src="https://cdn.bootcss.com/font-awesome/5.8.1/js/all.min.js"></script>
+    <!--bootstrap-table-->
+    <link href="https://cdn.bootcss.com/bootstrap-table/1.14.2/bootstrap-table.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/bootstrap-table/1.14.2/bootstrap-table.min.js"></script>
+    <!--bootstrap-table-lanuage-->
+    <script src="https://cdn.bootcss.com/bootstrap-table/1.14.2/bootstrap-table-locale-all.min.js"></script>
+    <!--bootstrap-table-export-->
+    <script src="https://cdn.bootcss.com/bootstrap-table/1.14.2/extensions/export/bootstrap-table-export.min.js"></script>
+    <!--在客户端保存生成的导出文件-->
+    <script src="https://cdn.bootcss.com/FileSaver.js/2014-11-29/FileSaver.min.js"></script>
+    <!--以XLSX（Excel 2007+ XML格式）格式导出表（SheetJS）-->
+    <script src="https://cdn.bootcss.com/xlsx/0.14.2/xlsx.core.min.js"></script>
+    <!--以PNG格式导出表格-->
+    <!--对于IE支持包括 html2canvas 之前的 es6-promise-->
+    <script src="https://cdn.bootcss.com/es6-promise/4.1.1/es6-promise.auto.min.js"></script>
+    <script src="https://cdn.bootcss.com/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+    <!--将表导出为PDF文件-->
+    <script src="https://unpkg.com/tableexport.jquery.plugin/libs/jsPDF/jspdf.min.js"></script>
+    <script src="https://unpkg.com/tableexport.jquery.plugin/libs/jsPDF-AutoTable/jspdf.plugin.autotable.js"></script>
+    <!--无论期望的格式如何，最后都包含 tableexport.jquery.plugin（不是tableexport）-->
+    <script src="https://unpkg.com/tableexport.jquery.plugin/tableExport.min.js"></script>
+    <!--    导出excel所用包-->
+
+
     <!--bootstrap-table-->
     <link rel="stylesheet" href="../bootstrap-4.5.0-dist/css/bootstrap-table.css">
     <script src="../bootstrap-4.5.0-dist/js/bootstrap-table.js"></script>
@@ -29,7 +60,7 @@
     </div>
     <div class="col-md-3 mb-2">
         <input id="productName-select" type="text" class="form-control"
-               placeholder="产品名称" autocomplete="off">
+               placeholder="物料代码" autocomplete="off">
     </div>
     <div class="col-md-2 mb-2">
         <button id="select-btn" class="btn btn-primary">
@@ -49,6 +80,10 @@
         <button id="delete-btn" class="btn btn-primary">
             <i class="bi bi-trash icon"></i>
             删除
+        </button>
+        <button id="import-btn" class="btn btn-primary" onclick="getexcel('#table','出库明细表')">
+            <i class="bi bi-plus-square icon"></i>
+            导出
         </button>
         <button id="refresh-btn" class="btn btn-primary">
             <i class="bi bi-arrow-clockwise icon"></i>

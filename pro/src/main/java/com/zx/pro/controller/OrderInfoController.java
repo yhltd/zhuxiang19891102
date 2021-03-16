@@ -1,8 +1,6 @@
 package com.zx.pro.controller;
 
-import com.zx.pro.entity.OrderInfo;
-import com.zx.pro.entity.OrderInfoItem;
-import com.zx.pro.entity.OrderState;
+import com.zx.pro.entity.*;
 import com.zx.pro.service.IOrderInfoService;
 import com.zx.pro.util.*;
 import lombok.extern.slf4j.Slf4j;
@@ -175,10 +173,43 @@ public class OrderInfoController {
         }
     }
 
+//    @RequestMapping("/add")
+//    @Transactional
+//    public ResultInfo add(HttpSession session,@RequestBody HashMap map){
+//        GsonUtil gsonUtil = new GsonUtil(GsonUtil.toJson(map));
+//
+//        try{
+//            PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
+//            if(!powerUtil.isAdd("订单汇总")){
+//                return ResultInfo.error(401,"无权限");
+//            }
+//
+//            OrderInfo orderInfo = GsonUtil.toEntity(gsonUtil.get("orderInfo"), OrderInfo.class);
+//            List<HashMap> list = GsonUtil.toList(gsonUtil.get("productInfoList"),HashMap.class);
+//
+//            if(iOrderInfoService.add(orderInfo,list)){
+//                return ResultInfo.success("新增成功");
+//            }else{
+//                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+//                return ResultInfo.success("未新增");
+//            }
+//
+//        }catch (Exception e){
+//            e.printStackTrace();
+//            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+//            log.error("新增失败：{}",e.getMessage());
+//            log.error("参数：{}",map);
+//            return ResultInfo.error("新增失败");
+//        }
+//    }
+
+    /**
+     * 更改代码
+     */
     @RequestMapping("/add")
     @Transactional
-    public ResultInfo add(HttpSession session,@RequestBody HashMap map){
-        GsonUtil gsonUtil = new GsonUtil(GsonUtil.toJson(map));
+    public ResultInfo add(HttpSession session,@RequestBody String MatterinfoItemJons){
+//        GsonUtil gsonUtil = new GsonUtil(GsonUtil.toJson(map));
 
         try{
             PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
@@ -186,21 +217,22 @@ public class OrderInfoController {
                 return ResultInfo.error(401,"无权限");
             }
 
-            OrderInfo orderInfo = GsonUtil.toEntity(gsonUtil.get("orderInfo"), OrderInfo.class);
-            List<HashMap> list = GsonUtil.toList(gsonUtil.get("productInfoList"),HashMap.class);
+            MatterInfoItem matterInfoItem = DecodeUtil.decodeToJson(MatterinfoItemJons,
+                    MatterInfoItem.class);
+//            List<HashMap> list = GsonUtil.toList(gsonUtil.get("productInfoList"),HashMap.class);
 
-            if(iOrderInfoService.add(orderInfo,list)){
-                return ResultInfo.success("新增成功");
-            }else{
-                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+//            if(iOrderInfoService.add(orderInfo,list)){
+//                return ResultInfo.success("新增成功");
+//            }else{
+//                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
                 return ResultInfo.success("未新增");
-            }
+//            }
 
         }catch (Exception e){
             e.printStackTrace();
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             log.error("新增失败：{}",e.getMessage());
-            log.error("参数：{}",map);
+            log.error("参数：{}",MatterinfoItemJons);
             return ResultInfo.error("新增失败");
         }
     }

@@ -43,4 +43,6 @@ public class OrderInfo {
      * 订单状态
      */
     private String state;
+
+    private int matter_id;
 }

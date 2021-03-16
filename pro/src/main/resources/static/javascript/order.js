@@ -89,7 +89,7 @@ $(function () {
     //产品窗口提交按钮点击事件
     $('#product-submit-btn').click(function(){
         if(productInfoList.length==0){
-            alert('请添加产品')
+            alert('请添加物料')
             return;
         }
         $.each(function(index,p){
@@ -99,14 +99,14 @@ $(function () {
                 return;
             }
         })
-
+        let params = formToJson('#add-form');
         $ajax({
             type: 'post',
             url: '/order_info/add',
-            data: JSON.stringify({
-                orderInfo: formToJson('#add-form'),
-                productInfoList: productInfoList
-            }),
+            data: {
+                MatterinfoItemJons: JSON.stringify(params),
+                // productInfoList: productInfoList
+            },
             contentType: 'application/json;charset=utf-8',
             dataType: 'json'
         },false,'',function(res){
@@ -130,14 +130,14 @@ $(function () {
         let check = true;
         $('#matter-table tbody tr').each(function (i, tr) {
             let num = 0
-            let price = 0;
+            // let price = 0;
             check = true;
             $(tr).children().each(function (j, td) {
                 if (j == 3) {
                     //用户输入的数量
                     num = $(td).children().val();
                     if(num == ''){
-                        alert('请输入订单数量，序号：' + (i+1))
+                        alert('请输入物料数量，序号：' + (i+1))
                         check = false;
                         return false;
                     }else{
@@ -149,14 +149,15 @@ $(function () {
                     let matterNum = matterList[i].matterNum;
 
                     if (num*productNum > matterNum) {
-                        alert('订单使用数量不能大于总数量，序号' + (i + 1))
+                        alert('物料使用数量不能大于总数量，序号' + (i + 1))
                         check = false;
                         return;
                     }
-                } else if (j == 4) {
-                    //用户输入的单价
-                    price = parseInt($(td).children().val());
                 }
+                    // else if (j == 4) {
+                //     //用户输入的单价
+                //     price = parseInt($(td).children().val());
+                // }
             })
             if(check){
                 productInfoList[index].matterInfo.push(JSON.parse(JSON.stringify(matterList[i])));
@@ -284,7 +285,8 @@ $(function () {
 })
 
 //获取订单汇总
-function getList(callback) {
+function
+getList(callback) {
     $ajax({
         type: 'post',
         url: '/order_info/post_list',
@@ -519,7 +521,7 @@ function setMatterTable(idx) {
                 width: 100
             }, {
                 field: 'num',
-                title: '订单数量',
+                title: '物料数量',
                 align: 'left',
                 width: 70,
                  formatter: function (value, row, index) {
@@ -528,17 +530,17 @@ function setMatterTable(idx) {
                      // return '<input type="number" class="form-control" value="' + num + '"/>'
                      return '<input type="number" class="form-control"/>'
                  }
-            }, {
-                field: 'price',
-                title: '单价',
-                align: 'left',
-                width: 70,
-                 formatter: function (value, row, index) {
-                    // let idx = parseInt($('#productIndex').val());
-                    // let price = productInfoList[idx].matterInfo.price
-                    // return '<input type="number" class="form-control" value="' + price + '"/>'
-                     return '<input type="number" class="form-control"/>'
-                 }
+            // }, {
+            //     field: 'price',
+            //     title: '单价',
+            //     align: 'left',
+            //     width: 70,
+            //      formatter: function (value, row, index) {
+            //         // let idx = parseInt($('#productIndex').val());
+            //         // let price = productInfoList[idx].matterInfo.price
+            //         // return '<input type="number" class="form-control" value="' + price + '"/>'
+            //          return '<input type="number" class="form-control"/>'
+            //      }
             }
         ]
     })

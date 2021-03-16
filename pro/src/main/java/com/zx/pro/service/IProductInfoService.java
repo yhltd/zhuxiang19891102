@@ -1,6 +1,8 @@
 package com.zx.pro.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zx.pro.entity.MatterOrder;
+import com.zx.pro.entity.Order_matter;
 import com.zx.pro.entity.ProductInfo;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,8 @@ public interface IProductInfoService extends IService<ProductInfo> {
      * @return
      */
     List<ProductInfo> getList();
+
+
 
     /**
      * 条件查询
@@ -41,11 +45,7 @@ public interface IProductInfoService extends IService<ProductInfo> {
      */
     boolean add(List<ProductInfo> productInfoList);
 
-    /**
-     * 修改
-     * @param productInfo 产品信息
-     * @return
-     */
+
     boolean update(ProductInfo productInfo);
 
     /**
@@ -54,4 +54,33 @@ public interface IProductInfoService extends IService<ProductInfo> {
      * @return
      */
     boolean delete(List<Integer> idList);
+
+
+
+    /**
+     * 订单汇总表更改功能
+     */
+
+
+    /**
+     * 查询所有信息
+     * @return
+     */
+    List<Order_matter> getmoList();
+
+    List<Order_matter> getmoonList(String orderId,String productName);
+
+    int getid(String mattername);
+
+    int updatematterorder(int metterid,int moid,int num);
+
+    int deletemo(int id);
+
+    String selectgteorderid(int id);
+
+    int deleteorderid(int id);
+
+    /**
+     * 订单汇总表更改功能end
+     */
 }

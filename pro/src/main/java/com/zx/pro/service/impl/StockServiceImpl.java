@@ -24,7 +24,7 @@ public class StockServiceImpl extends ServiceImpl<StockMapper, Stock> implements
     @Override
     public boolean addOrUpdate(Stock stock, Boolean isSet) {
         QueryWrapper<Stock> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("stock_id").eq("product_info_id",stock.getProductInfoId());
+        queryWrapper.select("stock_id").eq("product_info_id",stock.getMatter_id());
         Stock oldStock = this.getOne(queryWrapper);
 
         //如果已有商品，并且是入库操作
@@ -36,7 +36,7 @@ public class StockServiceImpl extends ServiceImpl<StockMapper, Stock> implements
 
             //修改操作
             UpdateWrapper<Stock> updateWrapper = new UpdateWrapper<>();
-            updateWrapper.eq("product_info_id",stock.getProductInfoId());
+            updateWrapper.eq("product_info_id",stock.getMatter_id());
             updateWrapper.setSql(sqlBuffer.toString());
             return this.update(updateWrapper);
         }else{

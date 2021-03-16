@@ -119,7 +119,7 @@ public class MatterInfoController {
 
             Integer productId = Integer.parseInt(map.get("productId").toString());
 
-            List<MatterInfoItem> list = iMatterInfoService.getListByProductId(productId);
+            List<MatterInfoItem> list = iMatterInfoService.getListByProductId();
             if (StringUtils.isNotNull(list)) {
                 return ResultInfo.success("获取成功", list);
             } else {

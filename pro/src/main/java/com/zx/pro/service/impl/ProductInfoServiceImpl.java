@@ -2,9 +2,13 @@ package com.zx.pro.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zx.pro.entity.MatterInfo;
+import com.zx.pro.entity.MatterOrder;
+import com.zx.pro.entity.Order_matter;
 import com.zx.pro.entity.ProductInfo;
 import com.zx.pro.mapper.ProductInfoMapper;
 import com.zx.pro.service.IProductInfoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.management.Query;
@@ -15,11 +19,13 @@ import java.util.List;
  */
 @Service
 public class ProductInfoServiceImpl extends ServiceImpl<ProductInfoMapper, ProductInfo> implements IProductInfoService {
-
     @Override
     public List<ProductInfo> getList() {
         return this.list();
     }
+    @Autowired
+    ProductInfoMapper productInfoMapper;
+
 
     @Override
     public List<ProductInfo> getList(String orderId, String productName) {
@@ -48,4 +54,49 @@ public class ProductInfoServiceImpl extends ServiceImpl<ProductInfoMapper, Produ
     public boolean delete(List<Integer> idList) {
         return this.removeByIds(idList);
     }
+
+    /**
+     * 订单汇总表更改功能
+     */
+
+    @Override
+    public List<Order_matter> getmoList() {
+        return productInfoMapper.getmoList();
+    }
+
+    @Override
+    public List<Order_matter> getmoonList(String orderId,String productName) {
+        return productInfoMapper.getmoonList(orderId,productName);
+    }
+
+    @Override
+    public int getid(String mattername){
+        return productInfoMapper.getid(mattername);
+    };
+
+    @Override
+    public int updatematterorder(int metterid, int moid, int num){
+        return productInfoMapper.updatematterorder(metterid,moid,num);
+    };
+
+    @Override
+    public int deletemo(int id) {
+        return productInfoMapper.deletemo(id);
+    }
+
+    @Override
+    public String selectgteorderid(int id) {
+        return productInfoMapper.selectgteorderid(id);
+    }
+
+    @Override
+    public int deleteorderid(int id) {
+        return productInfoMapper.deleteorderid(id);
+    }
+
+
+    /**
+     * 订单汇总表更改功能
+     */
+
 }

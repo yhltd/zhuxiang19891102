@@ -52,7 +52,8 @@ public class MatterProjectChangeController {
     public ResultInfo postList(@RequestBody HashMap map, HttpSession session) {
         try {
             PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
-            if (!powerUtil.isSelect("项目物料需求变化表")) {
+            if (!powerUtil.isSelect("项目物料需求变化")) {
+                System.out.println("401");
                 return ResultInfo.error(401, "无权限");
             }
 
@@ -82,7 +83,7 @@ public class MatterProjectChangeController {
     public ResultInfo update(@RequestBody String matterProductChangeJson, HttpSession session) {
         try {
             PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
-            if (!powerUtil.isUpdate("项目物料需求变化表")) {
+            if (!powerUtil.isUpdate("项目物料需求变化")) {
                 return ResultInfo.error(401, "无权限");
             }
 
@@ -109,7 +110,7 @@ public class MatterProjectChangeController {
 
         try {
             PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
-            if (!powerUtil.isDelete("项目物料需求变化表")) {
+            if (!powerUtil.isDelete("项目物料需求变化")) {
                 return ResultInfo.error(401, "无权限");
             }
 

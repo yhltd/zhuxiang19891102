@@ -227,8 +227,8 @@ function setTable(data) {
                 sortable: true,
                 width: 150
             }, {
-                field: 'productName',
-                title: '产品名称',
+                field: 'mattername',
+                title: '物料代码',
                 align: 'left',
                 sortable: true,
                 width: 120
@@ -247,22 +247,24 @@ function setTable(data) {
                 align: 'left',
                 sortable: true,
                 width: 100
-            }, {
-                field: 'productPrice',
-                title: '产品单价',
-                align: 'left',
-                sortable: true,
-                width: 100
-            }, {
-                field: 'setPrice',
-                title: '入库金额',
-                align: 'left',
-                sortable: true,
-                width: 100,
-                formatter: function (value, row, index) {
-                    return (row.setNum * row.productPrice).toFixed(2);
-                }
-            }, {
+            },
+                // {
+            //     field: 'productPrice',
+            //     title: '产品单价',
+            //     align: 'left',
+            //     sortable: true,
+            //     width: 100
+            // }, {
+            //     field: 'setPrice',
+            //     title: '入库金额',
+            //     align: 'left',
+            //     sortable: true,
+            //     width: 100,
+            //     formatter: function (value, row, index) {
+            //         return (row.setNum * row.productPrice).toFixed(2);
+            //     }
+            // },
+            {
                 field: 'man',
                 title: '入库人',
                 align: 'left',
@@ -303,8 +305,8 @@ function setWorkTable(data){
                     return index + 1;
                 }
             }, {
-                field: 'productName',
-                title: '产品名称',
+                field: 'mattername',
+                title: '物料代码',
                 align: 'left',
                 sortable: true,
                 width: 120

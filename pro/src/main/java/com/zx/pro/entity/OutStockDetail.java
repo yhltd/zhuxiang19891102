@@ -22,7 +22,9 @@ public class OutStockDetail {
     /**
      * 产品信息id
      */
-    private int productInfoId;
+//    private int productInfoId;
+
+    private int matter_id;
     /**
      * 出库单号
      */
@@ -46,13 +48,13 @@ public class OutStockDetail {
     /**
      * 产品名称
      */
-    private String productName;
+    private String mattername;
     /**
      * 产品单价
      */
-    private Double productPrice;
-    /**
-     * 产品数量
-     */
-    private Double productNum;
+//    private Double productPrice;
+//    /**
+//     * 产品数量
+//     */
+//    private Double productNum;
 }
