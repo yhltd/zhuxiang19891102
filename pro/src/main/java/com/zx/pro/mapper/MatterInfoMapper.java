@@ -31,22 +31,25 @@ public interface MatterInfoMapper extends BaseMapper<MatterInfo> {
      * @return
      */
     @Select("select * from " +
-            "(select mi.*,mp.id as matterProjectId,mp.matter_num-sum(ifnull(pm.num,0)) as matter_num " +
+            "(select mi.*," +
+            "(select sum(matter_num) as matter_num " +
             "from matter_project as mp " +
-            "left join matter_info as mi " +
-            "on mp.matter_info_id = mi.id " +
-            "left join product_matter as pm " +
-            "on mp.id = pm.matter_project_id " +
-            "where mp.project_info_id = #{projectInfoId} " +
-            "group by mp.matter_info_id) as mi_info " +
-            "where mi_info.matter_num > 0")
+            "where mp.matter_info_id = mi.id) " +
+            "- (select ifnull(sum(mo.num),0) as use_num " +
+            "from matter_order as mo " +
+            "where mo.order_id in " +
+            "(select order_id " +
+            "from order_info as oi " +
+            "where oi.project_info_id = #{projectInfoId}) " +
+            "and mo.matter_id = mi.id) as matter_num " +
+            "from matter_info as mi) as matter_info " +
+            "where matter_info.matter_num > 0")
     List<MatterInfoItem> getListOfUse(Integer projectInfoId);
 
 
     /**
      * 查询一个产品所需的物料信息
      *
-     * @param productId 产品id
      * @return
      */
     @Select("select mi.*,pm.num,pm.price,pm.matter_project_id " +

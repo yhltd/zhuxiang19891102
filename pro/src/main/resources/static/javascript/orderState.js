@@ -68,13 +68,13 @@ function setTable(data) {
                 title: '所属项目',
                 align: 'left',
                 sortable: true,
-                width: 120
+                width: 150
             }, {
                 field: 'orderId',
                 title: '订单号',
                 align: 'left',
                 sortable: true,
-                width: 120
+                width: 150
             }, {
                 field: 'createTime',
                 title: '创建时间',

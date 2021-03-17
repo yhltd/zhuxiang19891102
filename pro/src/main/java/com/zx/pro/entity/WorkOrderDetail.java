@@ -25,7 +25,7 @@ public class WorkOrderDetail {
      * 物料信息表id
      */
 
-    private int matter_id;
+    private int matterId;
 
     /**
      * 生产时间

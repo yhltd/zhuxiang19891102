@@ -5,18 +5,15 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zx.pro.entity.*;
 import com.zx.pro.mapper.OrderInfoMapper;
+import com.zx.pro.service.IMatterOrderService;
 import com.zx.pro.service.IOrderInfoService;
-import com.zx.pro.service.IProductInfoService;
-import com.zx.pro.service.IProductMatterService;
-import com.zx.pro.util.GsonUtil;
 import com.zx.pro.util.OrderUtil;
 import com.zx.pro.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -28,11 +25,8 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
     @Autowired
     private OrderInfoMapper orderInfoMapper;
 
-    @Autowired
-    private IProductInfoService iProductInfoService;
-
-    @Autowired
-    private IProductMatterService iProductMatterService;
+    @Resource
+    private IMatterOrderService matterOrderService;
 
     @Override
     public List<OrderInfoItem> getList() {
@@ -79,55 +73,21 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
     }
 
     @Override
-    public boolean add(OrderInfo orderInfo, List<HashMap> hashMapList) {
-        //订单号
+    public OrderInfo add(int projectId, String comment, List<MatterOrder> matterOrderList) {
+        OrderInfo orderInfo = new OrderInfo();
         orderInfo.setOrderId(OrderUtil.getOrder("O"));
-        //创建时间
         orderInfo.setCreateTime(LocalDateTime.now());
-        //添加订单
-        this.save(orderInfo);
-
-        for (HashMap hashMap : hashMapList) {
-            //产品信息
-            ProductInfo productInfo = new ProductInfo();
-            //订单表id
-            productInfo.setOrderInfoId(orderInfo.getOrderId());
-            //产品名称
-            productInfo.setProductName(StringUtils.cast(hashMap.get("productName")));
-            //产品数量
-            productInfo.setProductNum(Double.parseDouble(hashMap.get("productNum").toString()));
-            //产品单价
-            productInfo.setProductPrice(Double.parseDouble(hashMap.get("productPrice").toString()));
-            //添加产品
-            iProductInfoService.add(productInfo);
-
-            //获取所需物料信息
-            String matterInfoJson = GsonUtil.toJson(hashMap.get("matterInfo"));
-            //转List
-            List<MatterInfoItem> matterInfoItemList = GsonUtil.toList(matterInfoJson, MatterInfoItem.class);
-            //产品所需物料表集合
-            List<ProductMatter> productMatterList = new ArrayList<>();
-
-            for (MatterInfoItem matterInfoItem : matterInfoItemList) {
-                //产品所需物料
-                ProductMatter productMatter = new ProductMatter();
-                //产品信息表id
-                productMatter.setProductInfoId(productInfo.getId());
-                //项目物料表id
-                productMatter.setMatterProjectId(matterInfoItem.getMatterProjectId());
-                //数量
-                productMatter.setNum(matterInfoItem.getNum());
-                //单价
-                productMatter.setPrice(matterInfoItem.getPrice());
-                //添加到集合中
-                productMatterList.add(productMatter);
+        orderInfo.setComment(comment);
+        orderInfo.setProjectInfoId(projectId);
+        if(this.save(orderInfo)){
+            for(MatterOrder matterOrder : matterOrderList){
+                matterOrder.setOrderId(orderInfo.getOrderId());
             }
-            //如果添加不成功直接return结束方法
-            if (!iProductMatterService.add(productMatterList)) {
-                return false;
+            if(matterOrderService.add(matterOrderList)){
+                return orderInfo;
             }
         }
-        return true;
+        return null;
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.zx.pro.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zx.pro.entity.ProductMatter;
@@ -8,7 +7,6 @@ import com.zx.pro.mapper.ProductMatterMapper;
 import com.zx.pro.service.IProductMatterService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

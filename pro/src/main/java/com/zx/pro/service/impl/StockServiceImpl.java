@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zx.pro.entity.Stock;
+import com.zx.pro.entity.StockItem;
 import com.zx.pro.mapper.StockMapper;
 import com.zx.pro.service.IStockService;
 import com.zx.pro.util.StringUtils;
@@ -24,7 +25,7 @@ public class StockServiceImpl extends ServiceImpl<StockMapper, Stock> implements
     @Override
     public boolean addOrUpdate(Stock stock, Boolean isSet) {
         QueryWrapper<Stock> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("stock_id").eq("product_info_id",stock.getMatter_id());
+        queryWrapper.select("stock_id").eq("matter_id",stock.getMatterId());
         Stock oldStock = this.getOne(queryWrapper);
 
         //如果已有商品，并且是入库操作
@@ -36,7 +37,7 @@ public class StockServiceImpl extends ServiceImpl<StockMapper, Stock> implements
 
             //修改操作
             UpdateWrapper<Stock> updateWrapper = new UpdateWrapper<>();
-            updateWrapper.eq("product_info_id",stock.getMatter_id());
+            updateWrapper.eq("matter_id",stock.getMatterId());
             updateWrapper.setSql(sqlBuffer.toString());
             return this.update(updateWrapper);
         }else{
@@ -48,13 +49,13 @@ public class StockServiceImpl extends ServiceImpl<StockMapper, Stock> implements
     }
 
     @Override
-    public List<Stock> getList() {
+    public List<StockItem> getList() {
         return stockMapper.getList();
     }
 
     @Override
-    public List<Stock> getList(String productName) {
-        return stockMapper.selectList(productName);
+    public List<StockItem> getList(String code) {
+        return stockMapper.selectList(code);
     }
 
     @Override
@@ -70,5 +71,10 @@ public class StockServiceImpl extends ServiceImpl<StockMapper, Stock> implements
     @Override
     public boolean delete(List<Integer> idList) {
         return this.removeByIds(idList);
+    }
+
+    @Override
+    public List<StockItem> outList() {
+        return stockMapper.outList();
     }
 }

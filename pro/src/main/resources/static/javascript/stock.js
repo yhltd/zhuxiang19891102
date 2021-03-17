@@ -4,7 +4,7 @@ $(function () {
     //查询方法
     $('#select-btn').click(function () {
         let params = {
-            productName: $('#productName-select').val()
+            code: $('#code-select').val()
         }
 
         $ajax({
@@ -160,36 +160,17 @@ function setTable(data) {
                     return index + 1;
                 }
             }, {
-                field: 'mattername',
-                title: '物料名称',
+                field: 'code',
+                title: '物料编码',
                 align: 'left',
                 sortable: true,
                 width: 120,
-            // }
-            // , {
-            //     field: 'productPrice',
-            //     title: '产品单价',
-            //     align: 'left',
-            //     sortable: true,
-            //     width: 100
-            // }
-            // ,
-            // {
+            }, {
                 field: 'stockNum',
                 title: '库存数量',
                 align: 'left',
                 sortable: true,
                 width: 100
-            // },
-            // {
-            //     field: 'stockPrice',
-            //     title: '库存金额',
-            //     align: 'left',
-            //     sortable: true,
-            //     width: 100,
-            //     formatter: function (value, row, index) {
-            //         return (row.stockNum * row.productPrice).toFixed(2);
-            //     }
             }
         ],
         onClickRow: function (row, el) {

@@ -1,5 +1,3 @@
-let productInfoList = []
-
 let matterList = []
 
 $(function () {
@@ -34,7 +32,6 @@ $(function () {
             type: 'post',
             url: '/project_info/getList'
         }, false, '', function (res) {
-            console.log(res.data)
             if (res.code == 200) {
                 if (res.data.length == 0) {
                     alert('请先添加一个项目')
@@ -54,127 +51,56 @@ $(function () {
     //新增订单提交按钮
     $('#add-form-submit-btn').click(function () {
         if (checkForm('#add-form')) {
-            productInfoList = [];
-            //matterList = [];
-                //获取物料集合
-                 getMatterList();
-            console.log(matterList)
-            //新增订单add-modal表单hide隐藏
             $('#add-modal').modal('hide');
-            //show选择产品表单
-            //$('#product-modal').modal('show');
-            $('#matter-modal').modal('show')
-            //设置产品表格
-            //setProductTable();
-            //设置物料表格
-            //setMatterTable()
+            getMatterList($('#projectSelect').val());
+            $('#matter-modal').modal('show');
         }
-    })
-
-    //新增产品按钮点击事件(添加产品)
-    $('#add-product').click(function () {
-        productInfoList.push({
-            productName: '',
-            productNum: 0,
-            productPrice: 0,
-            matterInfo: []
-        })
-        setProductTable();
-        if (matterList.length == 0) {
-            //获取物料集合
-            getMatterList();
-        }
-    })
-
-    //产品窗口提交按钮点击事件
-    $('#product-submit-btn').click(function(){
-        if(productInfoList.length==0){
-            alert('请添加物料')
-            return;
-        }
-        $.each(function(index,p){
-            console.log(index,p)
-            if(p.matterInfo.length == 0){
-                alert('请选择物料，序号：'+(index+1))
-                return;
-            }
-        })
-        let params = formToJson('#add-form');
-        $ajax({
-            type: 'post',
-            url: '/order_info/add',
-            data: {
-                MatterinfoItemJons: JSON.stringify(params),
-                // productInfoList: productInfoList
-            },
-            contentType: 'application/json;charset=utf-8',
-            dataType: 'json'
-        },false,'',function(res){
-            alert(res.msg);
-            if(res.code == 200){
-                $('#product-modal').modal('hide');
-                getList();
-            }
-        })
-    })
-
-    //产品窗口返回按钮点击事件
-    $('#product-close-btn').click(function(){
-        $('#product-modal').modal('hide');
-        $('#add-modal').modal('show');
     })
 
     //选择物料确定按钮
     $('#matter-submit-btn').click(function () {
-        let index = parseInt($('#productIndex').val());
+        let projectId = $('#projectSelect').val();
+        let comment = $('#add-comment').val();
+        let matterOrderList = [];
         let check = true;
-        $('#matter-table tbody tr').each(function (i, tr) {
-            let num = 0
-            // let price = 0;
-            check = true;
-            $(tr).children().each(function (j, td) {
-                if (j == 3) {
-                    //用户输入的数量
-                    num = $(td).children().val();
-                    if(num == ''){
-                        alert('请输入物料数量，序号：' + (i+1))
-                        check = false;
-                        return false;
-                    }else{
-                        num = parseInt(num);
-                    }
-                    //产品数量
-                    let productNum = productInfoList[index].productNum;
-                    //该行物料总可用数量
-                    let matterNum = matterList[i].matterNum;
-
-                    if (num*productNum > matterNum) {
-                        alert('物料使用数量不能大于总数量，序号' + (i + 1))
-                        check = false;
-                        return;
-                    }
-                }
-                    // else if (j == 4) {
-                //     //用户输入的单价
-                //     price = parseInt($(td).children().val());
-                // }
-            })
-            if(check){
-                productInfoList[index].matterInfo.push(JSON.parse(JSON.stringify(matterList[i])));
-                let ii = productInfoList[index].matterInfo.length-1
-                productInfoList[index].matterInfo[ii].num = num;
-                productInfoList[index].matterInfo[ii].price = price;
+        $('#matter-table tbody tr').each(function(index, tr){
+            let useNum = $(tr).children().last().children().val();
+            if(useNum > matterList[index].matterNum){
+                alert('订单所用数量不能大于物料数量，物料代码：' + matterList[index].code + ',行号：' + (index+1));
+                check = false;
+                return check;
+            }else{
+                matterOrderList.push({
+                    matterId: matterList[index].id,
+                    num: useNum
+                })
             }
         })
-        if(check) {
-            $('#matter-back-btn').click();
+
+        if(check){
+            $ajax({
+                type: 'post',
+                url: '/order_info/add',
+                data: JSON.stringify({
+                    projectId,
+                    comment,
+                    matterOrderList
+                }),
+                contentType: "application/json;charset=utf-8",
+                dataType: 'json'
+            }, false, '', function (res) {
+                alert(res.msg)
+                if (res.code == 200) {
+                    $('#matter-modal').modal('hide');
+                    getList();
+                }
+            })
         }
     })
 
     //选择物料返回按钮
     $('#matter-back-btn').click(function () {
         $('#matter-modal').modal('hide');
-        //$('#product-modal').modal('show');
         $('#add-modal').modal('show');
     })
 
@@ -285,8 +211,7 @@ $(function () {
 })
 
 //获取订单汇总
-function
-getList(callback) {
+function getList(callback) {
     $ajax({
         type: 'post',
         url: '/order_info/post_list',
@@ -372,100 +297,8 @@ function setTable(data) {
     })
 }
 
-//设置产品表格
-function setProductTable() {
-
-    if ($('#product-table').html != '') {
-        $('#product-table').bootstrapTable('load', productInfoList);
-    }
-
-    $('#product-table').bootstrapTable({
-        data: productInfoList,
-        classes: 'table table-hover',
-        clickToSelect: true,
-        locale: 'zh-CN',
-        toolbar: '#product-table-toolbar',
-        toolbarAlign: 'left',
-        columns: [
-            {
-                field: 'productName',
-                title: '产品名称',
-                align: 'left',
-                width: 150,
-                formatter: function (value, row, index) {
-                    return '<input type="text" class="form-control" value="' + value + '"/>'
-                }
-            }, {
-                field: 'productNum',
-                title: '数量',
-                align: 'left',
-                width: 70,
-                formatter: function (value, row, index) {
-                    return '<input type="number" class="form-control" value="' + value + '"/>'
-                }
-            }, {
-                field: 'productPrice',
-                title: '单价',
-                align: 'left',
-                width: 70,
-                formatter: function (value, row, index) {
-                    return '<input type="number" class="form-control" value="' + value + '"/>'
-                }
-            }, {
-                field: 'matterInfo',
-                title: '操作',
-                align: 'left',
-                width: 70,
-                formatter: function (value, row, index) {
-                    let btnType = 'primary';
-                    if (value.length == 0) {
-                        btnType = 'danger'
-                    }
-                    return '<button onclick="javascript:showMatterInfo(' + index + ')" type="button" class="btn btn-' + btnType + '">' +
-                        '<i class="bi bi-inbox icon"></i>' +
-                        '选择物料' +
-                        '</button>'
-                }
-            }
-        ],
-        onClickRow: function (row, el) {
-            let isSelect = $(el).hasClass('selected')
-            if (isSelect) {
-                $(el).removeClass('selected')
-            } else {
-                $(el).addClass('selected')
-            }
-        }
-    })
-}
-
-//显示物料窗体
-function showMatterInfo(index) {
-    let productName = $('#product-table tbody tr:eq(' + index + ') td:eq(0)').children().val();
-    let productNum = parseInt($('#product-table tbody tr:eq(' + index + ') td:eq(1)').children().val());
-    let productPrice = parseInt($('#product-table tbody tr:eq(' + index + ') td:eq(2)').children().val());
-    if (productName == '' || productNum == 0 || productPrice == 0) {
-        alert('请先填写产品信息')
-        return;
-    } else {
-        productInfoList[index].productName = productName;
-        productInfoList[index].productNum = productNum;
-        productInfoList[index].productPrice = productPrice;
-    }
-
-    $('#product-modal').modal('hide');
-    $('#productIndex').val(index);
-    $('#matter-modal').modal('show');
-    setMatterTable(index);
-
-    $('#matter-modal').on('hidden.bs.modal', function (e) {
-        setProductTable();
-    })
-}
-
 //获取物料集合
-function getMatterList() {
-    let projectId = $('#projectSelect').val();
+function getMatterList(projectId) {
     $ajax({
         type: 'post',
         url: '/matter_info/selectListOfUseByProjectId',
@@ -479,7 +312,6 @@ function getMatterList() {
             alert(res.msg)
         } else {
             matterList = res.data;
-            console.log(matterList)
             //设置物料表格
             setMatterTable(matterList)
         }
@@ -487,9 +319,7 @@ function getMatterList() {
 }
 
 //设置物料表格
-function setMatterTable(idx) {
-// function setMatterTable(matterList) {
-    console.log(matterList)
+function setMatterTable() {
     if ($('#matter-table').html() != '') {
         $('#matter-table').bootstrapTable('load', matterList);
     }
@@ -513,34 +343,26 @@ function setMatterTable(idx) {
                 field: 'code',
                 title: '物料代码',
                 align: 'left',
-                width: 100
+                width: 150
+            }, {
+                field: 'materialDescription',
+                title: '物料描述',
+                align: 'left',
+                sortable: true,
+                width: 120
             }, {
                 field: 'matterNum',
                 title: '可用数量',
                 align: 'left',
-                width: 100
+                width: 120
             }, {
                 field: 'num',
                 title: '物料数量',
                 align: 'left',
-                width: 70,
+                width: 120,
                  formatter: function (value, row, index) {
-                     // let idx = parseInt($('#productIndex').val());
-                     // let num = productInfoList[idx].matterInfo.num
-                     // return '<input type="number" class="form-control" value="' + num + '"/>'
                      return '<input type="number" class="form-control"/>'
                  }
-            // }, {
-            //     field: 'price',
-            //     title: '单价',
-            //     align: 'left',
-            //     width: 70,
-            //      formatter: function (value, row, index) {
-            //         // let idx = parseInt($('#productIndex').val());
-            //         // let price = productInfoList[idx].matterInfo.price
-            //         // return '<input type="number" class="form-control" value="' + price + '"/>'
-            //          return '<input type="number" class="form-control"/>'
-            //      }
             }
         ]
     })

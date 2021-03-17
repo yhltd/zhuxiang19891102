@@ -71,13 +71,12 @@ function showDetail(workOrder) {
                         align: 'left',
                         sortable: true,
                         width: 100
-                    }
-                    , {
-                        field: 'mattername',
+                    }, {
+                        field: 'matterName',
                         title: '物料',
                         align: 'left',
                         sortable: true,
-                        width: 100
+                        width: 150
                     }
                     , {
                         field: 'workNum',

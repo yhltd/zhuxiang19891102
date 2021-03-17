@@ -2,6 +2,7 @@ package com.zx.pro.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zx.pro.entity.Stock;
+import com.zx.pro.entity.StockItem;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -13,14 +14,19 @@ import java.util.List;
 @Mapper
 public interface StockMapper extends BaseMapper<Stock> {
 
-    @Select("select m.code as mattername,s.* from stock as s left join matter_info as m " +
-            "on s.matter_id = m.id")
-    List<Stock> getList();
-
-    @Select("select pi.product_name,pi.product_price,s.* " +
+    @Select("select m.code,s.* " +
             "from stock as s " +
-            "left join product_info as pi " +
-            "on s.product_info_id = pi.id " +
-            "where pi.product_name like CONCAT('%',#{productName},'%')")
-    List<Stock> selectList(String productName);
+            "left join matter_info as m " +
+            "on s.matter_id = m.id")
+    List<StockItem> getList();
+
+    @Select("select m.code,s.* " +
+            "from stock as s " +
+            "left join matter_info as m " +
+            "on s.matter_id = m.id " +
+            "where m.code like CONCAT('%',#{code},'%')")
+    List<StockItem> selectList(String code);
+
+    @Select("select s.*,mi.* from stock as s left join matter_info as mi on s.matter_id = mi.id")
+    List<StockItem> outList();
 }

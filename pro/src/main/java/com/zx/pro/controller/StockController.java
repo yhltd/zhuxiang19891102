@@ -2,6 +2,7 @@ package com.zx.pro.controller;
 
 import com.zx.pro.entity.SetStockDetail;
 import com.zx.pro.entity.Stock;
+import com.zx.pro.entity.StockItem;
 import com.zx.pro.entity.UserInfo;
 import com.zx.pro.service.IStockService;
 import com.zx.pro.util.*;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
+import javax.xml.transform.Result;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,7 +38,7 @@ public class StockController {
                 return ResultInfo.error(401, "无权限");
             }
 
-            List<Stock> list = iStockService.getList();
+            List<StockItem> list = iStockService.getList();
             if(StringUtils.isNotNull(list)){
                 return ResultInfo.success("获取成功", list);
             }else{
@@ -56,9 +58,9 @@ public class StockController {
                 return ResultInfo.error(401, "无权限");
             }
 
-            String productName = map.get("productName").toString();
+            String code = map.get("code").toString();
 
-            List<Stock> list = iStockService.getList(productName);
+            List<StockItem> list = iStockService.getList(code);
 
             if (StringUtils.isNotNull(list)) {
                 return ResultInfo.success("查询成功", list);
@@ -118,6 +120,22 @@ public class StockController {
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             log.error("删除失败：{}", e.getMessage());
             log.error("参数：{}", map);
+            return ResultInfo.error("错误");
+        }
+    }
+
+    @RequestMapping("/out_stock")
+    public ResultInfo outList(HttpSession session){
+        try{
+            PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
+            if (!powerUtil.isAdd("出库明细")) {
+                return ResultInfo.error(401, "无权限");
+            }
+
+            return ResultInfo.success("查询成功", iStockService.outList());
+        }catch (Exception e){
+            e.printStackTrace();
+            log.error("查询失败：{}", e.getMessage());
             return ResultInfo.error("错误");
         }
     }

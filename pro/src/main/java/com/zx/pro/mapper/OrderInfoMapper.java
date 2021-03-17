@@ -39,7 +39,7 @@ public interface OrderInfoMapper extends BaseMapper<OrderInfo> {
             "left join project_info as pi " +
             "on oi.project_info_id = pi.id " +
             "where pi.project_name like CONCAT('%',#{projectName},'%') " +
-            "and oi.order_id like CONCAT('%',#{orderId},'%')" +
+            "and oi.order_id like CONCAT('%',#{orderId},'%') " +
             "and create_time between #{startDate} and #{endDate})")
     List<OrderInfoItem> getList(String projectName,
                                 String orderId,
@@ -51,18 +51,7 @@ public interface OrderInfoMapper extends BaseMapper<OrderInfo> {
      *
      * @return
      */
-    @Select("select pri.project_name,oi.order_id,oi.create_time,sum(pi.product_num) as order_num,min(wod.work_date) as work_date,min(ssd.create_time) as set_stock_date,sum(ssd.set_num) as set_num,min(osd.create_time) as out_stock_date,sum(osd.out_num) as out_num " +
-            "FROM order_info as oi " +
-            "LEFT JOIN project_info as pri " +
-            "ON oi.project_info_id = pri.id " +
-            "LEFT JOIN product_info as pi " +
-            "ON oi.order_id = pi.order_info_id " +
-            "LEFT JOIN work_order_detail as wod " +
-            "ON wod.product_info_id = pi.id " +
-            "LEFT JOIN set_stock_detail as ssd " +
-            "ON ssd.product_info_id = pi.id " +
-            "LEFT JOIN out_stock_detail as osd " +
-            "ON osd.product_info_id = pi.id;")
+    @Select("select pri.project_name,oi.order_id,oi.create_time,sum(mo.num) as order_num,min(wod.work_date) as work_date,min(ssd.create_time) as set_stock_date,sum(ssd.set_num) as set_num,min(osd.create_time) as out_stock_date,sum(osd.out_num) as out_num FROM order_info as oi LEFT JOIN project_info as pri ON oi.project_info_id = pri.id LEFT JOIN matter_order as mo ON oi.order_id = mo.order_id LEFT JOIN work_order_detail as wod ON wod.product_info_id = mo.id LEFT JOIN set_stock_detail as ssd ON ssd.product_info_id = mo.id LEFT JOIN out_stock_detail as osd ON osd.product_info_id = mo.id;")
     List<OrderState> getOrderStateList();
 
 
@@ -71,18 +60,6 @@ public interface OrderInfoMapper extends BaseMapper<OrderInfo> {
      * @param orderId 订单号
      * @return
      */
-    @Select("select pri.project_name,oi.order_id,oi.create_time,sum(pi.product_num) as order_num,min(wod.work_date) as work_date,min(ssd.create_time) as set_stock_date,sum(ssd.set_num) as set_num,min(osd.create_time) as out_stock_date,sum(osd.out_num) as out_num " +
-            "FROM order_info as oi " +
-            "LEFT JOIN project_info as pri " +
-            "ON oi.project_info_id = pri.id " +
-            "LEFT JOIN product_info as pi " +
-            "ON oi.order_id = pi.order_info_id " +
-            "LEFT JOIN work_order_detail as wod " +
-            "ON wod.product_info_id = pi.id " +
-            "LEFT JOIN set_stock_detail as ssd " +
-            "ON ssd.product_info_id = pi.id " +
-            "LEFT JOIN out_stock_detail as osd " +
-            "ON osd.product_info_id = pi.id " +
-            "WHERE oi.order_id like CONCAT('%',#{orderId},'%');")
+    @Select("select pri.project_name,oi.order_id,oi.create_time,sum(mo.num) as order_num,min(wod.work_date) as work_date,min(ssd.create_time) as set_stock_date,sum(ssd.set_num) as set_num,min(osd.create_time) as out_stock_date,sum(osd.out_num) as out_num FROM order_info as oi LEFT JOIN project_info as pri ON oi.project_info_id = pri.id LEFT JOIN matter_order as mo ON oi.order_id = mo.order_id LEFT JOIN work_order_detail as wod ON wod.product_info_id = mo.id LEFT JOIN set_stock_detail as ssd ON ssd.product_info_id = mo.id LEFT JOIN out_stock_detail as osd ON osd.product_info_id = mo.id where oi.order_id like CONCAT('%',#{orderId},'%')")
     List<OrderState> selectOrderStateList(String orderId);
 }

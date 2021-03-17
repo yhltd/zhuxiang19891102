@@ -19,12 +19,11 @@ public class OutStockDetail {
      */
     @TableId(value = "out_stock_id", type = IdType.AUTO)
     private int outStockId;
+
     /**
      * 产品信息id
      */
-//    private int productInfoId;
-
-    private int matter_id;
+    private int matterId;
     /**
      * 出库单号
      */

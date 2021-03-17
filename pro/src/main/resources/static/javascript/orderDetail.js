@@ -3,16 +3,15 @@ $(function(){
     $('#select-btn').click(function(){
         let params = {
             orderId: $('#orderId-select').val(),
-            productName: $('#productName-select').val()
+            code: $('#code-select').val()
         }
         $ajax({
             type: 'post',
-            url: '/product_info/select_list',
+            url: '/matter_order/select_list',
             data: JSON.stringify(params),
             contentType: 'application/json;charset=utf-8',
             dataType: 'json'
         }, false, '', function (res) {
-            alert(res.msg);
             if(res.code == 200){
                 setTable(res.data)
             }
@@ -35,23 +34,24 @@ $(function(){
     $('#edit-form-submit-btn').click(function(){
         if(checkForm('#edit-form')){
             let params = formToJson('#edit-form');
+            let list = getTableSelection('#table');
             $ajax({
                 type: 'post',
-                url: '/product_info/update',
-                data: {
-                    OrsermatterJson: JSON.stringify(params)
-                },
+                url: '/matter_order/update',
+                data: JSON.stringify({
+                    id: list[0].data.id,
+                    orderId: list[0].data.orderId,
+                    uid: list[0].data.uid,
+                    oldNum: list[0].data.num,
+                    newNum: params.num
+                }),
                 contentType: 'application/json;charset=utf-8',
                 dataType: 'json'
             }, false, '', function (res) {
                 alert(res.msg);
                 if(res.code == 200){
                     $('#edit-form-close-btn').click();
-                    let rows = getTableSelection('#table');
-                    $('#table').bootstrapTable('updateRow', {
-                        index: rows[0].index,
-                        row: res.data
-                    })
+                    getList();
                 }
             })
         }
@@ -80,12 +80,12 @@ $(function(){
 
         let idList = [];
         $.each(rows,function(index,row){
-            idList.push(row.data.id)
+            idList.push(row.data.uid)
         })
 
         $ajax({
             type: 'post',
-            url: '/product_info/delete',
+            url: '/matter_order/delete',
             data: JSON.stringify({
                 idList: idList
             }),
@@ -107,6 +107,8 @@ $(function(){
 
     //刷新
     $('#refresh-btn').click(function(){
+        $('#orderId-select').val('');
+        $('#code-select').val('');
         getList(function(){
             alert('已刷新');
         });
@@ -156,7 +158,7 @@ $(function(){
 function getList(callback) {
     $ajax({
         type: 'post',
-        url: '/product_info/post_list',
+        url: '/matter_order/post_list',
     }, false, '', function (res) {
         if (res.code == 200) {
             setTable(res.data);
@@ -186,7 +188,7 @@ function setTable(data) {
         toolbarAlign: 'left',
         columns: [
             {
-                field: 'id',
+                field: 'uid',
                 title: '序号',
                 align: 'center',
                 width: 50,
@@ -194,54 +196,32 @@ function setTable(data) {
                     return index + 1;
                 }
             }, {
-                field: 'orderid',
+                field: 'orderId',
                 title: '订单号',
                 align: 'left',
                 sortable: true,
                 width: 150
             }, {
-                field: 'mattername',
-                title: '物料编号',
+                field: 'code',
+                title: '物料代码',
                 align: 'left',
                 sortable: true,
                 width: 150
             }, {
-                field: 'matternum',
-                title: '数量',
-                align: 'left',
-                sortable: true,
-                width: 100
-            }
-            , {
                 field: 'type',
                 title: '类别',
                 align: 'left',
                 sortable: true,
-                width: 100,
-                // formatter: function (value, row, index) {
-                //     return '<button onclick="javascript:selectMatterByOrderId(' + row.id + ')" type="button" class="btn btn-primary">' +
-                //         '<i class="bi bi-inbox icon"></i>' +
-                //         '查看物料' +
-                //         '</button>'
-                // }
-            }
-            , {
-                field: 'size',
-                title: '长度',
+                width: 100
+            }, {
+                field: 'materialDescription',
+                title: '物料描述',
                 align: 'left',
                 sortable: true,
                 width: 100
-            }
-            , {
-                field: 'yie',
-                title: '屈展度',
-                align: 'left',
-                sortable: true,
-                width: 100
-            }
-            , {
-                field: 'color',
-                title: '颜色',
+            }, {
+                field: 'num',
+                title: '所用数量',
                 align: 'left',
                 sortable: true,
                 width: 100

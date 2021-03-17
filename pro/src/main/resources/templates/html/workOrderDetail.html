@@ -90,14 +90,6 @@
                         <input id="workOrderInfoId" name="workOrderInfoId" type="hidden">
                     </div>
                     <div class="form-group">
-                        <label for="update-workDate">日期</label>
-                        <input id="update-workDate" name="workDate" type="date" class="form-control"
-                               autocomplete="off" required>
-                        <div class="invalid-feedback">
-                            请输入日期！
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <label for="update-workShop">车间</label>
                         <input id="update-workShop" name="workShop" type="text" class="form-control"
                                autocomplete="off" required>
@@ -114,10 +106,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="update-productInfoId">物料</label>
-                        <select id="update-productInfoId" name="matter_id" class="form-control">
-                            <option value="2">呃呃呃</option>
-                        </select>
+                        <label for="update-productInfoId">物料代码</label>
+                        <input id="update-productInfoId" name="mattername" type="text" class="form-control"
+                               autocomplete="off" required readonly>
                         <div class="invalid-feedback">
                             请选择物料！
                         </div>

@@ -12,7 +12,7 @@ let tableId = '';
 
 let minDate;
 
-let products;
+let matters;
 
 function getOrders() {
     let $s = $('#add-orderInfoId');
@@ -43,10 +43,10 @@ function getOrders() {
 function getProducts(orderId) {
     $ajax({
         type: 'post',
-        url: '/product_info/select_list',
+        url: '/matter_order/select_list',
         data: JSON.stringify({
             orderId: orderId,
-            productName: ''
+            code: ''
         }),
         contentType: 'application/json;charset=utf-8',
         dataType: 'json'
@@ -57,9 +57,9 @@ function getProducts(orderId) {
         $s.append($o)
 
         if (res.code == 200) {
-            products = res.data;
-            $.each(products, function (index, o) {
-                $o = $('<option value="' + o.matterid + '">' + o.mattername + '</option>')
+            matters = res.data;
+            $.each(matters, function (index, o) {
+                $o = $('<option value="' + o.id + '">' + o.code + '</option>')
                 $s.append($o)
             })
         } else {
@@ -75,11 +75,11 @@ function getProducts(orderId) {
 
 function setProductNum(num, id) {
     let result = true;
-    $.each(products, function (index, product) {
-        if (product.matterid == id) {
-            result = product.matternum - num >= 0;
-            product.matternum = result ? product.matternum -= num : product.matternum;
-            $('#add-productNum').val(product.matternum);
+    $.each(matters, function (index, matter) {
+        if (matter.id == id) {
+            result = matter.num - num >= 0;
+            matter.num = result ? matter.num -= num : matter.num;
+            $('#add-productNum').val(matter.num);
             return false;
         }
     })
@@ -132,9 +132,9 @@ $(function () {
         if (result == '') {
             let weekArray = new Array("周日", "周一", "周二", "周三", "周四", "周五", "周六");
             let myDate = new Date(weekFirstDate);
-            let linkDate = new Date();
+            let linkDate;
             $('.nav-link').each(function (index, link) {
-                linkDate.setDate(myDate.getDate() + index);
+                linkDate = new Date(myDate.getTime() + (1000*60*60*24*index));
                 let date = formatDate(linkDate, 'yyyy-MM-dd');
                 let week = weekArray[linkDate.getDay()];
                 $(link).text(date + '/' + week);

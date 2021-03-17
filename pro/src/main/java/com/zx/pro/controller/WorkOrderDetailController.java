@@ -1,9 +1,7 @@
 package com.zx.pro.controller;
 
-import com.zx.pro.entity.ProductInfo;
 import com.zx.pro.entity.WorkOrderDetail;
 import com.zx.pro.entity.WorkOrderDetailItem;
-import com.zx.pro.service.IProductInfoService;
 import com.zx.pro.service.IWorkOrderDetailService;
 import com.zx.pro.service.IWorkOrderInfoService;
 import com.zx.pro.util.*;
@@ -14,7 +12,6 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -32,8 +29,6 @@ public class WorkOrderDetailController {
     private IWorkOrderDetailService iWorkOrderDetailService;
     @Autowired
     private IWorkOrderInfoService iWorkOrderInfoService;
-    @Autowired
-    private IProductInfoService iProductInfoService;
 
     /**
      * 批量录入派工单
@@ -269,20 +264,6 @@ public class WorkOrderDetailController {
             e.printStackTrace();
             log.error("查询失败：{}", e.getMessage());
             log.error("参数：{}", map);
-            return ResultInfo.error("错误");
-        }
-    }
-
-    @RequestMapping("/getProductList")
-    public ResultInfo getProductList() {
-        List<ProductInfo> getList = null;
-        try {
-            getList = iProductInfoService.getList();
-            return ResultInfo.success("查询成功", getList);
-        } catch (Exception e) {
-            e.printStackTrace();
-            log.error("查询失败：{}", e.getMessage());
-            log.error("参数：{}", getList);
             return ResultInfo.error("错误");
         }
     }

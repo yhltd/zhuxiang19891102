@@ -77,26 +77,12 @@ $(function(){
             let setNum = $('#work-table tbody tr:eq('+index+') td:eq(4) input').val();
 
              if(setNum == '' || parseFloat(setNum) > row.workNum){
-            //     // alert('入库数量不能为0或者大于生产数量，行号：' + (index+1));
-            //     // check = false;
-            //     // return false;
-            //     list.push({
-            //         productInfoId: row.productInfoId,
-            //         setNum: parseFloat(setNum)
-            //     })
-            // }else{
-            //     list.push({
-            //         productInfoId: row.productInfoId,
-            //         setNum: parseFloat(setNum)
-            //     })
                  setNum = 0;
              }
-
-
             list.push({
-                        productInfoId: row.productInfoId,
-                        setNum: parseFloat(setNum)
-                    })
+                productInfoId: row.matterId,
+                setNum: parseFloat(setNum)
+            })
         })
 
         if(check){
@@ -227,11 +213,11 @@ function setTable(data) {
                 sortable: true,
                 width: 150
             }, {
-                field: 'mattername',
+                field: 'code',
                 title: '物料代码',
                 align: 'left',
                 sortable: true,
-                width: 120
+                width: 150
             }, {
                 field: 'createTime',
                 title: '入库时间',
@@ -247,24 +233,7 @@ function setTable(data) {
                 align: 'left',
                 sortable: true,
                 width: 100
-            },
-                // {
-            //     field: 'productPrice',
-            //     title: '产品单价',
-            //     align: 'left',
-            //     sortable: true,
-            //     width: 100
-            // }, {
-            //     field: 'setPrice',
-            //     title: '入库金额',
-            //     align: 'left',
-            //     sortable: true,
-            //     width: 100,
-            //     formatter: function (value, row, index) {
-            //         return (row.setNum * row.productPrice).toFixed(2);
-            //     }
-            // },
-            {
+            },{
                 field: 'man',
                 title: '入库人',
                 align: 'left',
@@ -305,7 +274,7 @@ function setWorkTable(data){
                     return index + 1;
                 }
             }, {
-                field: 'mattername',
+                field: 'matterName',
                 title: '物料代码',
                 align: 'left',
                 sortable: true,

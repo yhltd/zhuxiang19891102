@@ -254,62 +254,62 @@ function setShowMatterTable(data) {
                 title: '物料代码',
                 align: 'left',
                 sortable: true,
-                width: 100
+                width: 150
             },  {
                 field: 'type',
                 title: '类别',
                 align: 'left',
                 sortable: true,
-                width: 150,
+                width: 100,
             }, {
                 field: 'size',
                 title: '长度(英尺)',
                 align: 'left',
                 sortable: true,
-                width: 150
+                width: 100
             },{
                 field: 'meter',
                 title: '长度(米)',
                 align: 'left',
                 sortable: true,
-                width: 150
+                width: 100
             }, {
                 field: 'yieldStrength',
                 title: '屈服强度',
                 align: 'left',
                 sortable: true,
-                width: 150
+                width: 100
             },
             {
                 field: 'chartThickness',
                 title: '图层厚度',
                 align: 'left',
                 sortable: true,
-                width: 150
+                width: 100
             },{
                 field: 'thickness',
                 title: '料厚',
                 align: 'left',
                 sortable: true,
-                width: 150
+                width: 100
             }, {
                 field: 'color',
                 title: '颜色',
                 align: 'left',
                 sortable: true,
-                width: 150
+                width: 100
             }, {
                 field: 'supplier',
                 title: '供应商',
                 align: 'left',
                 sortable: true,
-                width: 150
+                width: 120
             }, {
                 field: 'materialDescription',
                 title: '物料描述',
                 align: 'left',
                 sortable: true,
-                width: 150
+                width: 120
             }, {
                 field: 'createTime',
                 title: '录入时间',
@@ -321,7 +321,7 @@ function setShowMatterTable(data) {
                 title: '所需数量',
                 align: 'left',
                 sortable: true,
-                width: 100,
+                width: 120,
                 formatter: function (value, row, index) {
                     return '<input type="number" class="form-control" value="' + value + '"/>'
                 }
@@ -359,62 +359,62 @@ function setMatterTable(data) {
                 title: '物料代码',
                 align: 'left',
                 sortable: true,
-                width: 100
+                width: 150
             },  {
                 field: 'type',
                 title: '类别',
                 align: 'left',
                 sortable: true,
-                width: 150,
+                width: 100,
             }, {
                 field: 'size',
                 title: '长度(英尺)',
                 align: 'left',
                 sortable: true,
-                width: 150
+                width: 100
             },{
                 field: 'meter',
                 title: '长度(米)',
                 align: 'left',
                 sortable: true,
-                width: 150
+                width: 100
             }, {
                 field: 'yieldStrength',
                 title: '屈服强度',
                 align: 'left',
                 sortable: true,
-                width: 150
+                width: 100
             },
             {
                 field: 'chartThickness',
                 title: '图层厚度',
                 align: 'left',
                 sortable: true,
-                width: 150
+                width: 100
             },{
                 field: 'thickness',
                 title: '料厚',
                 align: 'left',
                 sortable: true,
-                width: 150
+                width: 100
             }, {
                 field: 'color',
                 title: '颜色',
                 align: 'left',
                 sortable: true,
-                width: 150
+                width: 100
             }, {
                 field: 'supplier',
                 title: '供应商',
                 align: 'left',
                 sortable: true,
-                width: 150
+                width: 120
             }, {
                 field: 'materialDescription',
                 title: '物料描述',
                 align: 'left',
                 sortable: true,
-                width: 150
+                width: 120
             }, {
                 field: 'createTime',
                 title: '录入时间',
@@ -426,7 +426,7 @@ function setMatterTable(data) {
                 title: '所需数量',
                 align: 'left',
                 sortable: true,
-                width: 100,
+                width: 120,
                 formatter: function (value, row, index) {
                     return '<input type="number" class="form-control"/>'
                 }

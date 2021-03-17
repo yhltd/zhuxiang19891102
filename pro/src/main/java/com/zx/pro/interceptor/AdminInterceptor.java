@@ -32,7 +32,6 @@ public class AdminInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         StringBuffer requestUrl = request.getRequestURL();
-        log.info("本次请求地址：{}",requestUrl);
         try {
             //获取session对象
             HttpSession session = request.getSession();
@@ -40,14 +39,11 @@ public class AdminInterceptor implements HandlerInterceptor {
             if (!SessionUtil.checkToken(session)) {
                 //跳转到首页
                 response.sendRedirect("/");
-                log.info("请求被拦截");
                 return false;
             }
         } catch (Exception e) {
-            log.error("拦截器错误：{}",e.getMessage());
             return false;
         }
-        log.info("请求成功");
         return true;
     }
 

@@ -61,8 +61,8 @@
                placeholder="订单号" autocomplete="off">
     </div>
     <div class="col-md-2 mb-2">
-        <input id="productName-select" type="text" class="form-control"
-               placeholder="产品名称" autocomplete="off">
+        <input id="code-select" type="text" class="form-control"
+               placeholder="物料编码" autocomplete="off">
     </div>
     <div class="col-md-2 mb-2">
         <button id="select-btn" class="btn btn-primary">
@@ -104,35 +104,21 @@
             <div class="modal-body">
                 <form id="edit-form" class="needs-validation">
                     <div class="form-group">
-                        <input id="id" name="id" type="hidden">
-                    </div>
-                    <div class="form-group">
-                        <input id="orderid" name="orderid" type="hidden">
-                    </div>
-                    <div class="form-group">
                         <label for="upd-productName">物料代码</label>
-                        <input id="upd-productName" name="mattername" type="text" class="form-control"
-                               autocomplete="off" required>
+                        <input id="upd-productName" name="code" type="text" class="form-control"
+                               autocomplete="off" required readonly>
                         <div class="invalid-feedback">
                             请输入物料代码！
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="upd-productNum">数量</label>
-                        <input id="upd-productNum" name="matternum" type="number" class="form-control"
+                        <input id="upd-productNum" name="num" type="number" class="form-control"
                                autocomplete="off" required>
                         <div class="invalid-feedback">
                             请输入数量！
                         </div>
                     </div>
-<!--                    <div class="form-group">-->
-<!--                        <label for="upd-productPrice">单价</label>-->
-<!--                        <input id="upd-productPrice" name="productPrice" type="number" class="form-control"-->
-<!--                               autocomplete="off" required>-->
-<!--                        <div class="invalid-feedback">-->
-<!--                            请输入单价！-->
-<!--                        </div>-->
-<!--                    </div>-->
                 </form>
             </div>
             <div class="border-top" style="padding: 15px;">
@@ -172,28 +158,5 @@
     </div>
 </div>
 
-<div id="show-matter-modal" class="modal fade" tabindex="-1">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title">查看物料</div>
-            </div>
-            <div class="modal-body">
-                <input id="productId" type="hidden">
-                <table id="matter-table"></table>
-            </div>
-            <div class="border-top" style="padding: 15px;">
-                <button id="upd-matter-submit-btn" type="button" class="btn btn-primary">
-                    <i class="bi bi-arrow-bar-up icon"></i>
-                    确定修改
-                </button>
-                <button id="upd-matter-close-btn" type="button" class="btn btn-primary left-margin">
-                    <i class="bi bi-x-circle icon"></i>
-                    关闭
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
 </body>
 </html>

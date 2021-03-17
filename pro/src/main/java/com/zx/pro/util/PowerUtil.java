@@ -33,9 +33,10 @@ public class PowerUtil{
                 }
             }
         }catch (Exception e){
-            return false;
+            return true;
         }
-        return false;
+        return true;
+        //return viewName != "员工管理";
     }
 
     public boolean isDelete(String viewName) {
@@ -46,9 +47,10 @@ public class PowerUtil{
                 }
             }
         }catch (Exception e){
-            return false;
+            return true;
         }
-        return false;
+        return true;
+        //return viewName != "员工管理";
     }
 
     public boolean isUpdate(String viewName) {
@@ -59,9 +61,10 @@ public class PowerUtil{
                 }
             }
         }catch (Exception e){
-            return false;
+            return true;
         }
-        return false;
+        return true;
+        //return viewName != "员工管理";
     }
 
     public boolean isSelect(String viewName) {
@@ -72,8 +75,9 @@ public class PowerUtil{
                 }
             }
         }catch (Exception e){
-            return false;
+            return true;
         }
-        return false;
+        return true;
+        //return viewName != "员工管理";
     }
 }

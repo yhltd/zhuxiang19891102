@@ -17,7 +17,7 @@ public interface SetStockDetailMapper extends BaseMapper<SetStockDetail>{
      * 查询入库明细
      * @return
      */
-    @Select("select ssd.*,m.code as mattername from set_stock_detail as ssd left join matter_info as m on ssd.matter_id = m.id")
+    @Select("select ssd.*,m.code from set_stock_detail as ssd left join matter_info as m on ssd.product_info_id = m.id")
     List<SetStockDetail> getList();
 
     /**
@@ -26,9 +26,9 @@ public interface SetStockDetailMapper extends BaseMapper<SetStockDetail>{
      * @param productName 产品名称
      * @return
      */
-    @Select("select ssd.*,m.code as mattername from set_stock_detail as ssd " +
+    @Select("select ssd.*,m.code from set_stock_detail as ssd " +
             "left join matter_info as m " +
-            "on ssd.matter_id = m.id " +
+            "on ssd.product_info_id = m.id " +
             "where ssd.set_order like '%${setOrder}%' " +
             "and m.code like '%${productName}%'")
     List<SetStockDetail> selectList(String setOrder,String productName);

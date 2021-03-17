@@ -57,7 +57,7 @@ $(function(){
 
     //修改项目提交按钮点击事件
     $('#update-form-submit-btn').click(function () {
-        var msg=confirm("确认要修改吗？")
+        var msg = confirm("确认要修改吗？")
         if(msg){
             if (checkForm('#update-form')) {
                 let params = formToJson('#update-form');
@@ -157,8 +157,8 @@ function setTable(data) {
                 width: 100
             },
             {
-                field: 'mattername',
-                title: '物料名称',
+                field: 'matterName',
+                title: '物料编码',
                 align: 'left',
                 sortable: true,
                 width: 100

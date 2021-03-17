@@ -2,15 +2,12 @@ package com.zx.pro.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zx.pro.entity.OutStockDetail;
-import com.zx.pro.entity.SetStockDetail;
 import com.zx.pro.entity.Stock;
 import com.zx.pro.entity.UserInfo;
 import com.zx.pro.mapper.OutStockDetailMapper;
 import com.zx.pro.mapper.ProductInfoMapper;
-import com.zx.pro.mapper.SetStockDetailMapper;
 import com.zx.pro.service.IOutStockDetailService;
 import com.zx.pro.service.IStockService;
-import com.zx.pro.service.IWorkOrderInfoService;
 import com.zx.pro.util.OrderUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -65,7 +62,7 @@ public class OutStockDetailServiceImpl extends ServiceImpl<OutStockDetailMapper,
             //出库
             Stock stock = new Stock();
             //产品id
-            stock.setMatter_id(outStockDetail.getMatter_id());
+            stock.setMatterId(outStockDetail.getMatterId());
             //出库数量
             stock.setStockNum(outStockDetail.getOutNum());
             if(!iStockService.addOrUpdate(stock,false)){

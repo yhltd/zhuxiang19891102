@@ -24,55 +24,21 @@ $(function(){
 
     //出库点击事件
     $('#add-btn').click(function(){
-        $('#product-table').bootstrapTable('removeAll');
-        $('#add-modal').modal('show');
-
-        $('#order-select').html('');
-        let $option = '<option value="">请选择订单号</option>'
-        $('#order-select').append($option);
 
         $ajax({
             type: 'post',
-            url: '/order_info/post_list',
+            url: '/stock/out_stock',
         }, false, '', function (res) {
             if (res.code == 200) {
-                $.each(res.data,function(index,data){
-                    $option = '<option value="'+data.orderId+'">'+data.orderId+'</option>'
-                    $('#order-select').append($option);
-                })
-            }
-        })
-    })
-
-    //选择订单号事件
-    $('#order-select').change(function(){
-        let orderId = $(this).val();
-        if(orderId == ''){
-            $('#product-table').bootstrapTable('removeAll');
-            return;
-        }
-
-        $ajax({
-            type: 'post',
-            url: '/out_stock/select_list_outStock',
-            data: JSON.stringify({
-                orderId: orderId
-            }),
-            contentType: "application/json;charset=utf-8",
-            dataType: 'json'
-        },false,'',function(res){
-            if(res.code == 200){
-                setProductTable(res.data)
-            }else{
-                alert(res.msg)
-                $('#work-table').bootstrapTable('removeAll');
+                $('#add-modal').modal('show');
+                setStockTable(res.data)
             }
         })
     })
 
     //出库提交按钮
     $('#add-form-submit-btn').click(function(){
-        let rows = $('#product-table').bootstrapTable('getData');
+        let rows = $('#stock-table').bootstrapTable('getData');
         let list = []
         let check = true;
         let outAddress = $('#outAddress').val();
@@ -82,11 +48,10 @@ $(function(){
         }
 
         $.each(rows,function(index,row){
-            let outNum = $('#product-table tbody tr:eq('+index+') td:eq(2)').text();
+            let outNum = $('#stock-table tbody tr:eq("' + index + '")').children().last().children().val();
 
             list.push({
-                outAddress: outAddress,
-                productInfoId: row.productInfoId,
+                matterId: row.matterId,
                 outNum: parseFloat(outNum)
             })
         })
@@ -217,8 +182,8 @@ function setTable(data) {
                 sortable: true,
                 width: 150
             }, {
-                field: 'mattername',
-                title: '物料名称',
+                field: 'code',
+                title: '物料编码',
                 align: 'left',
                 sortable: true,
                 width: 120
@@ -237,24 +202,7 @@ function setTable(data) {
                 align: 'left',
                 sortable: true,
                 width: 100
-            },
-                // {
-            //     field: 'productPrice',
-            //     title: '产品单价',
-            //     align: 'left',
-            //     sortable: true,
-            //     width: 100
-            // }, {
-            //     field: 'outPrice',
-            //     title: '出库金额',
-            //     align: 'left',
-            //     sortable: true,
-            //     width: 100,
-            //     formatter: function (value, row, index) {
-            //         return (row.outNum * row.productPrice).toFixed(2);
-            //     }
-            // },
-        {
+            },{
                 field: 'man',
                 title: '出库人',
                 align: 'left',
@@ -279,13 +227,13 @@ function setTable(data) {
     })
 }
 
-function setProductTable(data){
+function setStockTable(data){
 
-    if ($('#product-table').html != '') {
-        $('#product-table').bootstrapTable('load', data);
+    if ($('#stock-table').html != '') {
+        $('#stock-table').bootstrapTable('load', data);
     }
 
-    $('#product-table').bootstrapTable({
+    $('#stock-table').bootstrapTable({
         data: data,
         sortStable: true,
         classes: 'table table-hover',
@@ -301,30 +249,25 @@ function setProductTable(data){
                     return index + 1;
                 }
             }, {
-                field: 'mattername',
-                title: '物料名称',
+                field: 'code',
+                title: '物料编码',
                 align: 'left',
                 sortable: true,
-                width: 120
+                width: 150
             }, {
-                field: 'productNum',
-                title: '订单数量',
+                field: 'stockNum',
+                title: '库存数量',
                 align: 'left',
                 sortable: true,
                 width: 100
             }, {
                 field: 'outNum',
-                title: '库存数量',
+                title: '出库数量',
                 align: 'left',
                 sortable: true,
                 width: 100,
-                formatter: function (value, row, index){
-                    if(value < row.productNum){
-                        $('#add-form-submit-btn').attr('disabled','disabled');
-                    }else{
-                        $('#add-form-submit-btn').removeAttr('disabled');
-                    }
-                    return value;
+                formatter: function(){
+                    return '<input class="form-control" type="number"/>'
                 }
             }
         ]

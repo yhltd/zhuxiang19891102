@@ -1,6 +1,7 @@
 package com.zx.pro.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zx.pro.entity.MatterOrder;
 import com.zx.pro.entity.OrderInfo;
 import com.zx.pro.entity.OrderInfoItem;
 import com.zx.pro.entity.OrderState;
@@ -45,11 +46,12 @@ public interface IOrderInfoService extends IService<OrderInfo> {
 
     /**
      * 新增订单
-     * @param orderInfo 订单信息
-     * @param hashMapList 订单下的产品信息和物料信息
+     * @param projectId 项目id
+     * @param comment 贸易条款
+     * @param matterOrderList 所用物料集合
      * @return
      */
-    boolean add(OrderInfo orderInfo, List<HashMap> hashMapList);
+    OrderInfo add(int projectId, String comment, List<MatterOrder> matterOrderList);
 
     /**
      * 修改订单状态

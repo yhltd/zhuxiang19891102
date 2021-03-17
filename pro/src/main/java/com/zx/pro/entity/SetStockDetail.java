@@ -40,13 +40,9 @@ public class SetStockDetail {
      * 入库人
      */
     private String man;
+
     /**
-     * 产品名称
+     * 物料编码
      */
-//    private String productName;
-//    /**
-//     * 产品单价
-//     */
-//    private Double productPrice;
-    private String mattername;
+    private String code;
 }

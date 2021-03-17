@@ -17,26 +17,14 @@ public class Stock {
      */
     @TableId(value = "stock_id", type = IdType.AUTO)
     private int stockId;
-    /**
-     * 产品信息id
-     */
-//    private int productInfoId;
 
-    private int matter_id;
+    /**
+     * 物料id
+     */
+    private int matterId;
 
     /**
      * 库存数量
      */
     private Double stockNum;
-    /**
-     * 产品名称
-     */
-//    private String productName;
-
-    private String mattername;
-
-    /**
-     * 产品单价
-     */
-    private String productPrice;
 }
