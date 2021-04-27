@@ -28,11 +28,11 @@ public class MatterInfo {
     /**
      * 长度（英尺）
      */
-    private Double size;
+    private String size;
     /**
      * 屈服强度
      */
-    private Double yieldStrength;
+    private String yieldStrength;
     /**
      * 图层厚度
      */
@@ -48,7 +48,7 @@ public class MatterInfo {
     /**
      * 配件数量
      */
-    private Double fittingsNum;
+    private String fittingsNum;
     /**
      * 供应商
      */
@@ -56,11 +56,11 @@ public class MatterInfo {
     /**
      * 米
      */
-    private Double meter;
+    private String meter;
     /**
      * 料厚
      */
-    private Double thickness;
+    private String thickness;
     /**
      * 物料描述
      */
@@ -68,7 +68,6 @@ public class MatterInfo {
     /**
      * 创建时间
      */
-    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
 
 }

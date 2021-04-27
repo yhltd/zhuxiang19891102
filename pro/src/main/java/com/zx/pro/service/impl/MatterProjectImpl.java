@@ -101,7 +101,7 @@ public class MatterProjectImpl extends ServiceImpl<MatterProjectMapper, MatterPr
                         //项目物料变化表
                         MatterProjectChange matterProjectChange = new MatterProjectChange();
                         //项目物料表id
-                        matterProjectChange.setMatterProjectId(matterProduct.getId());
+                        matterProjectChange.setMatterInfoId(matterProduct.getId());
                         //修改前数量
                         matterProjectChange.setOldNum(matterProduct.getMatterNum());
                         //修改后数量

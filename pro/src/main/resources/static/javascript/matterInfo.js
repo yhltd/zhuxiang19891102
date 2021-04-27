@@ -30,7 +30,6 @@ $(function () {
                 if (res.code == 200) {
                     $('#matterInfoTable').bootstrapTable('load', res.data);
                 }
-                console.log(res)
             })
         }
     })
@@ -48,9 +47,9 @@ $(function () {
             $ajax({
                 type: 'post',
                 url: '/matter_info/add',
-                data: {
-                    matterInfoJson: JSON.stringify(addMatterInfo)
-                },
+                data: JSON.stringify({
+                    matterInfoJson: addMatterInfo
+                }),
                 dataType: 'json',
                 contentType: 'application/json;charset=utf-8'
             }, false, '', function (res) {

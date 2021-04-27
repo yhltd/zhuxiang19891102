@@ -56,6 +56,13 @@ public interface IMatterOrderService extends IService<MatterOrder> {
     boolean delete(List<Integer> idList);
 
     /**
+     * 根据订单号批量删除
+     * @param orderList 订单号集合
+     * @return
+     */
+    boolean deleteByOrderList(List<String> orderList);
+
+    /**
      * 批量删除
      * @param orderId 订单号
      * @return

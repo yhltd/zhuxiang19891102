@@ -75,6 +75,10 @@ function setForm(params, el) {
 function checkForm(el) {
     let result = true
     $(el + ' input').each(function(index,input){
+        let isRequired = $(input).data('required');
+        if(isRequired == "1"){
+            return true;
+        }
         if($(input).val() == '' || $(input).val() <= 0){
             $(input).next().css('display','block')
             result = false

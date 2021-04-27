@@ -92,7 +92,7 @@ public class MatterProjectChangeImpl extends ServiceImpl<MatterProjectChangeMapp
     @Override
     public boolean deleteByMatterProjectId(List<Integer> matterProductIdList) {
         QueryWrapper<MatterProjectChange> matterProductChangeQueryWrapper = new QueryWrapper<>();
-        matterProductChangeQueryWrapper.in("matter_project_id", matterProductIdList);
+        matterProductChangeQueryWrapper.in("matter_info_id", matterProductIdList);
         return remove(matterProductChangeQueryWrapper);
     }
 }

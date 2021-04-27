@@ -40,7 +40,6 @@ public class SetStockDetail {
      * 入库人
      */
     private String man;
-
     /**
      * 物料编码
      */

@@ -166,6 +166,18 @@ function setTable(data) {
                 sortable: true,
                 width: 120,
             }, {
+                field: 'type',
+                title: '物料类型',
+                align: 'left',
+                sortable: true,
+                width: 120,
+            }, {
+                field: 'materialDescription',
+                title: '物料描述',
+                align: 'left',
+                sortable: true,
+                width: 120,
+            }, {
                 field: 'stockNum',
                 title: '库存数量',
                 align: 'left',

@@ -14,16 +14,10 @@ import java.util.List;
 @Mapper
 public interface StockMapper extends BaseMapper<Stock> {
 
-    @Select("select m.code,s.* " +
-            "from stock as s " +
-            "left join matter_info as m " +
-            "on s.matter_id = m.id")
+    @Select("select m.code,m.type,m.material_description,s.* from stock as s left join matter_info as m on s.matter_id = m.id")
     List<StockItem> getList();
 
-    @Select("select m.code,s.* " +
-            "from stock as s " +
-            "left join matter_info as m " +
-            "on s.matter_id = m.id " +
+    @Select("select m.code,m.type,m.material_description,s.* from stock as s left join matter_info as m on s.matter_id = m.id " +
             "where m.code like CONCAT('%',#{code},'%')")
     List<StockItem> selectList(String code);
 

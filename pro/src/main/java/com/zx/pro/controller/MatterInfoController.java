@@ -1,5 +1,7 @@
 package com.zx.pro.controller;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.zx.pro.entity.MatterInfo;
 import com.zx.pro.entity.MatterInfoItem;
 import com.zx.pro.entity.ProjectInfo;
@@ -157,16 +159,15 @@ public class MatterInfoController {
     }
 
     @PostMapping("/add")
-    //@RequestBody HashMap map  String MatterInfoJson
-    public ResultInfo add(HttpSession session,@RequestBody  String matterInfoJson) {
-        //GsonUtil gsonUtil = new GsonUtil(GsonUtil.toJson(PushbackInputStream));
+    public ResultInfo add(HttpSession session,@RequestBody HashMap map) {
+        GsonUtil gsonUtil = new GsonUtil(GsonUtil.toJson(map));
         try {
             PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
             if (!powerUtil.isAdd("物料配置")) {
                 return ResultInfo.error(401, "无权限");
             }
-            MatterInfo matterInfo = DecodeUtil.decodeToJson(matterInfoJson, MatterInfo.class,"createTime");
-              //MatterInfo matterInfo = GsonUtil.toEntity(gsonUtil.get("projectInfo"),MatterInfo.class);
+            MatterInfo matterInfo = gsonUtil.toEntity(gsonUtil.get("matterInfoJson"), MatterInfo.class);
+
             if (iMatterInfoService.add(matterInfo)) {
                 return ResultInfo.success("添加成功", matterInfo);
             } else {
@@ -175,7 +176,7 @@ public class MatterInfoController {
         } catch (Exception e) {
             e.printStackTrace();
             log.error("添加失败：{}", e.getMessage());
-            log.error("参数：{}", matterInfoJson);
+            log.error("参数：{}", map);
             return ResultInfo.error("添加失败");
         }
     }

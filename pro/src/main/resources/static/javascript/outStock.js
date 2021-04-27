@@ -51,6 +51,7 @@ $(function(){
             let outNum = $('#stock-table tbody tr:eq("' + index + '")').children().last().children().val();
 
             list.push({
+                outAddress,
                 matterId: row.matterId,
                 outNum: parseFloat(outNum)
             })
@@ -182,7 +183,7 @@ function setTable(data) {
                 sortable: true,
                 width: 150
             }, {
-                field: 'code',
+                field: 'mattername',
                 title: '物料编码',
                 align: 'left',
                 sortable: true,

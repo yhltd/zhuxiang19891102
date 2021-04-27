@@ -3,6 +3,7 @@ package com.zx.pro.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.sun.org.apache.xpath.internal.operations.Or;
 import com.zx.pro.entity.*;
 import com.zx.pro.mapper.OrderInfoMapper;
 import com.zx.pro.service.IMatterOrderService;
@@ -10,10 +11,12 @@ import com.zx.pro.service.IOrderInfoService;
 import com.zx.pro.util.OrderUtil;
 import com.zx.pro.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -62,7 +65,14 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
 
     @Override
     public boolean delete(List<Integer> idList) {
-        return this.removeByIds(idList);
+        QueryWrapper<OrderInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("order_id");
+        queryWrapper.in("id", idList);
+        List<String> orderList = new ArrayList<>();
+        for(OrderInfo orderInfo : this.list(queryWrapper)){
+            orderList.add(orderInfo.getOrderId());
+        }
+        return matterOrderService.deleteByOrderList(orderList) ? this.removeByIds(idList) : false;
     }
 
     @Override

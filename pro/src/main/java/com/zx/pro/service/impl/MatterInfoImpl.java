@@ -11,6 +11,7 @@ import com.zx.pro.service.IMatterInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -63,6 +64,7 @@ public class MatterInfoImpl extends ServiceImpl<MatterInfoMapper, MatterInfo> im
 
     @Override
     public boolean add(MatterInfo matterInfo) {
+        matterInfo.setCreateTime(LocalDateTime.now());
         return this.save(matterInfo);
     }
 

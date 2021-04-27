@@ -69,6 +69,13 @@ public class MatterOrderServiceImpl extends ServiceImpl<MatterOrderMapper, Matte
     }
 
     @Override
+    public boolean deleteByOrderList(List<String> orderList) {
+        QueryWrapper<MatterOrder> queryWrapper = new QueryWrapper<>();
+        queryWrapper.in("order_id", orderList);
+        return this.remove(queryWrapper);
+    }
+
+    @Override
     public boolean deleteByOrderId(String orderId) {
         QueryWrapper<MatterOrder> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("order_id", orderId);

@@ -24,7 +24,7 @@ public class MatterProjectChange {
     /**
      * 项目物料表
      */
-    private int matterProjectId;
+    private int matterInfoId;
     /**
      * 修改前数量
      */

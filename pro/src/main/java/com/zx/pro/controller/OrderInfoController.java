@@ -145,6 +145,7 @@ public class OrderInfoController {
     }
 
     @RequestMapping("/delete")
+    @Transactional
     public ResultInfo delete(HttpSession session,@RequestBody HashMap map){
         GsonUtil gsonUtil = new GsonUtil(GsonUtil.toJson(map));
 
@@ -159,12 +160,14 @@ public class OrderInfoController {
             if(iOrderInfoService.delete(idList)){
                 return ResultInfo.success("删除成功");
             }else{
+                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
                 return ResultInfo.success("未删除");
             }
         }catch (Exception e){
             e.printStackTrace();
             log.error("删除失败：{}",e.getMessage());
             log.error("参数：{}",map);
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return ResultInfo.error("删除失败");
         }
     }
