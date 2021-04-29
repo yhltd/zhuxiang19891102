@@ -56,7 +56,7 @@ public class MatterOrderChangeController {
             }
 
             //物料编码
-            String code = map.get("projectName").toString();
+            String code = map.get("code").toString();
 
             List<MatterOrderChange> list = iMatterOrderChangeService.selectList(code);
 

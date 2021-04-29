@@ -134,7 +134,7 @@ $(function () {
             let myDate = new Date(weekFirstDate);
             let linkDate;
             $('.nav-link').each(function (index, link) {
-                linkDate = new Date(myDate.getTime() + (1000*60*60*24*index));
+                linkDate = new Date(myDate.getTime() + (1000 * 60 * 60 * 24 * index));
                 let date = formatDate(linkDate, 'yyyy-MM-dd');
                 let week = weekArray[linkDate.getDay()];
                 $(link).text(date + '/' + week);
@@ -188,6 +188,7 @@ function addDetail() {
         return;
     }
 
+    $('#add-productName').change();
     $('#add-modal').modal('show');
 }
 
@@ -202,6 +203,11 @@ function deleteDetail() {
     $.each(rows, function (index, row) {
         let tableData = tableDatas[tableId];
         if ($.inArray(row.data, tableData) >= 0) {
+            for (let i = 0; i < matters.length; i++) {
+                if (matters[i].id == parseInt(row.data.matterId)) {
+                    matters[i].num += parseInt(row.data.workNum);
+                }
+            }
             tableData.splice($.inArray(row.data, tableData), 1);
         }
     })
@@ -245,7 +251,7 @@ function saveDetail() {
         dataType: 'json'
     }, false, '', function (res) {
         alert(res.msg)
-        if(res.code == 200){
+        if (res.code == 200) {
             window.location.href = window.location.href
         }
     })

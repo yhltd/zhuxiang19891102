@@ -33,7 +33,7 @@ public class MatterInfoImpl extends ServiceImpl<MatterInfoMapper, MatterInfo> im
     @Override
     public List<MatterInfo> getList(String code) {
         QueryWrapper<MatterInfo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.like("code",code);
+        queryWrapper.like("code", code);
         return this.list(queryWrapper);
     }
 
@@ -75,7 +75,14 @@ public class MatterInfoImpl extends ServiceImpl<MatterInfoMapper, MatterInfo> im
 
     @Override
     public boolean delete(List<Integer> idList) {
+        try {
+            for (Integer id : idList) {
+                matterInfoMapper.deleteMatterById(id);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
         return this.removeByIds(idList);
     }
-
 }

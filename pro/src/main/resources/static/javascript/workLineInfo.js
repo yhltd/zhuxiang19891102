@@ -23,7 +23,7 @@ $(function () {
     //点击按钮根据时间查询
     $("#select-btn").click(function () {
         let startDate = $("#startDate").val();
-        let endDate = $("#startDate").val();
+        let endDate = $("#endDate").val();
 
         $ajax({
             type: 'post',
@@ -75,7 +75,7 @@ function setTable(data) {
                 width: 100
             }, {
                 field: 'matterName',
-                title: '物料代码',
+                title: '物料名称',
                 align: 'left',
                 sortable: true,
                 width: 100

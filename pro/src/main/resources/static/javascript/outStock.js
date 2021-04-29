@@ -50,11 +50,13 @@ $(function(){
         $.each(rows,function(index,row){
             let outNum = $('#stock-table tbody tr:eq("' + index + '")').children().last().children().val();
 
-            list.push({
-                outAddress,
-                matterId: row.matterId,
-                outNum: parseFloat(outNum)
-            })
+            if(outNum != "" && outNum > 0){
+                list.push({
+                    outAddress,
+                    matterId: row.matterId,
+                    outNum: parseFloat(outNum)
+                })
+            }
         })
 
         if(check){

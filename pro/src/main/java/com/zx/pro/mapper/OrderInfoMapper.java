@@ -40,7 +40,7 @@ public interface OrderInfoMapper extends BaseMapper<OrderInfo> {
             "on oi.project_info_id = pi.id " +
             "where pi.project_name like CONCAT('%',#{projectName},'%') " +
             "and oi.order_id like CONCAT('%',#{orderId},'%') " +
-            "and create_time between #{startDate} and #{endDate})")
+            "and oi.create_time between #{startDate} and #{endDate}")
     List<OrderInfoItem> getList(String projectName,
                                 String orderId,
                                 LocalDateTime startDate,

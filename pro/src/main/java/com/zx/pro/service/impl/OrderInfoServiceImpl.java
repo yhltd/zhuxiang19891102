@@ -38,11 +38,11 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
 
     @Override
     public List<OrderInfoItem> getList(String projectName, String orderId, String startDateStr, String endDateStr) {
-        LocalDateTime startDate = StringUtils.isNotEmpty(startDateStr) ?
+        LocalDateTime startDate = startDateStr != "" ?
                 LocalDateTime.parse(startDateStr) :
                 StringUtils.MIN_DATETIME;
 
-        LocalDateTime endDate = StringUtils.isNotEmpty(endDateStr) ?
+        LocalDateTime endDate = endDateStr != "" ?
                 LocalDateTime.parse(endDateStr) :
                 StringUtils.MAX_DATETIME;
         return orderInfoMapper.getList(projectName, orderId, startDate, endDate);

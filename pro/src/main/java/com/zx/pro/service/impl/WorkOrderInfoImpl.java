@@ -47,11 +47,11 @@ public class WorkOrderInfoImpl extends ServiceImpl<WorkOrderInfoMapper, WorkOrde
 
     @Override
     public List<WorkOrderInfo> selectList(String workOrder, String startDateStr, String endDateStr) {
-        LocalDateTime startDate = StringUtils.isNotEmpty(startDateStr) ?
+        LocalDateTime startDate = startDateStr != "" ?
                 LocalDateTime.parse(startDateStr) :
                 StringUtils.MIN_DATETIME;
 
-        LocalDateTime endDate = StringUtils.isNotEmpty(endDateStr) ?
+        LocalDateTime endDate = endDateStr != "" ?
                 LocalDateTime.parse(endDateStr) :
                 StringUtils.MAX_DATETIME;
 

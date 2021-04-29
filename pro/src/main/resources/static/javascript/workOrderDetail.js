@@ -73,11 +73,7 @@ $(function(){
                     alert(res.msg);
                     if (res.code == 200) {
                         $('#update-form-close-btn').click();
-                        let rows = getTableSelection('#workOrderDetailTable');
-                        $('#workOrderDetailTable').bootstrapTable('updateRow', {
-                            index: rows[0].index,
-                            row: res.data
-                        })
+                        getList();
                     }
                 })
             }

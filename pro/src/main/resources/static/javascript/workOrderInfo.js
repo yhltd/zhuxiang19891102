@@ -100,7 +100,7 @@ $(function () {
         let params = {
             workOrder: $('#workOrder').val(),
             startDate: $('#startTime').val(),
-            endDate: $('#endDate').val()
+            endDate: $('#endTime').val()
         }
 
         $ajax({

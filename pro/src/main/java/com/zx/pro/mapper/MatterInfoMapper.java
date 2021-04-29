@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zx.pro.entity.MatterInfo;
 import com.zx.pro.entity.MatterInfoItem;
 import com.zx.pro.entity.MatterProject;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -75,4 +76,18 @@ public interface MatterInfoMapper extends BaseMapper<MatterInfo> {
             "where pi.project_name " +
             "like CONCAT('%',#{projectName},'%') ")
     List<MatterInfoItem> getListByProjectName(String projectName);
+
+    /**
+     * 删除物料信息
+     * @param id
+     */
+    @Delete("delete from matter_order where matter_id = #{id};" +
+            "delete from matter_order_change where matter_info_id = #{id};" +
+            "delete from matter_project_change where matter_info_id in (select id from matter_project where matter_info_id = #{id});" +
+            "delete from matter_project where matter_info_id = #{id};" +
+            "delete from out_stock_detail where matter_id = #{id};" +
+            "delete from set_stock_detail where product_info_id = #{id};" +
+            "delete from stock where matter_id = #{id};" +
+            "delete from work_order_detail where matter_id = #{id};")
+    void deleteMatterById(int id);
 }

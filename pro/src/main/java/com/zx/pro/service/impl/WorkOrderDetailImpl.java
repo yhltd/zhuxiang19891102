@@ -82,10 +82,10 @@ public class WorkOrderDetailImpl extends ServiceImpl<WorkOrderDetailMapper, Work
 
     @Override
     public List<WorkOrderDetailItem> getWorkShopByWorkDate(String startDateStr, String endDateStr) {
-        LocalDateTime startDate = StringUtils.isNotEmpty(startDateStr) ?
+        LocalDateTime startDate = startDateStr != "" ?
                 LocalDateTime.parse(startDateStr) :
                 StringUtils.MIN_DATETIME;
-        LocalDateTime endDate = StringUtils.isNotEmpty(endDateStr) ?
+        LocalDateTime endDate = endDateStr != "" ?
                 LocalDateTime.parse(endDateStr) :
                 StringUtils.MAX_DATETIME;
 
@@ -94,10 +94,10 @@ public class WorkOrderDetailImpl extends ServiceImpl<WorkOrderDetailMapper, Work
 
     @Override
     public List<WorkOrderDetailItem> getWorkLineByWorkDate(String startDateStr, String endDateStr) {
-        LocalDateTime startDate = StringUtils.isNotEmpty(startDateStr) ?
+        LocalDateTime startDate = startDateStr != "" ?
                 LocalDateTime.parse(startDateStr) :
                 StringUtils.MIN_DATETIME;
-        LocalDateTime endDate = StringUtils.isNotEmpty(endDateStr) ?
+        LocalDateTime endDate = endDateStr != "" ?
                 LocalDateTime.parse(endDateStr) :
                 StringUtils.MAX_DATETIME;
 

@@ -89,7 +89,7 @@ $(function () {
     })
 
     //修改弹窗里点击提交按钮
-    $('#update-submit-btn').click(function () {
+    $('#update-user-submit-btn').click(function () {
         var msg = confirm("确认要修改吗？")
         if (msg) {
             if (checkForm('#update-form')) {
@@ -105,7 +105,7 @@ $(function () {
                 }, false, '', function (res) {
                     alert(res.msg);
                     if (res.code == 200) {
-                        $('#update-close-btn').click();
+                        $('#update-user-close-btn').click();
                         $('#update-modal').modal('hide');
                         getList();
                     }
@@ -115,7 +115,7 @@ $(function () {
     })
 
     //修改弹窗点击关闭按钮
-    $('#update-close-btn').click(function () {
+    $('#update-user-close-btn').click(function () {
         $('#update-form')[0].reset();
         $('#update-modal').modal('hide');
     })

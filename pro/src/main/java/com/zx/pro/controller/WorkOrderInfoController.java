@@ -69,16 +69,15 @@ public class WorkOrderInfoController {
 
     @PostMapping("/selectList")
     public ResultInfo workOrderListByWorkOrder(HttpSession session, @RequestBody HashMap map) {
-        GsonUtil gsonUtil = new GsonUtil(GsonUtil.toJson(map));
         try {
             PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
             if (!powerUtil.isSelect("派工单")) {
                 return ResultInfo.error(401, "无权限");
             }
 
-            String workOrder = gsonUtil.get("workOrder");
-            String startDate = gsonUtil.get("startDate");
-            String endDate = gsonUtil.get("endDate");
+            String workOrder = map.get("workOrder").toString();
+            String startDate = map.get("startDate").toString();
+            String endDate = map.get("endDate").toString();
 
             List<WorkOrderInfo> list = iWorkOrderInfoService.selectList(workOrder, startDate, endDate);
             if (StringUtils.isNotNull(list)) {
