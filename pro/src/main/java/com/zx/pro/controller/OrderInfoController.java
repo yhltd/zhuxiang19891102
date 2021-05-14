@@ -184,10 +184,11 @@ public class OrderInfoController {
             }
 
             int projectId = Integer.parseInt(map.get("projectId").toString());
+            String orderId=map.get("orderId").toString();
             String comment = map.get("comment").toString();
             List<MatterOrder> matterOrderList = GsonUtil.toList(gsonUtil.get("matterOrderList"),MatterOrder.class);
 
-            OrderInfo orderInfo = iOrderInfoService.add(projectId, comment, matterOrderList);
+            OrderInfo orderInfo = iOrderInfoService.add(projectId,orderId, comment, matterOrderList);
             if(StringUtils.isNotNull(orderInfo)){
                 return ResultInfo.success("新增成功", orderInfo);
             }else{

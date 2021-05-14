@@ -15,7 +15,6 @@
 
 
 
-
     <!--    导出excel所用包-->
     <script type="text/javascript" src="../javascript/Getexcel.js"></script>
     <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
@@ -257,6 +256,14 @@
             <div class="modal-header">
                 <div class="modal-title">查看物料</div>
             </div>
+            <div id="show-matter-modal-toolbar">
+                <div class="btn-group" role="group">
+                    <button id="import-matter-btn" class="btn btn-primary" onclick="getexcelnolast('#show-table-matter','项目物料信息',0)" style="margin-left: 15px">
+                        <i class="bi bi-plus-square icon"></i>
+                        导出
+                    </button>
+                </div>
+            </div>
             <div class="modal-body">
                 <input id="showMatterProjectId" type="hidden"/>
                 <table id="show-table-matter"></table>
@@ -265,6 +272,10 @@
                 <button id="upd-matter-submit-btn" type="button" class="btn btn-primary">
                     <i class="bi bi-arrow-bar-up icon"></i>
                     确定修改
+                </button>
+                <button id="add-matter-submit-btn" type="button" class="btn btn-primary">
+                    <i class="bi bi-arrow-bar-up icon"></i>
+                    新增物料
                 </button>
                 <button id="upd-matter-close-btn" type="button" class="btn btn-primary left-margin">
                     <i class="bi bi-x-circle icon"></i>

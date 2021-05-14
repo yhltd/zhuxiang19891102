@@ -179,6 +179,40 @@ $(function () {
     $('#add-close-btn').click(function () {
         $('#add-modal').modal('hide');
     })
+
+    //输入派工单单号点击提交
+    $('#workOrder-submit-btn').click(function () {
+        let workOrderDetailList = [];
+        for (let tableData in tableDatas) {
+            $.each(tableDatas[tableData], function (index, table) {
+                workOrderDetailList.push(table)
+            })
+        }
+        if (workOrderDetailList.length == 0) {
+            alert('输入派工单信息');
+            return;
+        }
+        let workOrder = $('#workOrderId').val();
+        if (workOrder==''){
+            alert('输入派工单单号')
+            return;
+        }
+        $ajax({
+            type: 'post',
+            url: '/work_order_detail/add',
+            data: JSON.stringify({
+                workOrder:workOrder,
+                workOrderDetailList: workOrderDetailList
+            }),
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json'
+        }, false, '', function (res) {
+            alert(res.msg)
+            if (res.code == 200) {
+                window.location.href = window.location.href
+            }
+        })
+    })
 })
 
 //新增点击事件
@@ -229,32 +263,36 @@ function getId() {
 
 //提交
 function saveDetail() {
-    let workOrderDetailList = [];
-    for (let tableData in tableDatas) {
-        $.each(tableDatas[tableData], function (index, table) {
-            workOrderDetailList.push(table)
-        })
-    }
+    // let workOrderDetailList = [];
+    // for (let tableData in tableDatas) {
+    //     $.each(tableDatas[tableData], function (index, table) {
+    //         workOrderDetailList.push(table)
+    //     })
+    // }
+    //
+    // if (workOrderDetailList.length == 0) {
+    //     alert('输入派工单信息');
+    //     return;
+    // }
 
-    if (workOrderDetailList.length == 0) {
-        alert('输入派工单信息');
-        return;
-    }
+    //输入派工单单号点击提交按钮
+    $('#modal-submit').modal('show');
 
-    $ajax({
-        type: 'post',
-        url: '/work_order_detail/add',
-        data: JSON.stringify({
-            workOrderDetailList: workOrderDetailList
-        }),
-        contentType: 'application/json;charset=utf-8',
-        dataType: 'json'
-    }, false, '', function (res) {
-        alert(res.msg)
-        if (res.code == 200) {
-            window.location.href = window.location.href
-        }
-    })
+
+    // $ajax({
+    //     type: 'post',
+    //     url: '/work_order_detail/add',
+    //     data: JSON.stringify({
+    //         workOrderDetailList: workOrderDetailList
+    //     }),
+    //     contentType: 'application/json;charset=utf-8',
+    //     dataType: 'json'
+    // }, false, '', function (res) {
+    //     alert(res.msg)
+    //     if (res.code == 200) {
+    //         window.location.href = window.location.href
+    //     }
+    // })
 }
 
 function setTable() {

@@ -3,6 +3,7 @@ package com.zx.pro.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zx.pro.entity.WorkOrderDetail;
 import com.zx.pro.entity.WorkOrderDetailItem;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 

@@ -21,6 +21,8 @@ public class MatterProjectImpl extends ServiceImpl<MatterProjectMapper, MatterPr
 
     @Autowired
     private IMatterProjectChangeService iMatterProjectChangeService;
+    @Autowired
+    private MatterProjectMapper matterProjectMapper;
 
     @Override
     public List<MatterProject> getList() {
@@ -126,6 +128,60 @@ public class MatterProjectImpl extends ServiceImpl<MatterProjectMapper, MatterPr
             }
         }
         return false;
+    }
+
+    @Override
+    public int matterCount(Integer projectInfoId, Integer matterId) {
+        return matterProjectMapper.getmatterCount(projectInfoId, matterId);
+    }
+
+    @Override
+    public void updateMatter(List<MatterProject> newMatterProductList,Integer projectInfoId, Integer matterId, Double matterNun,UserInfo userInfo) {
+        //创建项目物料变化表的集合
+        List<MatterProjectChange> matterProjectChanges = new ArrayList<>();
+        //获取该表修改前的集合
+        List<MatterProject> matterProductList = this.getList(projectInfoId);
+        if (StringUtils.isNotNull(matterProductList)) {
+            newMatterProductList.forEach(newMatterProduct -> {
+                matterProductList.forEach(matterProduct -> {
+                    //修改后的物料数量
+                    Double matterNum = newMatterProduct.getMatterNum();
+                    //物料id
+                    Integer matterInfoId = newMatterProduct.getMatterInfoId();
+                    //判断是否修改
+                    if(matterInfoId == matterProduct.getMatterInfoId() && StringUtils.isNotEqual(matterNum,matterProduct.getMatterNum())){
+                        //项目物料变化表
+                        MatterProjectChange matterProjectChange = new MatterProjectChange();
+                        //项目物料表id
+                        matterProjectChange.setMatterInfoId(matterProduct.getId());
+                        //修改前数量
+                        matterProjectChange.setOldNum(matterProduct.getMatterNum());
+                        //修改后数量
+                        matterProjectChange.setNewNum(matterNum);
+                        //修改人
+                        matterProjectChange.setUpdateMan(userInfo.getName());
+                        //修改时间
+                        matterProjectChange.setUpdateTime(LocalDateTime.now());
+                        //插入项目物料变化表
+                        matterProjectChanges.add(matterProjectChange);
+
+                        //插入修改后数量
+                        matterProduct.setMatterNum(matterNum);
+                    }
+                });
+            });
+            //修改项目物料表
+            matterProjectMapper.updateMatterNum(projectInfoId, matterId, matterNun);
+            //项目物料需求表
+            iMatterProjectChangeService.add(matterProjectChanges);
+        }
+
+
+    }
+
+    @Override
+    public void insertMatter(Integer projectInfoId, Integer matterId, Double matterNun) {
+        matterProjectMapper.insertMatterNum(projectInfoId,matterId,matterNun);
     }
 
 }

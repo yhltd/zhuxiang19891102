@@ -60,11 +60,15 @@ $(function () {
     //选择物料确定按钮
     $('#matter-submit-btn').click(function () {
         let projectId = $('#projectSelect').val();
+        let orderId=$('#add-orderId').val();
         let comment = $('#add-comment').val();
         let matterOrderList = [];
         let check = true;
         $('#matter-table tbody tr').each(function(index, tr){
             let useNum = $(tr).children().last().children().val();
+            if(useNum==''||useNum<=0){
+                return check
+            }
             if(useNum > matterList[index].matterNum){
                 alert('订单所用数量不能大于物料数量，物料代码：' + matterList[index].code + ',行号：' + (index+1));
                 check = false;
@@ -83,6 +87,7 @@ $(function () {
                 url: '/order_info/add',
                 data: JSON.stringify({
                     projectId,
+                    orderId,
                     comment,
                     matterOrderList
                 }),
@@ -281,6 +286,12 @@ function setTable(data) {
             }, {
                 field: 'state',
                 title: '订单状态',
+                align: 'left',
+                sortable: true,
+                width: 100
+            },{
+                field: 'outNum',
+                title: '出库数量',
                 align: 'left',
                 sortable: true,
                 width: 100

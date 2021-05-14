@@ -91,4 +91,27 @@ public interface IMatterProjectService extends IService<MatterProject> {
      * @return
      */
     boolean change(List<MatterProject> newMatterProductList, Integer projectInfoId, UserInfo userInfo);
+
+    /**
+     * 查询matter_project表中是否有该条物料
+     * @param projectInfoId 项目ID
+     * @param matterId 物料代码
+     */
+    int matterCount(Integer projectInfoId,Integer matterId);
+
+    /**
+     * 修改matter_project
+     * @param  projectInfoId 项目ID
+     * @param matterId 物料代码
+     * @param matterNun 物料数量
+     */
+    void updateMatter(List<MatterProject> newMatterProductList,Integer projectInfoId,Integer matterId,Double matterNun, UserInfo userInfo);
+
+    /**
+     * matter_project表中新增一条数据
+     * @param  projectInfoId 项目ID
+     * @param matterId 物料代码
+     * @param matterNun 物料数量
+     */
+    void insertMatter(Integer projectInfoId,Integer matterId,Double matterNun);
 }

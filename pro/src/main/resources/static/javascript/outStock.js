@@ -24,13 +24,48 @@ $(function(){
 
     //出库点击事件
     $('#add-btn').click(function(){
+        $('#add-modal').modal('show');
 
+        $('#select-orderInfoId').html('');
+        let $option = '<option value="">请选择订单号</option>'
+        $('#select-orderInfoId').append($option);
+
+        $ajax({
+            type: 'post',
+            url: '/order_info/post_list',
+        }, false, '', function (res) {
+            if (res.code == 200) {
+                $.each(res.data,function(index,data){
+                    $option = '<option value="'+data.id+'">'+data.orderId+'</option>'
+                    $('#select-orderInfoId').append($option);
+                })
+            }
+        })
+
+        // $ajax({
+        //     type: 'post',
+        //     url: '/stock/out_stock',
+        // }, false, '', function (res) {
+        //     if (res.code == 200) {
+        //         $('#add-modal').modal('show');
+        //         setStockTable(res.data)
+        //     }
+        // })
+    })
+
+    //选择订单号事件
+    $('#select-orderInfoId').change(function(){
+        let orderId = $(this).val();
+        if(orderId == ''){
+            $('#stock-table').bootstrapTable('removeAll');
+            return;
+        }
         $ajax({
             type: 'post',
             url: '/stock/out_stock',
         }, false, '', function (res) {
             if (res.code == 200) {
-                $('#add-modal').modal('show');
+                console.log(res.data)
                 setStockTable(res.data)
             }
         })
@@ -38,6 +73,7 @@ $(function(){
 
     //出库提交按钮
     $('#add-form-submit-btn').click(function(){
+        let orderInfoId=$('#select-orderInfoId').val()
         let rows = $('#stock-table').bootstrapTable('getData');
         let list = []
         let check = true;
@@ -52,9 +88,11 @@ $(function(){
 
             if(outNum != "" && outNum > 0){
                 list.push({
+                    orderInfoId,
                     outAddress,
                     matterId: row.matterId,
                     outNum: parseFloat(outNum)
+
                 })
             }
         })

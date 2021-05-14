@@ -32,10 +32,10 @@ public class WorkOrderInfoImpl extends ServiceImpl<WorkOrderInfoMapper, WorkOrde
     private WorkOrderInfoMapper workOrderInfoMapper;
 
     @Override
-    public WorkOrderInfo add() {
+    public WorkOrderInfo add(String workOder) {
         WorkOrderInfo workOrderInfo = new WorkOrderInfo();
         workOrderInfo.setCreateTime(LocalDateTime.now());
-        workOrderInfo.setWorkOrder(OrderUtil.getOrder("WO"));
+        workOrderInfo.setWorkOrder(workOder);
         workOrderInfo.setState("0");
         return this.save(workOrderInfo) ? workOrderInfo : null;
     }

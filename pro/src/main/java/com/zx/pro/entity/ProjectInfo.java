@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 
 @Data
 @TableName("project_info")
-public class ProjectInfo {
+public class ProjectInfo{
 
     /**
      * 主键
@@ -38,4 +38,9 @@ public class ProjectInfo {
      * 创建时间
      */
     private LocalDateTime createTime;
+    /**
+     * 出库数量
+     */
+    private double outNum;
+
 }

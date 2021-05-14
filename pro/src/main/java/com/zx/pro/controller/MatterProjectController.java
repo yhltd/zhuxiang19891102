@@ -141,4 +141,43 @@ public class MatterProjectController {
             return ResultInfo.error("修改失败");
         }
     }
+
+    @RequestMapping("/updateAndAdd")
+    @Transactional
+    public ResultInfo updateAndAdd(HttpSession session, @RequestBody HashMap map){
+        GsonUtil gsonUtil = new GsonUtil(GsonUtil.toJson(map));
+        try {
+            //修改后的list
+            List<MatterProject> newList = GsonUtil.toList(gsonUtil.get("newList"), MatterProject.class);
+            //项目id
+            Integer projectId = Integer.parseInt(gsonUtil.get("projectId"));
+            //当前登陆用户信息
+            UserInfo userInfo = GsonUtil.toEntity(SessionUtil.getToken(session),UserInfo.class);
+            int idx = 0;
+            for (int i = 1;i<=newList.size();i++){
+                //int matterinfoid = newList.indexOf(3);
+                int matterId = newList.get(idx).getMatterInfoId();
+                Double matterNun = newList.get(idx).getMatterNum();
+                int selectCount = iMatterProjectService.matterCount(projectId,matterId);
+                if(selectCount == 1){
+                    //修改
+                    //iMatterProjectService.updateMatter(newList,projectId,matterId,matterNun,userInfo);
+                    iMatterProjectService.change(newList,projectId,userInfo);
+                    break;
+                }else if(selectCount == 0){
+                    //新增
+                    iMatterProjectService.insertMatter(projectId,matterId,matterNun);
+                }
+                idx = idx + 1;
+            }
+            return ResultInfo.success("修改成功",null);
+        }catch (Exception e){
+            e.printStackTrace();
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            log.error("删除失败：{}",e.getMessage());
+            log.error("参数：{}",map);
+            return ResultInfo.error("修改失败");
+        }
+    }
+
 }

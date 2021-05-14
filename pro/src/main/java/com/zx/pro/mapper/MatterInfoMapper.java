@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zx.pro.entity.MatterInfo;
 import com.zx.pro.entity.MatterInfoItem;
 import com.zx.pro.entity.MatterProject;
+import com.zx.pro.entity.ProjectInfo;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -90,4 +91,18 @@ public interface MatterInfoMapper extends BaseMapper<MatterInfo> {
             "delete from stock where matter_id = #{id};" +
             "delete from work_order_detail where matter_id = #{id};")
     void deleteMatterById(int id);
+
+    /**
+     * 查询物料信息
+     * @param  projectId
+     */
+    @Select("select * from  matter_info where id not in (select matter_info_id from matter_project where project_info_id = #{projectId})")
+    List<MatterInfo> returnNotMatter(Integer projectId);
+
+    /**
+     * 查询项目信息
+     * return list<ProjectInfo>
+     */
+    @Select("select pi.id,pi.project_name,pi.customer_name,pi.project_address,pi.create_time,pi.postcode,sum(osd.out_num) as out_num from project_info pi LEFT JOIN order_info oi on pi.id=oi.project_info_id LEFT JOIN out_stock_detail osd on osd.order_info_id=oi.id GROUP BY pi.id")
+    List<ProjectInfo> getListByProject();
 }

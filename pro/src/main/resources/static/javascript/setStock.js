@@ -45,12 +45,12 @@ $(function(){
 
     //选择派工单号事件
     $('#workOrder-select').change(function(){
+        $("#orderInfoId").val('')
         let workOrder = $(this).val();
         if(workOrder == ''){
             $('#work-table').bootstrapTable('removeAll');
             return;
         }
-
         $ajax({
             type: 'post',
             url: '/work_order_detail/getListByWorkOrder',
@@ -59,7 +59,11 @@ $(function(){
             }
         },false,'',function(res){
             if(res.code == 200){
+                console.log(res.data)
                 setWorkTable(res.data)
+                $.each(res.data, function (index, o) {
+                    $("#orderInfoId").val(o.orderInfoId);
+                })
             }else{
                 alert(res.msg)
                 $('#work-table').bootstrapTable('removeAll');

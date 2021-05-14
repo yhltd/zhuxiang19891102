@@ -142,17 +142,17 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="add-productNum">产品数量</label>
+                        <label for="add-productNum">物料数量</label>
                         <input id="add-productNum" name="productNum" type="number" class="form-control" autocomplete="off" disabled>
                         <div class="invalid-feedback">
-                            该产品数量为0！
+                            该物料数量为0！
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="add-workNum">生产数量</label>
                         <input id="add-workNum" name="workNum" type="number" class="form-control" autocomplete="off" required>
                         <div class="invalid-feedback">
-                            请输入产品数量！
+                            请输入生产数量！
                         </div>
                     </div>
                 </form>
@@ -184,6 +184,26 @@
             </div>
             <div class="border-top" style="padding: 15px;">
                 <button id="submit-btn" type="button" class="btn btn-primary">
+                    <i class="bi bi-arrow-bar-up icon"></i>
+                    提交
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal-submit" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div id="modal-header-submit" class="modal-title">输入派工单单号</div>
+            </div>
+            <div class="modal-body">
+                <label for="workOrderId">派工单单号</label>
+                <input id="workOrderId" class="form-control" type="text"/>
+            </div>
+            <div class="border-top" style="padding: 15px;">
+                <button id="workOrder-submit-btn" type="button" class="btn btn-primary">
                     <i class="bi bi-arrow-bar-up icon"></i>
                     提交
                 </button>

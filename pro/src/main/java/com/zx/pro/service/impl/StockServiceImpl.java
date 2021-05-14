@@ -77,4 +77,9 @@ public class StockServiceImpl extends ServiceImpl<StockMapper, Stock> implements
     public List<StockItem> outList() {
         return stockMapper.outList();
     }
+
+//    @Override
+//    public List<StockItem> outList(String orderInfoId) {
+//        return stockMapper.outList(orderInfoId);
+//    }
 }

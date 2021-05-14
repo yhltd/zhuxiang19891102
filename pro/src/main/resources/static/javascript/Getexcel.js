@@ -5,6 +5,7 @@ function getexcel(tableid,filename){
         tableName: filename,
         exportDataType: "all",  //是否全部导出//basic', 'all' 全部, 'selected'选中.
         fileName: filename,//下载文件名称
+        forceExport:true,
         onCellHtmlData: function (cell, row, col, data){//处理导出内容,自定义某一行、某一列、某个单元格的内容
             return data;
         },
@@ -21,6 +22,7 @@ function getexcelnolast(tableid,filename,colnum){
         exportDataType: "all",  //是否全部导出//basic', 'all' 全部, 'selected'选中.
         ignoreColumn: [colnum],//忽略某一列的索引
         fileName: filename,//下载文件名称
+
         onCellHtmlData: function (cell, row, col, data){//处理导出内容,自定义某一行、某一列、某个单元格的内容
             return data;
         },

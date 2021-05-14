@@ -21,9 +21,10 @@ public interface OrderInfoMapper extends BaseMapper<OrderInfo> {
      *
      * @return
      */
-    @Select("select pi.project_name,oi.* from order_info as oi " +
-            "left join project_info as pi " +
-            "on oi.project_info_id = pi.id")
+//    @Select("select pi.project_name,oi.* from order_info as oi " +
+//            "left join project_info as pi " +
+//            "on oi.project_info_id = pi.id")
+    @Select("select pi.project_name,oi.*,sum(osd.out_num) as out_Num from order_info as oi left join project_info as pi  on oi.project_info_id = pi.id left join out_stock_detail osd on osd.order_info_id=oi.id GROUP BY order_id")
     List<OrderInfoItem> postList();
 
     /**

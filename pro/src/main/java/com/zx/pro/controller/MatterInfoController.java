@@ -205,4 +205,33 @@ public class MatterInfoController {
         }
     }
 
+    /**
+     * 查询物料信息
+     *
+     * @return ResultInfo
+     */
+    @PostMapping("/getNotMatter")
+    public ResultInfo getNotMatter(HttpSession session, @RequestBody HashMap map) {
+        try {
+            PowerUtil powerUtil = PowerUtil.getPowerUtil(session);
+            if (!powerUtil.isSelect("物料配置")) {
+                return ResultInfo.error(401, "无权限");
+            }
+
+            Integer projectId = Integer.parseInt(map.get("projectId").toString());
+
+            List<MatterInfo> list = iMatterInfoService.getNotMatter(projectId);
+            if (StringUtils.isNotNull(list)) {
+                return ResultInfo.success("获取成功", list);
+            } else {
+                return ResultInfo.success("获取失败");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("获取失败：{}", e.getMessage());
+            log.error("参数：{}", map);
+            return ResultInfo.error("错误!");
+        }
+    }
+
 }

@@ -47,5 +47,8 @@ public class WorkOrderDetail {
      */
     private int workNum;
 
-
+    /**
+     * 订单号
+     */
+    private String orderInfoId;
 }

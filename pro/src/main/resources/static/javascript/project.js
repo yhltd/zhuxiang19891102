@@ -173,10 +173,11 @@ $(function () {
             newList: getMatterProductList('#show-table-matter'),
             projectId: parseInt($('#showMatterProjectId').val())
         }
+        console.log(params)
 
         $ajax({
             type: 'post',
-            url: '/matter_project/change',
+            url: '/matter_project/updateAndAdd',
             data: JSON.stringify(params),
             contentType: "application/json;charset=utf-8",
             dataType: 'json'
@@ -195,6 +196,24 @@ $(function () {
 
     //获取表格数据
     getList()
+
+    //查看物料点击新增物料按钮
+    $('#add-matter-submit-btn').click(function () {
+         let projectId=$('#showMatterProjectId').val();
+        $ajax({
+            type: 'post',
+            url: '/matter_info/getNotMatter',
+            data: JSON.stringify({
+                projectId: projectId
+            }),
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json'
+        }, false, '', function (res) {
+            $('#show-matter-modal').modal('show');
+            setShowMatterTable(res.data)
+        })
+
+    })
 })
 
 function selectMatter() {
@@ -241,6 +260,32 @@ function setShowMatterTable(data) {
         clickToSelect: true,
         locale: 'zh-CN',
         columns: [
+            // {
+            //     field: 'id',
+            //     title: '序号',
+            //     align: 'center',
+            //     width: 50,
+            //     formatter: function (value, row, index) {
+            //         return index + 1;
+            //     }
+            // }
+             {
+                field: 'matterNum',
+                title: '更改数量',
+                align: 'left',
+                sortable: true,
+                width: 120,
+                formatter: function (value, row, index) {
+                    return '<input type="number" class="form-control" value="' + value + '"/>'
+                }
+            },{
+                field: 'matterNum',
+                title: '数量',
+                align: 'left',
+                sortable: true,
+                width: 150,
+                visible:true,
+            },
             {
                 field: 'id',
                 title: '序号',
@@ -249,7 +294,8 @@ function setShowMatterTable(data) {
                 formatter: function (value, row, index) {
                     return index + 1;
                 }
-            }, {
+            }
+            ,{
                 field: 'code',
                 title: '物料代码',
                 align: 'left',
@@ -311,21 +357,41 @@ function setShowMatterTable(data) {
                 sortable: true,
                 width: 120
             }, {
+                field: 'weight',
+                title: '产品单重',
+                align: 'left',
+                sortable: true,
+                width: 120
+            }, {
+                field: 'numberPackages',
+                title: '单位包装个数',
+                align: 'left',
+                sortable: true,
+                width: 120
+            }, {
+                field: 'traySize',
+                title: '托盘尺寸',
+                align: 'left',
+                sortable: true,
+                width: 120
+            },{
                 field: 'createTime',
                 title: '录入时间',
                 align: 'left',
                 sortable: true,
                 width: 150
-            },{
-                field: 'matterNum',
-                title: '所需数量',
-                align: 'left',
-                sortable: true,
-                width: 120,
-                formatter: function (value, row, index) {
-                    return '<input type="number" class="form-control" value="' + value + '"/>'
-                }
             }
+
+            // },{
+            //     field: 'matterNum',
+            //     title: '所需数量',
+            //     align: 'left',
+            //     sortable: true,
+            //     width: 120,
+            //     formatter: function (value, row, index) {
+            //         return '<input type="number" class="form-control" value="' + value + '"/>'
+            //     }
+            // }
         ]
     })
 }
@@ -347,6 +413,16 @@ function setMatterTable(data) {
         locale: 'zh-CN',
         columns: [
             {
+                field: 'matterNum',
+                title: '所需数量',
+                align: 'left',
+                sortable: true,
+                width: 120,
+                formatter: function (value, row, index) {
+                    return '<input type="number" class="form-control"/>'
+                }
+            },
+            {
                 field: 'id',
                 title: '序号',
                 align: 'center',
@@ -421,16 +497,17 @@ function setMatterTable(data) {
                 align: 'left',
                 sortable: true,
                 width: 150
-            },{
-                field: 'matterNum',
-                title: '所需数量',
-                align: 'left',
-                sortable: true,
-                width: 120,
-                formatter: function (value, row, index) {
-                    return '<input type="number" class="form-control"/>'
-                }
             }
+            // ,{
+            //     field: 'matterNum',
+            //     title: '所需数量',
+            //     align: 'left',
+            //     sortable: true,
+            //     width: 120,
+            //     formatter: function (value, row, index) {
+            //         return '<input type="number" class="form-control"/>'
+            //     }
+            // }
         ]
     })
 }
@@ -509,6 +586,12 @@ function setTable(data) {
                     return formatDate(new Date(value), "yyyy-MM-dd HH:mm:ss");
                 }
             }, {
+                field: 'outNum',
+                title: '出库数量',
+                align: 'left',
+                sortable: true,
+                width: 150,
+            }, {
                 field: 'id',
                 title: '操作',
                 align: 'left',
@@ -539,14 +622,14 @@ function getMatterProductList(el) {
         if (dataIndex == undefined) return true;
 
         let id = $(el).bootstrapTable('getData')[dataIndex].id;
-        let num = $(tr).children().last().children().val();
+        let num = $(tr).children().first().children().val();
         if (num == '' || num <= 0) return true;
 
         matterProjectList.push({
             id: 0,
             projectInfoId: 0,
             matterInfoId: parseInt(id),
-            matterNum: parseInt(num)
+            matterNum: parseInt(num),
         })
     })
     return matterProjectList;

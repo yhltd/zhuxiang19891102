@@ -265,6 +265,24 @@ function setTable(data) {
                 align: 'left',
                 sortable: true,
                 width: 150
+            },{
+                field: 'weight',
+                title: '产品单重',
+                align: 'left',
+                sortable: true,
+                width: 150
+            },{
+                field: 'numberPackages',
+                title: '单位包装个数',
+                align: 'left',
+                sortable: true,
+                width: 150
+            },{
+                field: 'traySize',
+                title: '托盘尺寸',
+                align: 'left',
+                sortable: true,
+                width: 150
             }, {
                 field: 'createTime',
                 title: '录入时间',

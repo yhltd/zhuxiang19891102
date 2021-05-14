@@ -33,4 +33,6 @@ public interface IStockService extends IService<Stock> {
 
 
     List<StockItem> outList();
+
+    //List<StockItem>outList(String orderInfoId);
 }

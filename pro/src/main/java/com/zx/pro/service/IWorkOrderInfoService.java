@@ -21,7 +21,7 @@ public interface IWorkOrderInfoService extends IService<WorkOrderInfo> {
      *
      * @return 实体类
      */
-    WorkOrderInfo add();
+    WorkOrderInfo add(String workOder);
 
     /**
      * 查询派工单信息

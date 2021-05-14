@@ -66,6 +66,18 @@ public class MatterInfo {
      */
     private String materialDescription;
     /**
+     * 产品单重
+     */
+    private String weight;
+    /**
+     * 单位包装个数
+     */
+    private String numberPackages;
+    /**
+     * 托盘尺寸
+     */
+    private String traySize;
+    /**
      * 创建时间
      */
     private LocalDateTime createTime;

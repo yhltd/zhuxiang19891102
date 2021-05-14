@@ -83,9 +83,9 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
     }
 
     @Override
-    public OrderInfo add(int projectId, String comment, List<MatterOrder> matterOrderList) {
+    public OrderInfo add(int projectId,String orderId, String comment, List<MatterOrder> matterOrderList) {
         OrderInfo orderInfo = new OrderInfo();
-        orderInfo.setOrderId(OrderUtil.getOrder("O"));
+        orderInfo.setOrderId(orderId);
         orderInfo.setCreateTime(LocalDateTime.now());
         orderInfo.setComment(comment);
         orderInfo.setProjectInfoId(projectId);

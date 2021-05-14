@@ -107,10 +107,9 @@ public class OutStockController {
                 return ResultInfo.error(401, "无权限");
             }
 
-            List<OutStockDetail> outStockDetailList =
-                    GsonUtil.toList(gsonUtil.get("list"),OutStockDetail.class);
+            List<OutStockDetail> outStockDetailList = GsonUtil.toList(gsonUtil.get("list"),OutStockDetail.class);
             UserInfo userInfo = GsonUtil.toEntity(SessionUtil.getToken(session),UserInfo.class);
-
+            //int orderInfoId=Integer.parseInt(map.get("orderId").toString());
             if (iOutStockDetailService.add(userInfo,outStockDetailList)) {
                 return ResultInfo.success("新增成功");
             } else {

@@ -39,8 +39,8 @@ public class WorkOrderDetailImpl extends ServiceImpl<WorkOrderDetailMapper, Work
     }
 
     @Override
-    public boolean add(List<WorkOrderDetail> list) {
-        WorkOrderInfo workOrderInfo = iWorkOrderInfoService.add();
+    public boolean add(List<WorkOrderDetail> list,String workOder) {
+        WorkOrderInfo workOrderInfo = iWorkOrderInfoService.add(workOder);
         for (WorkOrderDetail workOrderDetail : list) {
             workOrderDetail.setWorkOrderInfoId(workOrderInfo.getId());
         }

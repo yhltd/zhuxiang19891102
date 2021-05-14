@@ -51,7 +51,7 @@ public interface IOrderInfoService extends IService<OrderInfo> {
      * @param matterOrderList 所用物料集合
      * @return
      */
-    OrderInfo add(int projectId, String comment, List<MatterOrder> matterOrderList);
+    OrderInfo add(int projectId,String orderId, String comment, List<MatterOrder> matterOrderList);
 
     /**
      * 修改订单状态

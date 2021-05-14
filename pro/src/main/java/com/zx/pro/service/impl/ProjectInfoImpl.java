@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zx.pro.entity.MatterProject;
 import com.zx.pro.entity.ProjectInfo;
+import com.zx.pro.mapper.MatterInfoMapper;
 import com.zx.pro.mapper.ProjectInfoMapper;
 import com.zx.pro.service.IMatterProjectChangeService;
 import com.zx.pro.service.IMatterProjectService;
@@ -34,9 +35,12 @@ public class ProjectInfoImpl extends ServiceImpl<ProjectInfoMapper, ProjectInfo>
     @Autowired
     private IMatterProjectChangeService iMatterProjectChangeService;
 
+    @Autowired
+    private MatterInfoMapper matterInfoMapper;
+
     @Override
     public List<ProjectInfo> getList() {
-        return this.list();
+        return matterInfoMapper.getListByProject();
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.zx.pro.controller;
 
 import com.zx.pro.entity.WorkOrderDetail;
 import com.zx.pro.entity.WorkOrderDetailItem;
+import com.zx.pro.entity.WorkOrderInfo;
 import com.zx.pro.service.IWorkOrderDetailService;
 import com.zx.pro.service.IWorkOrderInfoService;
 import com.zx.pro.util.*;
@@ -45,10 +46,10 @@ public class WorkOrderDetailController {
             if (!powerUtil.isAdd("派工单")) {
                 return ResultInfo.error(401, "无权限");
             }
-
+            String workOrder=map.get("workOrder").toString();
             List<WorkOrderDetail> list = GsonUtil.toList(gsonUtil.get("workOrderDetailList"), WorkOrderDetail.class);
             log.error("参数：{}", map);
-            if (iWorkOrderDetailService.add(list)) {
+            if (iWorkOrderDetailService.add(list,workOrder)) {
                 return ResultInfo.success("录入成功", list);
             } else {
                 return ResultInfo.success("录入失败", list);

@@ -48,12 +48,16 @@ public class OutStockDetail {
      * 产品名称
      */
     private String mattername;
-    /**
-     * 产品单价
-     */
-//    private Double productPrice;
 //    /**
-//     * 产品数量
+//     * 产品单价
 //     */
-//    private Double productNum;
+////    private Double productPrice;
+////    /**
+////     * 产品数量
+////     */
+////    private Double productNum;
+    /**
+     * 订单id
+     */
+    private int orderInfoId;
 }

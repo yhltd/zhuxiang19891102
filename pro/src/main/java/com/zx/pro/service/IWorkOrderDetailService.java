@@ -31,7 +31,7 @@ public interface IWorkOrderDetailService extends IService<WorkOrderDetail> {
      * @param list
      * @return
      */
-    boolean add(List<WorkOrderDetail> list);
+    boolean add(List<WorkOrderDetail> list,String workOder);
 
     /**
      * 查询派工单明细

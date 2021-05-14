@@ -42,7 +42,6 @@ public interface IMatterInfoService extends IService<MatterInfo> {
     /**
      * 查询一个产品所需的物料信息
      *
-     * @param productId 产品id
      * @return
      */
     List<MatterInfoItem> getListByProductId();
@@ -94,4 +93,13 @@ public interface IMatterInfoService extends IService<MatterInfo> {
      * @return 是否删除成功
      */
     boolean delete(List<Integer> idList);
+
+    /**
+     * 查询物料集合
+     * @param  projectId
+     * @return 物料信息的集合
+     */
+    List<MatterInfo> getNotMatter(Integer projectId);
+
+
 }

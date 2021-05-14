@@ -85,4 +85,9 @@ public class MatterInfoImpl extends ServiceImpl<MatterInfoMapper, MatterInfo> im
         }
         return this.removeByIds(idList);
     }
+
+    @Override
+    public List<MatterInfo> getNotMatter(Integer projectId) {
+        return matterInfoMapper.returnNotMatter(projectId);
+    }
 }
