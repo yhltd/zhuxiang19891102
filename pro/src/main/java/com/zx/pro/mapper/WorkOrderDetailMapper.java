@@ -19,7 +19,8 @@ public interface WorkOrderDetailMapper extends BaseMapper<WorkOrderDetail> {
      * @param workOrder 根据派工单单号查询
      * @return 派工单明细集合
      */
-    @Select("SELECT m.code as mattername,wi.work_order,o.order_id,wd.* from work_order_info wi right join work_order_detail wd on wd.work_order_info_id=wi.id LEFT JOIN matter_info m on wd.matter_id= m.id LEFT JOIN order_info o on m.id=o.matterid where wi.work_order= #{workOrder} ")
+//    @Select("SELECT m.code as mattername,wi.work_order,o.order_id,wd.* from work_order_info wi right join work_order_detail wd on wd.work_order_info_id=wi.id LEFT JOIN matter_info m on wd.matter_id= m.id LEFT JOIN order_info o on m.id=o.matterid where wi.work_order= #{workOrder} ")
+    @Select("SELECT m.code as mattername,wi.work_order,o.order_id,wd.* from work_order_info wi right join work_order_detail wd on wd.work_order_info_id=wi.id LEFT JOIN matter_info m on wd.matter_id = m.id LEFT JOIN matter_order o on m.id=o.matter_id where wi.work_order= #{workOrder} ")
     List<WorkOrderDetailItem> getListByWorkOrder(String workOrder);
 
     /**
@@ -27,7 +28,8 @@ public interface WorkOrderDetailMapper extends BaseMapper<WorkOrderDetail> {
      *
      * @return 派工单明细集合
      */
-    @Select("SELECT m.code as mattername,wi.work_order,o.order_id,wd.* from work_order_info wi right join work_order_detail wd on wd.work_order_info_id=wi.id LEFT JOIN matter_info m on wd.matter_id = m.id LEFT JOIN order_info o on m.id=o.matterid order by wd.work_date desc")
+//    @Select("SELECT m.code as mattername,wi.work_order,o.order_id,wd.* from work_order_info wi right join work_order_detail wd on wd.work_order_info_id=wi.id LEFT JOIN matter_info m on wd.matter_id = m.id LEFT JOIN order_info o on m.id=o.matterid order by wd.work_date desc")
+    @Select("SELECT m.code as mattername,wi.work_order,o.order_id,wd.* from work_order_info wi right join work_order_detail wd on wd.work_order_info_id=wi.id LEFT JOIN matter_info m on wd.matter_id = m.id LEFT JOIN matter_order o on m.id=o.matter_id order by wd.work_date desc ")
     List<WorkOrderDetailItem> getList();
 
     /**

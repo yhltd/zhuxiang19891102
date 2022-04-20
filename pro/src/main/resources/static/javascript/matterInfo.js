@@ -13,6 +13,7 @@ function getList() {
 $(function () {
     //显示所有物料
     getList();
+
     //点击按钮根据项目名模糊查询物料
     $("#select-btn1").click(function () {
         var projectName = $("#projectName").val();
